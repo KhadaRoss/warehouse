@@ -27,6 +27,8 @@ class WarehouseController extends Controller
      */
     protected function getStrings(): array
     {
-        return ['WAREHOUSE'];
+        return [
+            'WAREHOUSE',
+        ];
     }
 }

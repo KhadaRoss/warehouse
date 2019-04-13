@@ -1,0 +1,24 @@
+<html lang="{{ LANG }}">
+<head>
+    <title>{{ TITLE }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ URL }}img/rexx.ico">
+    <link rel="stylesheet" type="text/css" href="{{ URL }}lib/fontawesome-free-5.6.3-web/css/all.css">
+    <link rel="stylesheet" type="text/css" href="{{ URL }}css/warehouse.css">
+    {{ ADD_STYLES|raw }}
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
+
+</head>
+<body>
+<div id="background"></div>
+    {% include 'sidebar.twig' %}
+<div id="pageContent">
+    {% block content %}{% endblock %}
+</div>
+<script src="{{ URL }}lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+<script src="{{ URL }}js/warehouse.js"></script>
+{{ ADD_SCRIPTS|raw }}
+</body>
+</html>
