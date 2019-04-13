@@ -8,10 +8,11 @@ use Error;
 
 class RouterFactory
 {
-    const ERROR_CONTROLLER = 'error';
-    const WAREHOUSE_CONTROLLER = 'warehouse';
-    const REPORTS_CONTROLLER = 'reports';
     const AJAX_CONTROLLER = 'ajax';
+    const ERROR_CONTROLLER = 'error';
+    const LOGIN_CONTROLLER = 'login';
+    const REPORTS_CONTROLLER = 'reports';
+    const WAREHOUSE_CONTROLLER = 'warehouse';
 
     /**
      * @param string $controller

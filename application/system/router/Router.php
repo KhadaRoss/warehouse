@@ -66,7 +66,7 @@ class Router
     private function handleLandingPage(string $controllerName): string
     {
         if (empty($controllerName)) {
-            self::redirect(RouterFactory::WAREHOUSE_CONTROLLER, '');
+            self::redirect(RouterFactory::LOGIN_CONTROLLER, '');
         }
 
         return $controllerName;
