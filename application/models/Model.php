@@ -8,9 +8,7 @@ use PDOStatement;
 
 abstract class Model
 {
-    /**
-     * @var PDO
-     */
+    /** @var PDO */
     protected $db;
 
     public function __construct()

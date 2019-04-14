@@ -4,14 +4,9 @@ namespace helpers;
 
 class ErrorHandler
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $message;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $headline;
 
     /**
@@ -27,7 +22,7 @@ class ErrorHandler
     /**
      * @return void
      */
-    public function printError()
+    public function printError(): void
     {
         echo $this->headline . '<br><br>'
              . $this->message;

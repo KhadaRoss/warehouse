@@ -6,10 +6,8 @@ class Route
 {
     /** @var string */
     private $controllerName;
-
     /** @var string */
     private $controllerMethod;
-
     /** @var array */
     private $controllerArgs;
 

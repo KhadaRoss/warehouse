@@ -10,14 +10,9 @@ class AjaxController extends Controller
 {
     const AJAX_DATA_KEY = 'data';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $function = '';
-
-    /**
-     * @var array
-     */
+    /** @var array */
     private $parameters = [];
 
     /**
@@ -33,7 +28,10 @@ class AjaxController extends Controller
         $this->handleIncomingData();
     }
 
-    private function handleIncomingData()
+    /**
+     * @return void
+     */
+    private function handleIncomingData(): void
     {
         unset($this->args['strings']);
         $this->function = $this->args[0];

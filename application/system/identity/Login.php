@@ -22,11 +22,9 @@ class Login
     }
 
     /**
-     * @throws LoginException
-     *
      * @return void
      */
-    public function doLogin()
+    public function doLogin(): void
     {
         $userData = (new LoginModel())->getUserData($this->username);
 

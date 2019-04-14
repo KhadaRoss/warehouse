@@ -15,7 +15,7 @@ class LoginView extends View
     /**
      * @return void
      */
-    protected function setTemplate()
+    protected function setTemplate(): void
     {
         $this->template = 'login.twig';
     }
@@ -23,7 +23,7 @@ class LoginView extends View
     /**
      * @return void
      */
-    protected function setTwigVariables()
+    protected function setTwigVariables(): void
     {
         $this->addStyles(['login']);
     }

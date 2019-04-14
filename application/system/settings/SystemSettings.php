@@ -33,7 +33,7 @@ class SystemSettings
     /**
      * @return void
      */
-    private function getAll()
+    private function getAll(): void
     {
         self::$settings = (new SettingsModel())->getAll();
     }
@@ -41,7 +41,7 @@ class SystemSettings
     /**
      * @return void
      */
-    public static function updateAll()
+    public static function updateAll(): void
     {
         new self();
     }

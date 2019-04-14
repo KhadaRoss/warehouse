@@ -4,9 +4,7 @@ namespace helpers;
 
 class JsHelper
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $scrips = '';
 
     /**

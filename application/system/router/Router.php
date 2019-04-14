@@ -7,24 +7,13 @@ use entities\Route;
 
 class Router
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $uri;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $basePath;
-
-    /**
-     * @var Route
-     */
+    /** @var Route */
     private $route;
-
-    /**
-     * @var Controller
-     */
+    /** @var Controller */
     private $controller;
 
     public function __construct()
@@ -36,7 +25,7 @@ class Router
     /**
      * @return void
      */
-    private function setInformation()
+    private function setInformation(): void
     {
         $this->basePath = \strtolower(
             \implode('/', \array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/'
@@ -48,7 +37,7 @@ class Router
     /**
      * @return void
      */
-    private function setRouteInformation()
+    private function setRouteInformation(): void
     {
         $routeInformation = \explode('/', $this->uri);
 
@@ -75,7 +64,7 @@ class Router
     /**
      * return void
      */
-    private function setController()
+    private function setController(): void
     {
         $this->controller = RouterFactory::getController(
             $this->route->getControllerName(),

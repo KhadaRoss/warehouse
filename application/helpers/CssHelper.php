@@ -4,9 +4,7 @@ namespace helpers;
 
 class CssHelper
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $styles = '';
 
     /**

@@ -4,9 +4,7 @@ namespace helpers;
 
 class AjaxRequest
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $response = '';
 
     /**

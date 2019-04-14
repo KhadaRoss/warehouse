@@ -31,7 +31,7 @@ SQL;
     /**
      * @return void
      */
-    public function manuallyRegisterUser()
+    public function manuallyRegisterUser(): void
     {
         $query = <<<SQL
 REPLACE INTO users (userId, username, passwordHash) VALUES (:userId, :username, :passwordHash);

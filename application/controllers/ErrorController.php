@@ -28,7 +28,7 @@ class ErrorController extends Controller
     protected function getStrings(): array
     {
         return [
-            'ERROR'
+            'ERROR',
         ];
     }
 }

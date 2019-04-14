@@ -7,24 +7,16 @@ use PDOException;
 
 class Database
 {
-    /**
-     * @var \PDO
-     */
+    /** @var PDO  */
     private $db;
-
-    /**
-     * @var array
-     */
+    /** @var Database */
+    private static $instance;
+    /** @var array  */
     private $options = [
         PDO::ATTR_EMULATE_PREPARES   => false,
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ];
-
-    /**
-     * @var Database
-     */
-    private static $instance;
 
     private function __construct()
     {

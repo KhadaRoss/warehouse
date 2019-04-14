@@ -15,7 +15,7 @@ class ErrorView extends View
     /**
      * @return void
      */
-    protected function setTemplate()
+    protected function setTemplate(): void
     {
         $this->template = 'error.twig';
     }
@@ -23,7 +23,7 @@ class ErrorView extends View
     /**
      * @return void
      */
-    protected function setTwigVariables()
+    protected function setTwigVariables(): void
     {
         $this->addStyles(['error']);
     }

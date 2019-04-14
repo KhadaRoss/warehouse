@@ -26,10 +26,7 @@ abstract class View
     private $styles = ['warehouse'];
     /** @var array */
     private $scripts = ['warehouse'];
-
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $template;
 
     /**
@@ -38,6 +35,7 @@ abstract class View
     public function __construct(array $args)
     {
         $this->setTemplate();
+
         $this->initTwig();
         $this->initArgs($args);
         $this->initOutput();
@@ -49,7 +47,7 @@ abstract class View
     /**
      * @return void
      */
-    private function initTwig()
+    private function initTwig(): void
     {
         $this->loader = new Twig_Loader_Filesystem([TEMPLATES]);
         $this->twig = new Twig_Environment($this->loader);
@@ -57,8 +55,10 @@ abstract class View
 
     /**
      * @param array $args
+     *
+     * @return void
      */
-    private function initArgs(array $args)
+    private function initArgs(array $args): void
     {
         $this->args = $args;
         $this->strings = $this->args['strings'];
@@ -67,7 +67,7 @@ abstract class View
     /**
      * @return void
      */
-    private function initStrings()
+    private function initStrings(): void
     {
         foreach ($this->strings as $id => $string) {
             $this->output[$id] = $string;
@@ -77,7 +77,7 @@ abstract class View
     /**
      * @return void
      */
-    private function initOutput()
+    private function initOutput(): void
     {
         $this->output['URL'] = URL;
         $this->output['LANG'] = SystemSettings::get('CURRENT_LANGUAGE');
@@ -86,12 +86,12 @@ abstract class View
     /**
      * @return void
      */
-    abstract protected function setTwigVariables();
+    abstract protected function setTwigVariables(): void;
 
     /**
      * @return void
      */
-    abstract protected function setTemplate();
+    abstract protected function setTemplate(): void;
 
     /**
      * @return string
@@ -113,7 +113,7 @@ abstract class View
      *
      * @return void
      */
-    protected function addStyles(array $styles)
+    protected function addStyles(array $styles): void
     {
         $this->styles = \array_merge($this->styles, $styles);
     }
@@ -123,7 +123,7 @@ abstract class View
      *
      * @return void
      */
-    protected function addScripts(array $scripts)
+    protected function addScripts(array $scripts): void
     {
         $this->scripts = \array_merge($this->scripts, $scripts);
     }

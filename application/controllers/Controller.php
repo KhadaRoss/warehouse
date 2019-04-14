@@ -9,14 +9,9 @@ use system\router\RouterFactory;
 
 abstract class Controller
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $args = [];
-
-    /**
-     * @var array
-     */
+    /** @var array  */
     private $strings = ['TITLE', 'LOGOUT'];
 
     /**
@@ -51,7 +46,7 @@ abstract class Controller
     /**
      * @return void
      */
-    private function getStringsFromDb()
+    private function getStringsFromDb():void
     {
         $this->args['strings'] = (new StringsModel())->getAll($this->strings);
     }
@@ -59,7 +54,7 @@ abstract class Controller
     /**
      * @return void
      */
-    private function checkAccess()
+    private function checkAccess(): void
     {
         if (!$this instanceof LoginController && !CurrentIdentity::getIdentity()->isLoggedIn()) {
             Router::redirect(RouterFactory::LOGIN_CONTROLLER);

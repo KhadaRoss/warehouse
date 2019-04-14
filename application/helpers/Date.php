@@ -7,9 +7,7 @@ use system\settings\SystemSettings;
 
 class Date
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $date;
 
     /**

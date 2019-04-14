@@ -27,7 +27,7 @@ class CurrentIdentity
     /**
      * @return void
      */
-    private function initSession()
+    private function initSession(): void
     {
         if (empty($_SESSION[self::IDENTITY_SESSION_KEY])) {
             $_SESSION[self::IDENTITY_SESSION_KEY] = [];
@@ -91,7 +91,7 @@ class CurrentIdentity
     /**
      * @return void
      */
-    public function logout()
+    public function logout(): void
     {
         $this->identity = [];
 
