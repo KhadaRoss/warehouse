@@ -11,6 +11,7 @@ class RouterFactory
     const AJAX_CONTROLLER = 'ajax';
     const ERROR_CONTROLLER = 'error';
     const LOGIN_CONTROLLER = 'login';
+    const LOGOUT_CONTROLLER = 'logout';
     const REPORTS_CONTROLLER = 'reports';
     const WAREHOUSE_CONTROLLER = 'warehouse';
 

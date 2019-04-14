@@ -40,9 +40,9 @@ SQL;
         $this->prepareAndExecute(
             $query,
             [
-                'userId'       => 1,
-                'username'     => 'admin',
-                'passwordHash' => Login::getHashedPassword('AdminKicker123'),
+                'userId'       => '',
+                'username'     => '',
+                'passwordHash' => Login::getHashedPassword(''),
             ]
         );
     }

@@ -1,0 +1,70 @@
+#background {
+    background-image: url('../img/login.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: bottom;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: -5;
+}
+
+#loginContrast {
+    width: 100vw;
+    background-color: black;
+    opacity: 0.8;
+    height: 300px;
+    position: absolute;
+    top: calc(50vh - 150px)
+}
+
+#login {
+    position: absolute;
+    width: 400px;
+    min-width: 200px;
+    height: 220px;
+    border: 2px solid white;
+    top: calc(50vh - 110px);
+    left: calc(50vw - 200px);
+}
+
+#login input {
+    font-family: 'Poiret One', cursive;
+    background-color: rgba(0,0,0,0.1);
+    caret-color: white;
+    text-align: center;
+    width: 300px;
+    margin-left: 50px;
+    margin-top: 15px;
+    color: white;
+    font-size: 24px;
+}
+
+#loginHeader {
+    text-align: center;
+    color: white;
+    font-family: 'Poiret One', cursive;
+    margin-top: 30px;
+    font-size: 30px;
+}
+
+/* desktop */
+@media (min-width: 1200px) {
+}
+
+/* tablet */
+@media (max-width: 1199px) {
+}
+
+/* mobile */
+@media (max-width: 576px) {
+    #login {
+        width: 90vw;
+        left: 5vw;
+    }
+
+    #login input {
+        width: 80vw;
+        margin-left: 5vw;
+    }
+}

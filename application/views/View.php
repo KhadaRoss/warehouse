@@ -23,9 +23,9 @@ abstract class View
     /** @var array */
     protected $output = [];
     /** @var array */
-    private $styles = [];
+    private $styles = ['warehouse'];
     /** @var array */
-    private $scripts = [];
+    private $scripts = ['warehouse'];
 
     /**
      * @var string

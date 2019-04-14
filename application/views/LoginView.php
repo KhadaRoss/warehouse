@@ -25,6 +25,6 @@ class LoginView extends View
      */
     protected function setTwigVariables()
     {
-        $this->addStyles(['warehouse']);
+        $this->addStyles(['login']);
     }
 }

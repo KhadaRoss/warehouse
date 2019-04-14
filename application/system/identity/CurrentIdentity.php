@@ -2,9 +2,13 @@
 
 namespace system\identity;
 
+use system\router\Router;
+use system\router\RouterFactory;
+
 class CurrentIdentity
 {
     const IDENTITY_SESSION_KEY = 'identity';
+    const IDENTITY_GUEST_ID = 0;
 
     /** @var array */
     private $identity;
@@ -16,8 +20,8 @@ class CurrentIdentity
     {
         $this->initSession();
 
-        $this->setUserId($userData['userId']);
-        $this->setUserName($userData['userName']);
+        $this->setUserId($userData['userId'] ?? 0);
+        $this->setUserName($userData['userName'] ?? 'guest');
     }
 
     /**
@@ -74,5 +78,23 @@ class CurrentIdentity
     public static function getIdentity(): CurrentIdentity
     {
         return new self($_SESSION[self::IDENTITY_SESSION_KEY]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoggedIn(): bool
+    {
+        return $this->getUserId() !== self::IDENTITY_GUEST_ID;
+    }
+
+    /**
+     * @return void
+     */
+    public function logout()
+    {
+        $this->identity = [];
+
+        Router::redirect(RouterFactory::LOGIN_CONTROLLER);
     }
 }

@@ -25,7 +25,5 @@ class WarehouseView extends View
      */
     protected function setTwigVariables()
     {
-        $this->addStyles(['warehouse']);
-        $this->addScripts(['warehouse']);
     }
 }

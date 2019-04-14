@@ -96,7 +96,7 @@ class Router
      * @param string $method
      * @param array $controllerArgs
      */
-    public static function redirect(string $controllerName, string $method ,array $controllerArgs = [])
+    public static function redirect(string $controllerName, string $method = '' ,array $controllerArgs = [])
     {
         $uri = \URL . $controllerName . '/' . $method;
 

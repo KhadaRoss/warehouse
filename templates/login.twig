@@ -1,5 +1,13 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-    {{ LOGIN }}
+    <div id="loginContrast"></div>
+    <div id="login">
+        <div id="loginHeader">{{ LOGIN }}</div>
+        <form action="{{ URL }}login/authenticate" autocomplete="off" method="post">
+            <input name="username" placeholder="{{ USERNAME }}"><br>
+            <input name="password" type="password" placeholder="{{ PASSWORD }}"><br>
+            <button type="submit" class="hidden"></button>
+        </form>
+    </div>
 {% endblock %}

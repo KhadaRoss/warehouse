@@ -3,6 +3,9 @@
 namespace controllers;
 
 use models\StringsModel;
+use system\identity\CurrentIdentity;
+use system\router\Router;
+use system\router\RouterFactory;
 
 abstract class Controller
 {
@@ -14,13 +17,15 @@ abstract class Controller
     /**
      * @var array
      */
-    private $strings = ['TITLE'];
+    private $strings = ['TITLE', 'LOGOUT'];
 
     /**
      * @param array $args
      */
     public function __construct(array $args)
     {
+        $this->checkAccess();
+
         $this->strings = \array_merge($this->strings, $this->getStrings());
 
         $this->args = $args;
@@ -49,5 +54,15 @@ abstract class Controller
     private function getStringsFromDb()
     {
         $this->args['strings'] = (new StringsModel())->getAll($this->strings);
+    }
+
+    /**
+     * @return void
+     */
+    private function checkAccess()
+    {
+        if (!$this instanceof LoginController && !CurrentIdentity::getIdentity()->isLoggedIn()) {
+            Router::redirect(RouterFactory::LOGIN_CONTROLLER);
+        }
     }
 }

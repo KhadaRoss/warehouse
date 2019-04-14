@@ -17,20 +17,17 @@
 
 namespace controllers;
 
-use helpers\Request;
 use system\identity\CurrentIdentity;
-use system\identity\Login;
-use system\router\Router;
-use system\router\RouterFactory;
-use views\LoginView;
 
-class LoginController extends Controller
+class LogoutController extends Controller
 {
     /**
      * @param array $args
      */
     public function __construct(array $args)
     {
+        CurrentIdentity::getIdentity()->logout();
+
         parent::__construct($args);
     }
 
@@ -39,26 +36,7 @@ class LoginController extends Controller
      */
     public function index(): string
     {
-        return (new LoginView($this->args))->render();
-    }
-
-    /**
-     * @return string
-     */
-    public function authenticate(): string
-    {
-        $request = Request::getInstance();
-
-        (new Login(
-            $request->getPost('username'),
-            $request->getPost('password'))
-        )->doLogin();
-
-        if (CurrentIdentity::getIdentity()->isLoggedIn()) {
-            Router::redirect(RouterFactory::WAREHOUSE_CONTROLLER);
-        }
-
-        return (new LoginView($this->args))->render();
+        return '';
     }
 
     /**
@@ -66,10 +44,6 @@ class LoginController extends Controller
      */
     protected function getStrings(): array
     {
-        return [
-            'LOGIN',
-            'USERNAME',
-            'PASSWORD',
-        ];
+        return [];
     }
 }

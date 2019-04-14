@@ -17,7 +17,7 @@ class Login
      */
     public function __construct(string $username, string $password)
     {
-        $this->username = $username;
+        $this->username = \strtolower($username);
         $this->password = $password;
     }
 
@@ -30,9 +30,8 @@ class Login
     {
         $userData = (new LoginModel())->getUserData($this->username);
 
-        if ($userData['userId'] === 0
-            || !\password_verify($this->password, $userData['passwordHash'])) {
-            throw new LoginException('wrong username');
+        if ($userData['userId'] === 0 || !password_verify($this->password, $userData['passwordHash'])) {
+            return;
         }
 
         new CurrentIdentity([
