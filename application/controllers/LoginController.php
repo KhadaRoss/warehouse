@@ -39,6 +39,10 @@ class LoginController extends Controller
      */
     public function index(): string
     {
+        if (CurrentIdentity::getIdentity()->isLoggedIn()) {
+            Router::redirect(RouterFactory::WAREHOUSE_CONTROLLER);
+        }
+
         return (new LoginView($this->args))->render();
     }
 
