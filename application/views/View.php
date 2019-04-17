@@ -100,9 +100,9 @@ abstract class View
     public function render(): string
     {
         if (!$this instanceof LoginView) {
-            $this->output['SIDEBAR'] = (new Sidebar())->getTwigData();
+            $this->output['SIDEBAR'] = (new Sidebar($this->args['active'] ?? 0))->getTwigData();
             $this->addStyles(['sidebar', 'warehouse']);
-            $this->addScripts(['warehouse']);
+            $this->addScripts(['sidebar']);
         }
 
         $this->output['ADD_STYLES'] = (new CssHelper())->getStyles($this->styles);

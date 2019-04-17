@@ -9,9 +9,12 @@ class Sidebar
 {
     /** @var Shelf[] */
     private $entries;
+    /** @var int */
+    private $activeId;
 
-    public function __construct()
+    public function __construct(int $activeId)
     {
+        $this->activeId = $activeId;
         $this->entries = (new ShelfModel())->getAll();
     }
 
@@ -23,10 +26,17 @@ class Sidebar
         $data = [];
 
         foreach ($this->entries as $entry) {
-            $data[] = [
+            $menuEntry = [
                 'id'   => $entry->getId(),
                 'name' => $entry->getName(),
+                'class' => '',
             ];
+
+            if ($this->activeId === $entry->getId()) {
+                $menuEntry['class'] = 'active';
+            }
+
+            $data[] = $menuEntry;
         }
 
         return $data;

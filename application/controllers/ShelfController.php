@@ -12,12 +12,15 @@ class ShelfController extends Controller
     public function __construct(array $args)
     {
         parent::__construct($args);
+
+        $this->args['active'] = $this->args[0];
+        unset($this->args[0]);
     }
 
     /**
      * @return string
      */
-    public function show    (): string
+    public function show(): string
     {
         return (new ShelfView($this->args))->render();
     }

@@ -12,7 +12,7 @@ abstract class Controller
     /** @var array */
     protected $args = [];
     /** @var array  */
-    private $strings = ['TITLE', 'LOGOUT'];
+    private $strings = ['TITLE', 'LOGOUT', 'SEARCH', 'NEW'];
 
     /**
      * @param array $args
