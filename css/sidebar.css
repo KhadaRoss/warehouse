@@ -18,9 +18,25 @@
     margin-top: 5px;
 }
 
-#sidebar a:hover {
-    color: black;
+#sidebar a.logout {
+    display: inline-block;
+}
+
+#sidebar a:hover, #sidebar .fa:hover {
+    color: #404040;
     background-color: white;
+}
+
+#sidebar a, #sidebar .fa {
+    padding: 2px;
+}
+
+#menuEntries {
+    border-top: 2px solid white;
+}
+
+#menuTools {
+    margin-bottom: 5px;
 }
 
 #pageContent {

@@ -1,5 +1,16 @@
+{% if SIDEBAR %}
 <div id="sidebar">
-    {% for shelf in SIDEBAR %}
-        <a id="shelf_{{ shelf.id }}" href="{{ URL }}shelf/show/{{ shelf.id }}">{{ shelf.name }}</a>
-    {% endfor %}
+    <div id="menuTools">
+        <div id="search" class="fa fa-search"></div>
+        <div id="add" class="fa fa-plus"></div>
+        <a href="{{ URL }}logout" class="logout"><div id="logout" class="fa fa-sign-out-alt"></div></a>
+    </div>
+    <div id="menuEntries">
+        {% for shelf in SIDEBAR %}
+            <div class="entry">
+                <a id="shelf_{{ shelf.id }}" href="{{ URL }}shelf/show/{{ shelf.id }}">{{ shelf.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
+{% endif %}
