@@ -77,7 +77,7 @@ class CurrentIdentity
      */
     public static function getIdentity(): CurrentIdentity
     {
-        return new self($_SESSION[self::IDENTITY_SESSION_KEY]);
+        return new self($_SESSION[self::IDENTITY_SESSION_KEY] ?? []);
     }
 
     /**
