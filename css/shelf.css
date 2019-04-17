@@ -1,0 +1,27 @@
+#topRightButton {
+    color: black;
+    text-decoration: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#topRightButton:hover {
+    color: white;
+    background-color: #404040;
+}
+
+/* desktop */
+@media (min-width: 1200px) {
+}
+
+/* tablet */
+@media (max-width: 1199px) {
+}
+
+/* mobile */
+@media (max-width: 576px) {
+}

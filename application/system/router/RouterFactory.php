@@ -13,6 +13,7 @@ class RouterFactory
     const LOGIN_CONTROLLER = 'login';
     const LOGOUT_CONTROLLER = 'logout';
     const REPORTS_CONTROLLER = 'reports';
+    const SHELF_CONTROLLER = 'shelf';
     const WAREHOUSE_CONTROLLER = 'warehouse';
 
     /**

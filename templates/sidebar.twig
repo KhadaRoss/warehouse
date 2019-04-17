@@ -1,5 +1,5 @@
 <div id="sidebar">
-    {% for entry in menu %}
-        <div id="shelf_{{ entry.id }}">{{ entry.name }}</div>
+    {% for shelf in SIDEBAR %}
+        <a id="shelf_{{ shelf.id }}" href="{{ URL }}shelf/show/{{ shelf.id }}">{{ shelf.name }}</a>
     {% endfor %}
 </div>
