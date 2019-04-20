@@ -8,8 +8,6 @@ use helpers\Request;
 
 class AjaxController extends Controller
 {
-    const AJAX_DATA_KEY = 'data';
-
     /** @var string */
     private $function = '';
     /** @var array */
@@ -20,11 +18,8 @@ class AjaxController extends Controller
      */
     public function __construct(array $args)
     {
-        if (!\defined('AJAX_CALL') || !AJAX_CALL) {
-            (new ErrorHandler('request Error', 'invalid ajax request'))->printError();
-        }
-
         parent::__construct($args);
+
         $this->handleIncomingData();
     }
 
@@ -33,17 +28,20 @@ class AjaxController extends Controller
      */
     private function handleIncomingData(): void
     {
-        unset($this->args['strings']);
-        $this->function = $this->args[0];
-        unset($this->args[0]);
-        $this->parameters = (array)json_decode(Request::getInstance()->getPost(self::AJAX_DATA_KEY));
+        $request = Request::getInstance();
+        $this->function = $request->getPost('function');
+        $this->parameters = $request->getPost('parameters');
     }
 
     /**
      * @return string
      */
-    public function handle(): string
+    public function index(): string
     {
+        if (empty($this->function) || !\is_string($this->function) || !\is_array($this->parameters)) {
+            (new ErrorHandler('error', 'bad request'))->printError();
+        }
+
         return (new AjaxRequest($this->function, $this->parameters))->render();
     }
 

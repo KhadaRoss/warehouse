@@ -10,7 +10,20 @@ let sidebar = function () {
         initTools: function () {
             $('.inputTrigger').on('click', function () {
                 sidebar.handleToolClick(this.id);
-            })
+            });
+            $('#toolInput').keyup(function (e) {
+                const mode = input.attr('data-mode');
+                const name = input.val();
+
+
+                if (e.keyCode !== 13 || typeof mode === 'undefined' || !name || !mode) {
+                    return;
+                }
+
+                request.request(mode + 'Shelf', {name: name}, function (data) {
+                    console.log(data);
+                });
+            });
         },
         /**
          * @param {string} mode

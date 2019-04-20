@@ -101,8 +101,8 @@ abstract class View
     {
         if (!$this instanceof LoginView) {
             $this->output['SIDEBAR'] = (new Sidebar($this->args['active'] ?? 0))->getTwigData();
-            $this->addStyles(['sidebar', 'warehouse']);
-            $this->addScripts(['sidebar']);
+            $this->addStyles(['warehouse', 'sidebar']);
+            $this->addScripts(['warehouse', 'sidebar']);
         }
 
         $this->output['ADD_STYLES'] = (new CssHelper())->getStyles($this->styles);

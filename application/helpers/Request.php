@@ -44,9 +44,9 @@ class Request
     /**
      * @param string $key
      *
-     * @return string
+     * @return mixed
      */
-    public function getPost(string $key): string
+    public function getPost(string $key)
     {
         return $this->post[$key] ?? '';
     }
@@ -64,9 +64,9 @@ class Request
     /**
      * @param string $key
      *
-     * @return string
+     * @return mixed
      */
-    public function getGet(string $key): string
+    public function getGet(string $key)
     {
         return $this->get[$key] ?? '';
     }
