@@ -2,6 +2,8 @@
 
 namespace views;
 
+use models\ShelfModel;
+
 class ShelfView extends View
 {
     /**
@@ -26,6 +28,7 @@ class ShelfView extends View
     protected function setTwigVariables(): void
     {
         $this->output['CURRENT_SHELF'] = $this->args['active'];
+        $this->output['CURRENT_SHELF_NAME'] = (new ShelfModel())->get($this->args['active'])->getName();
         $this->addStyles(['shelf']);
         $this->addScripts(['shelf']);
     }

@@ -26,11 +26,11 @@
 #shelfBackground {
     position: absolute;
     width: 500px;
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 158px);
     padding: 30px;
     background-color: black;
-    opacity: 0.7;
-    top: 30px;
+    opacity: 0.9;
+    top: 68px;
     left: calc(((100vw - 221px) / 2 ) - 280px + 221px);
 }
 
@@ -39,9 +39,40 @@
     color: white;
     position: absolute;
     width: 500px;
-    min-height: calc(100vh - 120px);
-    top: 30px;
+    min-height: calc(100vh - 158px);
+    top: 68px;
     left: calc(((100vw - 221px) / 2 ) - 280px + 221px);
+}
+
+#shelfTools {
+    margin-bottom: 20px;
+}
+
+#shelfTools .fa {
+    margin-right: 20px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+#shelfTools .fa:hover, #shelfTools .fa.active {
+    background-color: white;
+    color: black;
+
+}
+
+#shelfTools input {
+    width: calc(100% - 46px);
+    height: 21px;
+    text-align: center;
+    display: none;
+}
+
+#shelfHeader {
+    position: relative;
+    top:2px;
+    text-align: center;
+    padding: 5px;
+    background-color: #404040;
 }
 
 /* desktop */

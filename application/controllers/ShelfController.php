@@ -37,6 +37,8 @@ class ShelfController extends Controller
             'DELETE_MESSAGE_2',
             'DELETE_YES',
             'DELETE_NO',
+            'FIELD_NEW',
+            'FIELD_DELETE',
         ];
     }
 }

@@ -1,4 +1,5 @@
 let shelf = function () {
+    let animating = false;
     const confirmation = $('#deletePopup');
     const confirmationLayer = $('.popupBackground');
 
@@ -17,6 +18,19 @@ let shelf = function () {
                         $('#backButton').click();
                     })
                 }
+            });
+            $('#shelfTools .fa').on('click', function () {
+                if (animating) {
+                    return;
+                }
+
+                animating = true;
+                let newFieldInput = $('#shelfTools input');
+
+                $(this).toggleClass('active');
+                $(newFieldInput).fadeToggle(400, function () {
+                    animating = false;
+                });
             });
         }
     }

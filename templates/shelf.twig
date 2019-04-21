@@ -2,7 +2,13 @@
 
 {% block content %}
     <div id="shelfBackground"></div>
-    <div id="shelf" data-shelfId="{{ CURRENT_SHELF }}">{{ SHELF }}</div>
+    <div id="shelf" data-shelfId="{{ CURRENT_SHELF }}">
+        <div id="shelfTools">
+            <div class="fa fa-plus"></div>
+            <label for="newField"></label><input id="newField" placeholder="{{ FIELD_NEW }}">
+        </div>
+        <div id="shelfHeader">{{ CURRENT_SHELF_NAME }}</div>
+    </div>
 {% endblock %}
 
 {% block popups %}
