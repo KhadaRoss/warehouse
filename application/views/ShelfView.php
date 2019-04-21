@@ -2,6 +2,7 @@
 
 namespace views;
 
+use models\FieldModel;
 use models\ShelfModel;
 
 class ShelfView extends View
@@ -29,6 +30,7 @@ class ShelfView extends View
     {
         $this->output['CURRENT_SHELF'] = $this->args['active'];
         $this->output['CURRENT_SHELF_NAME'] = (new ShelfModel())->get($this->args['active'])->getName();
+        $this->output['FIELDS'] = (new FieldModel())->getTwigDataByShelfId($this->args['active']);
         $this->addStyles(['shelf']);
         $this->addScripts(['shelf']);
     }

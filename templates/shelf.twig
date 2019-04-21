@@ -8,6 +8,11 @@
             <label for="newField"></label><input id="newField" placeholder="{{ FIELD_NEW }}">
         </div>
         <div id="shelfHeader">{{ CURRENT_SHELF_NAME }}</div>
+        <div id="fieldsContainer">
+            {% for field in FIELDS %}
+                <div class="field" data-fieldId="{{ field.id }}">{{ field.name }}</div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
 

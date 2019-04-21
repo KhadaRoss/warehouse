@@ -29,6 +29,7 @@
 }
 
 #sidebar a, #sidebar .fa {
+    word-break: break-word;
     padding: 2px;
 }
 

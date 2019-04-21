@@ -1,5 +1,6 @@
 let shelf = function () {
     let animating = false;
+    const shelfInput = $('#shelfTools input');
     const confirmation = $('#deletePopup');
     const confirmationLayer = $('.popupBackground');
 
@@ -32,6 +33,22 @@ let shelf = function () {
                     animating = false;
                 });
             });
+            shelfInput.keyup(function (e) {
+                let name = shelfInput.val()
+                
+                if (e.keyCode !== 13 || !name) {
+                    return;
+                }
+
+                const parameters = {
+                    name: name,
+                    shelfId: $('#shelf').attr('data-shelfId')
+                };
+
+                request.request('newField', parameters, function () {
+                    location.reload();
+                })
+            })
         }
     }
 }();

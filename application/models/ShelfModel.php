@@ -68,6 +68,11 @@ class ShelfModel extends Model
      */
     public function delete(int $id): bool
     {
+        $this->prepareAndExecute(
+            'DELETE FROM fields WHERE shelfId = :shelfId',
+            ['shelfId' => $id]
+        );
+
         return (int)$this->prepareAndExecute(
             'DELETE FROM shelves WHERE id = :id',
             ['id' => $id]

@@ -2,7 +2,7 @@
     background-color: white;
     color: black;
     text-decoration: none;
-    position: absolute;
+    position: fixed;
     top: 20px;
     width: 16px;
     padding: 5px;
@@ -67,12 +67,29 @@
     display: none;
 }
 
-#shelfHeader {
-    position: relative;
-    top:2px;
+#shelfHeader, .field {
+    font-family: 'Poiret One', cursive;
     text-align: center;
     padding: 5px;
     background-color: #404040;
+}
+
+#shelfHeader {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.field:not(:last-child) {
+    border-bottom: 1px solid white;
+}
+
+.field:hover {
+    cursor: pointer;
+    background-color: #1d1d1d;
+}
+
+#shelf > *, #fieldsContainer > * {
+    word-break: break-word;
 }
 
 /* desktop */

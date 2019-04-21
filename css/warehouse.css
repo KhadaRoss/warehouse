@@ -8,7 +8,7 @@ body {
 
 #background {
     top: 0;
-    position: absolute;
+    position: fixed;
     width: calc(100vw - 221px);
     height: 100vh;
     right: 0;

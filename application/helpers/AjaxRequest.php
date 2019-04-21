@@ -2,6 +2,7 @@
 
 namespace helpers;
 
+use models\FieldModel;
 use models\ShelfModel;
 
 class AjaxRequest
@@ -56,5 +57,15 @@ class AjaxRequest
     private function deleteShelf(array $args): bool
     {
         return (new ShelfModel())->delete((int)$args['id']);
+    }
+
+    /**
+     * @param array $args
+     *
+     * @return int
+     */
+    private function newField(array $args): int
+    {
+        return (new FieldModel())->add($args['name'], (int)$args['shelfId']);
     }
 }
