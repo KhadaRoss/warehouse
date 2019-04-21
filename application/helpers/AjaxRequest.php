@@ -2,6 +2,8 @@
 
 namespace helpers;
 
+use models\ShelfModel;
+
 class AjaxRequest
 {
     /** @var string */
@@ -31,9 +33,7 @@ class AjaxRequest
      */
     private function newShelf(array $args): int
     {
-        echo $args['name']; exit;
-
-        return 1;
+        return (new ShelfModel())->add($args['name']);
     }
 
     private function searchShelf(array $args): array

@@ -45,4 +45,19 @@ class ShelfModel extends Model
 
         return $entity;
     }
+
+    /**
+     * @param string $name
+     *
+     * @return int
+     */
+    public function add(string $name): int
+    {
+        $this->prepareAndExecute(
+            'INSERT INTO shelves (name) VALUES (:name)',
+            ['name' => $name]
+        );
+
+        return (int)$this->prepareAndExecute('SELECT MAX(id) AS id FROM shelves')->fetch()['id'];
+    }
 }

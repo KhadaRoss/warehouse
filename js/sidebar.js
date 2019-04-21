@@ -21,10 +21,33 @@ let sidebar = function () {
                 }
 
                 request.request(mode + 'Shelf', {name: name}, function (data) {
-                    console.log(data);
+                    switch (mode) {
+                        case 'new':
+                            sidebar.onNewShelf(data, name);
+                            break;
+                        default:
+                            break;
+                    }
                 });
             });
         },
+
+        /**
+         * @param {number} id
+         * @param {string} name
+         */
+        onNewShelf: function (id, name) {
+            const entry = $(
+                '<div class="entry">' +
+                '    <a id="shelf_'+ id +'" href="' + env.getWebPath() + 'shelf/show/' + id + '" class="">' + name + '</a>\n' +
+                '</div>'
+            );
+
+            entry.appendTo($('#menuEntries'));
+            this.hideInput(function () {
+            });
+        },
+
         /**
          * @param {string} mode
          */
@@ -54,6 +77,7 @@ let sidebar = function () {
 
             animating = true;
             input.attr('data-mode', '');
+            input.val('');
             input.fadeOut(400, function () {
                 animating = false;
                 $('#menuTools div').removeClass('active');
