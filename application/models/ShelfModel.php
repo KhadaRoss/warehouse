@@ -60,4 +60,17 @@ class ShelfModel extends Model
 
         return (int)$this->prepareAndExecute('SELECT MAX(id) AS id FROM shelves')->fetch()['id'];
     }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function delete(int $id): bool
+    {
+        return (int)$this->prepareAndExecute(
+            'DELETE FROM shelves WHERE id = :id',
+            ['id' => $id]
+        )->rowCount() > 0;
+    }
 }

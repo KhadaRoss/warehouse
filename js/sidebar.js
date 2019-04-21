@@ -101,6 +101,7 @@ let sidebar = function () {
                 input.attr('data-mode', mode);
                 input.attr('placeholder', tool.attr('title'));
                 input.fadeIn();
+                input.focus();
             });
         }
     }

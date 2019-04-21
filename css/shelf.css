@@ -1,17 +1,47 @@
-#topRightButton {
+.topRightButton {
+    background-color: white;
     color: black;
     text-decoration: none;
     position: absolute;
     top: 20px;
-    right: 20px;
+    width: 16px;
     padding: 5px;
     border: 1px solid black;
     cursor: pointer;
 }
 
-#topRightButton:hover {
+.topRightButton:hover {
     color: white;
     background-color: #404040;
+}
+
+#deleteButton {
+    right: 55px;
+}
+
+#backButton {
+    right: 20px;
+}
+
+#shelfBackground {
+    position: absolute;
+    width: 500px;
+    min-height: calc(100vh - 120px);
+    padding: 30px;
+    background-color: black;
+    opacity: 0.7;
+    top: 30px;
+    left: calc(((100vw - 221px) / 2 ) - 280px + 221px);
+}
+
+#shelf {
+    padding: 30px;
+    color: white;
+    position: absolute;
+    width: 500px;
+    min-height: calc(100vh - 120px);
+    top: 30px;
+    left: calc(((100vw - 221px) / 2 ) - 280px + 221px);
 }
 
 /* desktop */

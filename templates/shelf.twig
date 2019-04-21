@@ -1,9 +1,24 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-    {{ SHELF }}
+    <div id="shelfBackground"></div>
+    <div id="shelf" data-shelfId="{{ CURRENT_SHELF }}">{{ SHELF }}</div>
+{% endblock %}
+
+{% block popups %}
+    <div class="popupBackground hidden"></div>
+    <div id="deletePopup" class="popup hidden">
+        <div class="headline">{{ DELETE_HEADLINE }}</div>
+        <div class="text">{{ DELETE_MESSAGE_1 }}</div>
+        <div class="text">{{ DELETE_MESSAGE_2 }}</div>
+        <div class="confirmation">
+            <button class="yes">{{ DELETE_YES }}</button>
+            <button class="no">{{ DELETE_NO }}</button>
+        </div>
+    </div>
 {% endblock %}
 
 {% block topRightButton %}
-    <a href="{{ URL }}/warehouse"><div id="topRightButton" class="fa fa-arrow-left"></div></a>
+    <div id="deleteButton" class="topRightButton fa fa-trash"></div>
+    <a href="{{ URL }}/warehouse"><div id="backButton" class="topRightButton fa fa-arrow-left"></div></a>
 {% endblock %}

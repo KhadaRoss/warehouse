@@ -6,6 +6,68 @@ body {
     display: none;
 }
 
+#background {
+    top: 0;
+    position: absolute;
+    width: calc(100vw - 221px);
+    height: 100vh;
+    right: 0;
+    background-image: url("../img/bridge.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    z-index: -5;
+}
+
+.popupBackground {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.7;
+    z-index: 20;
+}
+
+.popup {
+    background-color: #404040;
+    font-family: 'Poiret One', cursive;
+    top: calc(50vh - 110px);
+    position: absolute;
+    color: white;
+    width: 300px;
+    z-index: 21;
+    height: 220px;
+    border: 2px solid white;
+    left: calc(((100vw - 221px) / 2 ) - 150px + 221px);
+    text-align: center;
+}
+
+.popup .headline {
+    font-size: 25px;
+    margin: 20px 0;
+}
+
+.popup .text {
+    margin: 0 10px 10px 10px;
+}
+
+.popup .confirmation {
+    margin-top: 20px;
+}
+
+.popup button {
+    font-weight: bold;
+    padding: 7px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.popup button:hover {
+    background-color: #1d1d1d;
+    color: white;
+}
+
 /* desktop */
 @media (min-width: 1200px) {
 }

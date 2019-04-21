@@ -25,6 +25,8 @@ class ShelfView extends View
      */
     protected function setTwigVariables(): void
     {
+        $this->output['CURRENT_SHELF'] = $this->args['active'];
         $this->addStyles(['shelf']);
+        $this->addScripts(['shelf']);
     }
 }
