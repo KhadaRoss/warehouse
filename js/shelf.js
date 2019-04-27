@@ -5,6 +5,9 @@ let shelf = function () {
     const confirmationLayer = $('.popupBackground');
 
     return {
+        /**
+         * @return void
+         */
         init: function () {
             $('#deleteButton').on('click', function () {
                 confirmation.removeClass('hidden');
@@ -34,7 +37,7 @@ let shelf = function () {
                 });
             });
             shelfInput.keyup(function (e) {
-                let name = shelfInput.val()
+                let name = shelfInput.val();
                 
                 if (e.keyCode !== 13 || !name) {
                     return;
@@ -48,6 +51,51 @@ let shelf = function () {
                 request.request('newField', parameters, function () {
                     location.reload();
                 })
+            });
+            $('.field').on('click', function () {
+                let field = $(this);
+
+                field.siblings().each(function () {
+                    shelf.closeFieldContent($(this).find('.fieldContent'));
+                });
+
+                if (!field.hasClass('hasContent')) {
+                    shelf.appendFieldContent(field);
+                }
+
+                let content = field.find('.fieldContent');
+
+                if (content.hasClass('extended')) {
+                    shelf.closeFieldContent(content);
+                    return;
+                }
+
+                shelf.openFieldContent(content);
+            });
+        },
+        /**
+         * @param {object} field
+         */
+        appendFieldContent: function (field) {
+            const content = $('<div class="fieldContent hidden">content</div>');
+            content.appendTo(field);
+            field.addClass('hasContent');
+            this.openFieldContent(content);
+        },
+        /**
+         * @param {object} content
+         */
+        openFieldContent: function (content) {
+            content.slideDown(400, function () {
+                content.addClass('extended');
+            });
+        },
+        /**
+         * @param {object} content
+         */
+        closeFieldContent: function (content) {
+            content.slideUp(400, function () {
+                content.removeClass('extended');
             })
         }
     }
