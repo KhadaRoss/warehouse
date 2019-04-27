@@ -32,9 +32,12 @@ class ShelfController extends Controller
     {
         return [
             'SHELF',
-            'DELETE_HEADLINE',
-            'DELETE_MESSAGE_1',
-            'DELETE_MESSAGE_2',
+            'DELETE_SHELF_HEADLINE',
+            'DELETE_SHELF_MESSAGE_1',
+            'DELETE_SHELF_MESSAGE_2',
+            'DELETE_FIELD_HEADLINE',
+            'DELETE_FIELD_MESSAGE_1',
+            'DELETE_FIELD_MESSAGE_2',
             'DELETE_YES',
             'DELETE_NO',
             'FIELD_NEW',

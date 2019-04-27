@@ -1,7 +1,6 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-    <div id="shelfBackground"></div>
     <div id="shelf" data-shelfId="{{ CURRENT_SHELF }}">
         <div id="shelfTools">
             <div class="fa fa-plus"></div>
@@ -10,7 +9,9 @@
         <div id="shelfHeader">{{ CURRENT_SHELF_NAME }}</div>
         <div id="fieldsContainer">
             {% for field in FIELDS %}
-                <div class="field" data-fieldId="{{ field.id }}">{{ field.name }}</div>
+                <div class="field" data-fieldId="{{ field.id }}">
+                    <div class="fieldHeadline">{{ field.name }}</div>
+                </div>
             {% endfor %}
         </div>
     </div>
@@ -18,10 +19,19 @@
 
 {% block popups %}
     <div class="popupBackground hidden"></div>
-    <div id="deletePopup" class="popup hidden">
-        <div class="headline">{{ DELETE_HEADLINE }}</div>
-        <div class="text">{{ DELETE_MESSAGE_1 }}</div>
-        <div class="text">{{ DELETE_MESSAGE_2 }}</div>
+    <div id="deleteShelf" class="popup hidden">
+        <div class="headline">{{ DELETE_SHELF_HEADLINE }}</div>
+        <div class="text">{{ DELETE_SHELF_MESSAGE_1 }}</div>
+        <div class="text">{{ DELETE_SHELF_MESSAGE_2 }}</div>
+        <div class="confirmation">
+            <button class="yes">{{ DELETE_YES }}</button>
+            <button class="no">{{ DELETE_NO }}</button>
+        </div>
+    </div>
+    <div id="deleteField" class="popup hidden">
+        <div class="headline">{{ DELETE_FIELD_HEADLINE }}</div>
+        <div class="text">{{ DELETE_FIELD_MESSAGE_1 }}</div>
+        <div class="text">{{ DELETE_FIELD_MESSAGE_2 }}</div>
         <div class="confirmation">
             <button class="yes">{{ DELETE_YES }}</button>
             <button class="no">{{ DELETE_NO }}</button>
@@ -30,6 +40,6 @@
 {% endblock %}
 
 {% block topRightButton %}
-    <div id="deleteButton" class="topRightButton fa fa-trash"></div>
+    <div id="deleteShelfButton" data-method="deleteShelf" class="deleteButton topRightButton fa fa-trash"></div>
     <a href="{{ URL }}/warehouse"><div id="backButton" class="topRightButton fa fa-arrow-left"></div></a>
 {% endblock %}

@@ -20,7 +20,7 @@ body {
 }
 
 .popupBackground {
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 100vh;
     background-color: black;
@@ -32,7 +32,7 @@ body {
     background-color: #404040;
     font-family: 'Poiret One', cursive;
     top: calc(50vh - 110px);
-    position: absolute;
+    position: fixed;
     color: white;
     width: 300px;
     z-index: 21;

@@ -15,7 +15,7 @@
     background-color: #404040;
 }
 
-#deleteButton {
+#deleteShelfButton {
     right: 55px;
 }
 
@@ -23,18 +23,8 @@
     right: 20px;
 }
 
-#shelfBackground {
-    position: absolute;
-    width: 500px;
-    min-height: calc(100vh - 158px);
-    padding: 30px;
-    background-color: black;
-    opacity: 0.9;
-    top: 68px;
-    left: calc(((100vw - 221px) / 2 ) - 280px + 221px);
-}
-
 #shelf {
+    background-color: rgba(0, 0, 0, 0.9);
     padding: 30px;
     color: white;
     position: absolute;
@@ -83,13 +73,34 @@
     border-bottom: 1px solid white;
 }
 
-.field:hover {
+.fieldHeadline:hover {
     cursor: pointer;
     background-color: #1d1d1d;
 }
 
 #shelf > *, #fieldsContainer > * {
     word-break: break-word;
+}
+
+.fieldContent {
+    height: 500px;
+    width: 300px;
+    background-color: lightgray;
+    margin: 10px auto;
+}
+
+.fieldTools {
+    text-align: left;
+}
+
+.fieldTool {
+    padding: 4px;
+    cursor: pointer;
+}
+
+.fieldTool:hover {
+    color: black;
+    background-color: white;
 }
 
 /* desktop */

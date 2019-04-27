@@ -1,26 +1,47 @@
 let shelf = function () {
     let animating = false;
     const shelfInput = $('#shelfTools input');
-    const confirmation = $('#deletePopup');
-    const confirmationLayer = $('.popupBackground');
+    const popupBackground = $('.popupBackground');
 
     return {
         /**
          * @return void
          */
         init: function () {
-            $('#deleteButton').on('click', function () {
-                confirmation.removeClass('hidden');
-                confirmationLayer.removeClass('hidden');
+            this.initDeleteButton($('.deleteButton'));
+
+            $(document).keyup(function (e) {
+                const activePopup = $('.popup:not(.hidden)');
+
+                if (activePopup.length < 1) {
+                    return;
+                }
+
+                if (e.keyCode === 27) {
+                    activePopup.find('.confirmation .no').click();
+                }
+
+                if (e.keyCode === 13) {
+                    activePopup.find('.confirmation .yes').click();
+                }
             });
             $('.popup .no, .popup .yes').on('click', function () {
-                confirmation.addClass('hidden');
-                confirmationLayer.addClass('hidden');
+                const method = $(this).parents('.popup').attr('id');
 
-                if ($(this).hasClass('yes')) {
-                    request.request('deleteShelf', {id: $('#shelf').attr('data-shelfId')}, function () {
-                        $('#backButton').click();
-                    })
+                shelf.togglePopup(method);
+
+                if ($(this).hasClass('no')) {
+                    return;
+                }
+
+                switch (method) {
+                    case 'deleteShelf':
+                        request.request(method, {id: $('#shelf').attr('data-shelfId')}, function () {
+                            $('#backButton').click();
+                        });
+                        break;
+                    case 'deleteField':
+                        break;
                 }
             });
             $('#shelfTools .fa').on('click', function () {
@@ -39,34 +60,23 @@ let shelf = function () {
             shelfInput.keyup(function (e) {
                 let name = shelfInput.val();
                 
-                if (e.keyCode !== 13 || !name) {
-                    return;
+                if (e.keyCode === 13 && name.length > 0) {
+                    shelf.addField(name, $('#shelf').attr('data-shelfId'));
                 }
-
-                const parameters = {
-                    name: name,
-                    shelfId: $('#shelf').attr('data-shelfId')
-                };
-
-                request.request('newField', parameters, function () {
-                    location.reload();
-                })
             });
-            $('.field').on('click', function () {
-                let field = $(this);
-
-                field.siblings().each(function () {
-                    shelf.closeFieldContent($(this).find('.fieldContent'));
-                });
+            $('.fieldHeadline').on('click', function () {
+                let field = $(this).parent();
 
                 if (!field.hasClass('hasContent')) {
                     shelf.appendFieldContent(field);
+                    shelf.appendFieldTools(field);
                 }
 
-                let content = field.find('.fieldContent');
+                let content = field.find('.fieldSlider');
 
                 if (content.hasClass('extended')) {
-                    shelf.closeFieldContent(content);
+                    shelf.closeFieldContent(content, function () {
+                    });
                     return;
                 }
 
@@ -74,28 +84,92 @@ let shelf = function () {
             });
         },
         /**
+         * @param {object} button
+         */
+        initDeleteButton: function (button) {
+            button.on('click', function () {
+                shelf.togglePopup($(this).attr('data-method'));
+            });
+        },
+        /**
+         * @param {string} name
+         * @param {number} id
+         */
+        addField: function (name, id) {
+            request.request('newField', {name: name, shelfId: id}, function () {
+                location.reload();
+            });
+        },
+        /**
+         * @param {string} id
+         */
+        togglePopup: function (id) {
+            let popup = $('#' + id);
+
+            popup.toggleClass('hidden');
+            popupBackground.toggleClass('hidden');
+        },
+        /**
          * @param {object} field
          */
         appendFieldContent: function (field) {
-            const content = $('<div class="fieldContent hidden">content</div>');
+            const content = $('<div class="fieldSlider hidden"><div class="fieldContent"></div></div>');
             content.appendTo(field);
             field.addClass('hasContent');
             this.openFieldContent(content);
         },
         /**
-         * @param {object} content
+         * @param {object} field
          */
-        openFieldContent: function (content) {
-            content.slideDown(400, function () {
-                content.addClass('extended');
-            });
+        appendFieldTools: function (field) {
+            let tools = $('<div class="fieldTools"></div>');
+            let deleteField = $('<div class="fieldTool deleteButton fa fa-trash" data-method="deleteField"></div>');
+
+            deleteField.appendTo(tools);
+            tools.prependTo(field.find('.fieldSlider'));
+            this.initDeleteButton(deleteField);
         },
         /**
          * @param {object} content
          */
-        closeFieldContent: function (content) {
+        openFieldContent: function (content) {
+            if (animating) {
+                return;
+            }
+
+            const openFields = $('.fieldSlider.extended');
+
+            function open(content) {
+                animating = true;
+                content.slideDown(400, function () {
+                    animating = false;
+                    content.addClass('extended');
+                });
+            }
+
+            if (openFields.length === 0) {
+                open(content);
+                return;
+            }
+
+            shelf.closeFieldContent(openFields, function () {
+                open(content);
+            });
+        },
+        /**
+         * @param {object}   content
+         * @param {function} callback
+         */
+        closeFieldContent: function (content, callback) {
+            if (animating) {
+                return;
+            }
+
+            animating = true;
             content.slideUp(400, function () {
+                animating = false;
                 content.removeClass('extended');
+                callback();
             })
         }
     }
