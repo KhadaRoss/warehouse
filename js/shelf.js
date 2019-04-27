@@ -56,8 +56,16 @@ let shelf = function () {
                 animating = true;
                 let newFieldInput = $('#shelfTools input');
 
-                $(this).toggleClass('active');
+                const addButton = $(this);
+                addButton.toggleClass('active');
+                if (addButton.hasClass('active')) {
+                    newFieldInput.val('');
+                }
+
                 $(newFieldInput).fadeToggle(400, function () {
+                    if (addButton.hasClass('active')) {
+                        newFieldInput.focus();
+                    }
                     animating = false;
                 });
             });
