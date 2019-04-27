@@ -68,4 +68,14 @@ class AjaxRequest
     {
         return (new FieldModel())->add($args['name'], (int)$args['shelfId']);
     }
+
+    /**
+     * @param array $args
+     *
+     * @return bool
+     */
+    private function deleteField(array $args): bool
+    {
+        return (new FieldModel())->delete((int)$args['id']);
+    }
 }

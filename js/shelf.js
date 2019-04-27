@@ -41,6 +41,10 @@ let shelf = function () {
                         });
                         break;
                     case 'deleteField':
+                        let id = $('.fieldSlider.extended').parents('.field').attr('data-fieldId');
+                        request.request(method, {id: id}, function () {
+                            location.reload();
+                        });
                         break;
                 }
             });

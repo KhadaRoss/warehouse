@@ -53,4 +53,17 @@ class FieldModel extends Model
 
         return $data;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function delete(int $id): bool
+    {
+        return (int)$this->prepareAndExecute(
+            'DELETE FROM fields WHERE id = :id',
+            ['id' => $id]
+        )->rowCount() > 0;
+    }
 }
