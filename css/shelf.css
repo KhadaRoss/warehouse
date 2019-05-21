@@ -103,6 +103,21 @@
     background-color: white;
 }
 
+#addProduct {
+    padding: 10px 0;
+    font-weight: bold;
+    color: black;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}
+
+#addProduct:hover {
+    color: white;
+    background-color: #1d1d1d;
+    width: 100%;
+    cursor: pointer;
+}
+
 /* desktop */
 @media (min-width: 1200px) {
 }

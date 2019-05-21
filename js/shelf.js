@@ -128,7 +128,9 @@ let shelf = function () {
             const content = $('' +
                 '<div class="fieldSlider hidden">' +
                     '<div class="fieldContent">' +
-                        '<div id="addProduct">' + strings['NEW_PRODUCT'] + '</div>' +
+                        '<div id="addProduct">' +
+                            '<span>' + strings['NEW_PRODUCT'] + '</span>' +
+                        '</div>' +
                     '</div>' +
                 '</div>'
             );
