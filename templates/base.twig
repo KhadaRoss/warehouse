@@ -18,5 +18,10 @@
     {% block popups %}{% endblock %}
     <script src="{{ URL }}lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
     {{ ADD_SCRIPTS|raw }}
+    <script>
+        $(document).ready(function () {
+            warehouse.initStrings('{{ JS_STRINGS|raw }}');
+        })
+    </script>
 </body>
 </html>

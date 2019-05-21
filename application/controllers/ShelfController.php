@@ -42,6 +42,7 @@ class ShelfController extends Controller
             'DELETE_NO',
             'FIELD_NEW',
             'FIELD_DELETE',
+            'NEW_PRODUCT',
         ];
     }
 }

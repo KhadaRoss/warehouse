@@ -125,7 +125,13 @@ let shelf = function () {
          * @param {object} field
          */
         appendFieldContent: function (field) {
-            const content = $('<div class="fieldSlider hidden"><div class="fieldContent"></div></div>');
+            const content = $('' +
+                '<div class="fieldSlider hidden">' +
+                    '<div class="fieldContent">' +
+                        '<div id="addProduct">' + strings['NEW_PRODUCT'] + '</div>' +
+                    '</div>' +
+                '</div>'
+            );
             content.appendTo(field);
             field.addClass('hasContent');
             this.openFieldContent(content);

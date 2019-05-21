@@ -1,3 +1,5 @@
+let strings;
+
 let env = function () {
 
     return {
@@ -23,6 +25,18 @@ let request = function () {
         }
     }
 }();
+
+let warehouse = function() {
+
+    return {
+        /**
+         * @param jsStrings
+         */
+        initStrings: function (jsStrings) {
+            strings = JSON.parse(jsStrings);
+        }
+    }
+} ();
 
 $(document).ready(function () {
 });

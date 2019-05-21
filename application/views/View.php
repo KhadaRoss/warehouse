@@ -22,6 +22,8 @@ abstract class View
     /** @var array */
     protected $strings = [];
     /** @var array */
+    protected $jsStrings = [];
+    /** @var array */
     protected $output = [];
     /** @var array */
     private $styles = [];
@@ -107,6 +109,7 @@ abstract class View
 
         $this->output['ADD_STYLES'] = (new CssHelper())->getStyles($this->styles);
         $this->output['ADD_SCRIPTS'] = (new JsHelper())->getScripts($this->scripts);
+        $this->output['JS_STRINGS'] = \json_encode($this->getJsStrings());
 
         try {
             return $this->twig->render($this->template, $this->output);
@@ -133,5 +136,23 @@ abstract class View
     protected function addScripts(array $scripts): void
     {
         $this->scripts = \array_merge($this->scripts, $scripts);
+    }
+
+    /**
+     * @param array $strings
+     */
+    protected function addJsStrings(array $strings): void
+    {
+        $this->jsStrings = \array_merge($this->jsStrings, $strings);
+    }
+
+    /**
+     * @return array
+     */
+    private function getJsStrings(): array
+    {
+        $strings = [];
+
+        return \array_merge($this->jsStrings, $strings);
     }
 }

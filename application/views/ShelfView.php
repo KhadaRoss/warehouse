@@ -33,5 +33,8 @@ class ShelfView extends View
         $this->output['FIELDS'] = (new FieldModel())->getTwigDataByShelfId($this->args['active']);
         $this->addStyles(['shelf']);
         $this->addScripts(['shelf']);
+        $this->addJsStrings([
+            'NEW_PRODUCT' => $this->strings['NEW_PRODUCT'],
+        ]);
     }
 }
