@@ -56,6 +56,17 @@ body {
     font-size: 30px;
 }
 
+#credits {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    color: white;
+}
+
+#credits .fa {
+    margin: 10px;
+}
+
 /* desktop */
 @media (min-width: 1200px) {
 }

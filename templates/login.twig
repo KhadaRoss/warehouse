@@ -5,9 +5,14 @@
     <div id="login">
         <div id="loginHeader">{{ LOGIN }}</div>
         <form action="{{ URL }}login/authenticate" autocomplete="off" method="post">
-            <input name="username" placeholder="{{ USERNAME }}"><br>
-            <input name="password" type="password" placeholder="{{ PASSWORD }}"><br>
+            <label>
+                <input name="username" placeholder="{{ USERNAME }}">
+            </label><br>
+            <label>
+                <input name="password" type="password" placeholder="{{ PASSWORD }}">
+            </label><br>
             <button type="submit" class="hidden"></button>
         </form>
     </div>
+    <div id="credits"><span class="fa fa-envelope"></span><span>Khada.Webdev@gmail.com</span></div>
 {% endblock %}
