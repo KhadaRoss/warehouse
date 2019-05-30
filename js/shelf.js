@@ -129,7 +129,10 @@ let shelf = function () {
         togglePopup: function (id) {
             let popup = $('#' + id);
 
-            popup.find('input').val('');
+            if (popup.hasClass('hidden')) {
+                popup.find('input, textarea').val('');
+            }
+
             popup.toggleClass('hidden');
             popupBackground.toggleClass('hidden');
         },

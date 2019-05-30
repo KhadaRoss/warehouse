@@ -3,6 +3,7 @@
 namespace helpers;
 
 use models\FieldModel;
+use models\ProductModel;
 use models\ShelfModel;
 
 class AjaxRequest
@@ -86,6 +87,6 @@ class AjaxRequest
      */
     private function productFieldAdd(array $args): int
     {
-        return 1;
+        return (new ProductModel())->add($args);
     }
 }
