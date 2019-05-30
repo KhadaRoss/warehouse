@@ -30,7 +30,7 @@ let shelf = function () {
                 const method = $(this).parents('.popup').attr('id');
 
                 if ($(this).hasClass('no')) {
-                    shelf.togglePopup(method);
+                    shelf.togglePopup(method, true);
                     return;
                 }
 
@@ -49,6 +49,7 @@ let shelf = function () {
                         });
                         break;
                     case 'productFieldAdd':
+                    case 'productFieldUpdate':
                         $(this).parents('.popup').find('input, textarea').each(function () {
                             let currentField = $(this);
                             currentField.removeClass('empty');
@@ -58,13 +59,21 @@ let shelf = function () {
                             }
                         });
 
+                        if (!closePopup) {
+                            break;
+                        }
+
                         let data = {
                             fieldId: extendedFieldId,
-                            name: $('#productName').val(),
-                            quantity: $('#productQuantity').val(),
-                            date: $('#productDate').val(),
-                            comment: $('#productComment').val()
+                            name: (method === 'productFieldAdd' ? $('#productName').val() : $('#productNameUpdate').val()),
+                            quantity: (method === 'productFieldAdd' ? $('#productQuantity').val() : $('#productQuantityUpdate').val()),
+                            date: (method === 'productFieldAdd' ? $('#productDate').val() : $('#productDateUpdate').val()),
+                            comment: (method === 'productFieldAdd' ? $('#productComment').val() : $('#productCommentUpdate').val())
                         };
+
+                        if (method === 'productFieldUpdate') {
+                            data.id = $(this).parents('.popup').find('.headline').attr('data-productId');
+                        }
 
                         request.request(method, data, function (productId) {
                             shelf.loadProducts(
@@ -76,7 +85,7 @@ let shelf = function () {
                 }
 
                 if (closePopup) {
-                    shelf.togglePopup(method);
+                    shelf.togglePopup(method,  true);
                 }
             });
             $('#shelfTools .fa').on('click', function () {
@@ -132,7 +141,7 @@ let shelf = function () {
          */
         initPopupButton: function (button) {
             button.on('click', function () {
-                shelf.togglePopup($(this).attr('data-method'));
+                shelf.togglePopup($(this).attr('data-method'), true);
             });
         },
         /**
@@ -146,11 +155,12 @@ let shelf = function () {
         },
         /**
          * @param {string} id
+         * @param {boolean} clearInputs
          */
-        togglePopup: function (id) {
+        togglePopup: function (id, clearInputs) {
             let popup = $('#' + id);
 
-            if (popup.hasClass('hidden')) {
+            if (popup.hasClass('hidden') && clearInputs) {
                 popup.find('input, textarea').val('').removeClass('empty');
             }
 
@@ -183,9 +193,10 @@ let shelf = function () {
             request.request('getProductsByFieldId', {id: extendedFieldId}, function (products) {
                 content.find('.product').remove();
                 $(JSON.parse(products)).each(function () {
-                    $('<div class="product" data-productid="' + this.id + '">' + this.name + ' (' + this.quantity + ')</div>').appendTo(content);
+                    $('<div class="product" data-productid="' + this.id + '">' + this.name + ' (' + this.quantity + ')<div class="fa fa-trash deleteProduct"></div></div>').appendTo(content);
                 });
 
+                shelf.initProductEventHandlers();
                 shelf.openFieldContent(content.parents('.fieldSlider'), scrollToProductId)
             });
         },
@@ -270,8 +281,38 @@ let shelf = function () {
                 content.removeClass('extended');
                 callback();
             })
+        },
+        /**
+         * @return void
+         */
+        initProductEventHandlers: function () {
+            $('.product:not(.popup)').on('click', function (e) {
+                if ($(e.target).hasClass('deleteProduct')) {
+                    request.request('deleteProduct', {id: $(this).attr('data-productId'), fieldId: extendedFieldId}, function (product) {
+                        shelf.loadProducts($('.field[data-fieldId="' + extendedFieldId + '"]').find('.fieldContent'), undefined);
+                    });
+                } else {
+                    request.request('getProductInformation', {id: $(this).attr('data-productId')}, function (product) {
+                        shelf.fillProductPopup(JSON.parse(product));
+                    });
+                }
+            });
+        },
+        /**
+         * @param {object} product
+         */
+        fillProductPopup: function (product) {
+            let popup = $('#productFieldUpdate');
+
+            popup.find('.headline').attr('data-productid', product.id);
+            popup.find('#productNameUpdate').val(product.name);
+            popup.find('#productQuantityUpdate').val(product.quantity);
+            popup.find('#productDateUpdate').val(product.date);
+            popup.find('#productCommentUpdate').val(product.comment);
+
+            this.togglePopup('productFieldUpdate', false);
         }
-    }
+    };
 }();
 
 $(document).ready(function () {

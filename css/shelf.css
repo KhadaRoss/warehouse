@@ -139,6 +139,13 @@ input.empty, textarea.empty {
     font-weight: bold;
 }
 
+.product:not(.popup) .fa {
+    color: lightgray;
+    float: right;
+    font-size: 12px;
+    margin: 3px;
+}
+
 .product.highlight {
     animation: highlight 2s;
 }

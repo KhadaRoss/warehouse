@@ -53,4 +53,51 @@ SQL;
 
         return $data;
     }
+
+    /**
+     * @param int $productId
+     *
+     * @return array
+     */
+    public function getByProductId(int $productId): array
+    {
+        $product = $this->prepareAndExecute(
+            'SELECT id, fieldId, name, quantity, date, comment FROM products WHERE id = :id LIMIT 1',
+            ['id' => $productId]
+        )->fetch();
+
+        return [
+            'id'       => $product['id'],
+            'fieldId'  => $product['fieldId'],
+            'name'     => $product['name'],
+            'quantity' => $product['quantity'],
+            'date'     => $product['date'],
+            'comment'  => $product['comment'],
+        ];
+    }
+
+    /**
+     * @param array $args
+     */
+    public function update(array $args): void
+    {
+        $this->prepareAndExecute(
+            'UPDATE products SET name = :name, quantity = :quantity, date = :date, comment = :comment WHERE id = :id',
+            [
+                'id'       => $args['id'],
+                'name'     => $args['name'],
+                'quantity' => $args['quantity'],
+                'date'     => $args['date'],
+                'comment'  => $args['comment'],
+            ]
+        );
+    }
+
+    /**
+     * @param int $productId
+     */
+    public function delete(int $productId): void
+    {
+        $this->prepareAndExecute('DELETE FROM products WHERE id = :id', ['id' => $productId]);
+    }
 }

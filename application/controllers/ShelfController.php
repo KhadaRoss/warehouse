@@ -50,6 +50,8 @@ class ShelfController extends Controller
             'PRODUCT_COMMENT',
             'PRODUCT_YES',
             'PRODUCT_NO',
+            'PRODUCT_INFORMATION',
+            'PRODUCT_UPDATE_YES',
         ];
     }
 }

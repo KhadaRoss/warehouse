@@ -68,7 +68,7 @@ body {
     position: absolute;
     bottom: 50px;
     display: inline-table;
-    left: calc(50% - 81px);
+    left: calc(50% - 98px);
 }
 
 .popup.product .confirmation button {
