@@ -68,6 +68,21 @@ class ShelfModel extends Model
      */
     public function delete(int $id): bool
     {
+        $fields = $this->prepareAndExecute(
+            'SELECT id FROM fields WHERE shelfId = :shelfId',
+            ['shelfId' => $id]
+        )->fetchAll();
+
+        $fieldsToDelete = [];
+        foreach ($fields as $field) {
+            $fieldsToDelete[] = (int)$field['id'];
+        }
+
+        if (!empty($fieldsToDelete)) {
+            $in = \implode(',', $fieldsToDelete);
+            $this->prepareAndExecute("DELETE FROM products WHERE fieldId IN({$in})");
+        }
+
         $this->prepareAndExecute(
             'DELETE FROM fields WHERE shelfId = :shelfId',
             ['shelfId' => $id]

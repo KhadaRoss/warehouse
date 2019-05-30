@@ -61,6 +61,8 @@ class FieldModel extends Model
      */
     public function delete(int $id): bool
     {
+        $this->prepareAndExecute('DELETE FROM products WHERE fieldId = :fieldId', ['fieldId' => $id]);
+
         return (int)$this->prepareAndExecute(
             'DELETE FROM fields WHERE id = :id',
             ['id' => $id]
