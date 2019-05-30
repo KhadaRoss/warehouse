@@ -41,18 +41,6 @@ class AjaxRequest
     /**
      * @param array $args
      *
-     * @return array
-     */
-    private function searchShelf(array $args): array
-    {
-        echo $args['name']; exit;
-
-        return [];
-    }
-
-    /**
-     * @param array $args
-     *
      * @return bool
      */
     private function deleteShelf(array $args): bool

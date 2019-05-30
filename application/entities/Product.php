@@ -5,7 +5,11 @@ namespace entities;
 class Product
 {
     /** @var int */
-    private $id;
+    private $productId;
+    /** @var int */
+    private $fieldId;
+    /** @var int */
+    private $shelfId;
     /** @var string */
     private $name;
     /** @var string */
@@ -18,19 +22,59 @@ class Product
     /**
      * @return int
      */
-    public function getId(): int
+    public function getProductId(): int
     {
-        return (int)$this->id;
+        return (int)$this->productId;
     }
 
     /**
-     * @param int $id
+     * @param int $productId
      *
      * @return Product
      */
-    public function setId(int $id): Product
+    public function setProductId(int $productId): Product
     {
-        $this->id = $id;
+        $this->productId = $productId;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFieldId(): int
+    {
+        return (int)$this->fieldId;
+    }
+
+    /**
+     * @param int $fieldId
+     *
+     * @return Product
+     */
+    public function setFieldId(int $fieldId): Product
+    {
+        $this->fieldId = $fieldId;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getShelfId(): int
+    {
+        return (int)$this->shelfId;
+    }
+
+    /**
+     * @param int $shelfId
+     *
+     * @return Product
+     */
+    public function setShelfId(int $shelfId): Product
+    {
+        $this->shelfId = $shelfId;
 
         return $this;
     }
@@ -60,7 +104,7 @@ class Product
      */
     public function getQuantity(): string
     {
-        return (string)$this->quantity;
+        return trim((string)$this->quantity);
     }
 
     /**

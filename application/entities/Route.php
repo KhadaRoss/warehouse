@@ -66,7 +66,7 @@ class Route
      */
     public function setControllerArgs(array $controllerArgs): Route
     {
-        $this->controllerArgs = $controllerArgs;
+        $this->controllerArgs = \array_map('\urldecode', $controllerArgs);
 
         return $this;
     }

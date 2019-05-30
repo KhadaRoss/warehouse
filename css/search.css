@@ -1,0 +1,65 @@
+#globalSearch {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 30px;
+    color: white;
+    position: absolute;
+    width: 500px;
+    min-height: calc(100vh - 158px);
+    top: 68px;
+    left: calc(((100vw - 221px) / 2 ) - 280px + 221px);
+}
+
+#searchHeadline {
+    font-family: 'Poiret One', cursive;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+    background-color: #404040;
+    margin-bottom: 10px;
+}
+
+#searchResults .product {
+    font-family: 'Poiret One', cursive;
+    padding: 5px;
+    background-color: #404040;
+}
+
+#searchResults .product:hover {
+    cursor: pointer;
+    background-color: #1d1d1d;
+}
+
+.productName {
+    width: calc(100% - 127px);
+    display: inline-block;
+}
+
+.productQuantity {
+    text-align: right;
+    display: inline-block;
+    width: 100px;
+    margin: 0 10px;
+}
+
+.productQuantity, .productName {
+    word-break: break-all;
+}
+
+#searchResults .product:not(:first-child) {
+    border-top: 1px solid white;
+}
+
+#globalSearch .searchTerm {
+    text-decoration: underline;
+}
+/* desktop */
+@media (min-width: 1200px) {
+}
+
+/* tablet */
+@media (max-width: 1199px) {
+}
+
+/* mobile */
+@media (max-width: 576px) {
+}

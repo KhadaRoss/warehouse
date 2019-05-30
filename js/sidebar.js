@@ -15,20 +15,22 @@ let sidebar = function () {
                 const mode = input.attr('data-mode');
                 const name = input.val();
 
-
                 if (e.keyCode !== 13 || typeof mode === 'undefined' || !name || !mode) {
                     return;
                 }
 
-                request.request(mode + 'Shelf', {name: name}, function (data) {
-                    switch (mode) {
-                        case 'new':
+                switch (mode) {
+                    case 'search':
+                        window.location.href = env.getWebPath() + 'search/product/' + name.trim().replace(/\s/g, "~");
+                        break;
+                    case 'new':
+                        request.request(mode + 'Shelf', {name: name}, function (data) {
                             sidebar.onNewShelf(data, name);
-                            break;
-                        default:
-                            break;
-                    }
-                });
+                        });
+                        break;
+                    default:
+                        break;
+                }
             });
         },
 

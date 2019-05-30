@@ -1,6 +1,6 @@
 @keyframes highlight {
     0% {
-        background-color: #404040;
+        background-color: #1d1d1d;
         color: white;
     }
     100% {
@@ -147,7 +147,7 @@ input.empty, textarea.empty {
 }
 
 .product.highlight {
-    animation: highlight 2s;
+    animation: highlight 3s;
 }
 
 /* desktop */

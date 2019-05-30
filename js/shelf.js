@@ -1,6 +1,7 @@
 let shelf = function () {
     let animating = false;
     let extendedFieldId;
+    let initAutoOpen = true;
     const shelfInput = $('#shelfTools input');
     const popupBackground = $('.popupBackground');
 
@@ -135,6 +136,8 @@ let shelf = function () {
 
                 shelf.openFieldContent(content, undefined);
             });
+
+            this.handleProductRequest();
         },
         /**
          * @param {object} button
@@ -241,6 +244,7 @@ let shelf = function () {
                     if (typeof scrollToProductId !== 'undefined') {
                         shelf.scrollElementIntoView(scrollToElement);
                     }
+                    $(window).trigger('shelfOpened');
                 });
             }
 
@@ -263,7 +267,7 @@ let shelf = function () {
                 scrollToElement.addClass('highlight');
                 setTimeout(function () {
                     scrollToElement.removeClass('highlight');
-                }, 2000);
+                }, 3000);
             });
         },
         /**
@@ -311,6 +315,30 @@ let shelf = function () {
             popup.find('#productCommentUpdate').val(product.comment);
 
             this.togglePopup('productFieldUpdate', false);
+        },
+        /**
+         * @return void
+         */
+        handleProductRequest: function () {
+            let urlParts = window.location.pathname.split('/');
+            let productId = urlParts.pop();
+            let fieldId = urlParts.pop();
+            let open = urlParts.pop() || '';
+
+            if (!initAutoOpen || open !== 'open') {
+                return;
+            }
+
+            $('.field[data-fieldId="' + fieldId + '"] .fieldHeadline').click();
+
+            $(window).on('shelfOpened', function () {
+                if (!initAutoOpen || open !== 'open') {
+                    return;
+                }
+
+                initAutoOpen = false;
+                shelf.scrollElementIntoView($('.product[data-productid="' + productId + '"]'));
+            });
         }
     };
 }();

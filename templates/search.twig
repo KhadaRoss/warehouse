@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+    <div id="globalSearch">
+        <div id="searchHeadline">
+            <span class="headline">{{ SEARCH_HEADLINE }}: </span>
+            <span class="searchTerm">{{ SEARCH_TERM }}</span>
+        </div>
+        <div id="searchResults">
+            {% if PRODUCTS is defined %}
+                {% for product in PRODUCTS %}
+                    <div title="{{ SHELF }}: {{ product.shelfName }} | {{ SHELF }}: {{ product.fieldName }} | {{ PRODUCT_DATE }}: {{ product.date }}" class="product" data-productId="{{ product.productId }}" data-fieldId="{{ product.fieldId }}" data-shelfId="{{ product.shelfId }}">
+                        <div class="productName">{{ product.productName }}</div>
+                        <div class="productQuantity">{{ product.quantity }}</div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

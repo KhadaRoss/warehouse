@@ -100,4 +100,39 @@ SQL;
     {
         $this->prepareAndExecute('DELETE FROM products WHERE id = :id', ['id' => $productId]);
     }
+
+    /**
+     * @param string $searchTerm
+     *
+     * @return array
+     */
+    public function search(string $searchTerm): array
+    {
+        $query = <<<SQL
+SELECT
+  p.id as productId,
+  p.fieldId as fieldId,
+  f.name as fieldName,
+  f.shelfId as shelfId,
+  s.name as shelfName,
+  p.name as productName,
+  p.quantity as quantity,
+  p.date as date,
+  p.comment as comment
+FROM products AS p
+INNER JOIN fields AS f ON p.fieldId = f.id
+INNER JOIN shelves AS s ON f.shelfId = s.id
+WHERE p.id LIKE :term
+  OR p.fieldId LIKE :term
+  OR f.shelfId LIKE :term
+  OR p.name LIKE :term
+  OR p.quantity LIKE :term
+  OR p.date LIKE :term
+  OR p.comment LIKE :term
+ORDER BY p.name
+  ASC;
+SQL;
+
+        return $this->prepareAndExecute($query, ['term' => '%' . $searchTerm . '%'])->fetchAll();
+    }
 }
