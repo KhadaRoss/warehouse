@@ -78,4 +78,14 @@ class AjaxRequest
     {
         return (new FieldModel())->delete((int)$args['id']);
     }
+
+    /**
+     * @param array $args
+     *
+     * @return int
+     */
+    private function productFieldAdd(array $args): int
+    {
+        return 1;
+    }
 }

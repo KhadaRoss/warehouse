@@ -43,6 +43,13 @@ class ShelfController extends Controller
             'FIELD_NEW',
             'FIELD_DELETE',
             'NEW_PRODUCT',
+            'PRODUCT_ADD_HEADER',
+            'PRODUCT_NAME',
+            'PRODUCT_QUANTITY',
+            'PRODUCT_DATE',
+            'PRODUCT_COMMENT',
+            'PRODUCT_YES',
+            'PRODUCT_NO',
         ];
     }
 }

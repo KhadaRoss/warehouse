@@ -8,7 +8,7 @@ let shelf = function () {
          * @return void
          */
         init: function () {
-            this.initDeleteButton($('.deleteButton'));
+            this.initPopupButton($('.deleteButton'));
 
             $(document).keyup(function (e) {
                 const activePopup = $('.popup:not(.hidden)');
@@ -44,6 +44,17 @@ let shelf = function () {
                         let id = $('.fieldSlider.extended').parents('.field').attr('data-fieldId');
                         request.request(method, {id: id}, function () {
                             location.reload();
+                        });
+                        break;
+                    case 'productFieldAdd':
+                        let data = {
+                            name: $('#productName').val(),
+                            quantity: $('#productQuantity').val(),
+                            date: $('#productDate').val(),
+                            comment: $('#productComment').val()
+                        };
+
+                        request.request(method, data, function (products) {
                         });
                         break;
                 }
@@ -98,7 +109,7 @@ let shelf = function () {
         /**
          * @param {object} button
          */
-        initDeleteButton: function (button) {
+        initPopupButton: function (button) {
             button.on('click', function () {
                 shelf.togglePopup($(this).attr('data-method'));
             });
@@ -118,6 +129,7 @@ let shelf = function () {
         togglePopup: function (id) {
             let popup = $('#' + id);
 
+            popup.find('input').val('');
             popup.toggleClass('hidden');
             popupBackground.toggleClass('hidden');
         },
@@ -128,13 +140,14 @@ let shelf = function () {
             const content = $('' +
                 '<div class="fieldSlider hidden">' +
                     '<div class="fieldContent">' +
-                        '<div id="addProduct">' +
+                        '<div class="productButtonAdd" id="addProduct" data-method="productFieldAdd">' +
                             '<span>' + strings['NEW_PRODUCT'] + '</span>' +
                         '</div>' +
                     '</div>' +
                 '</div>'
             );
             content.appendTo(field);
+            this.initPopupButton($('.productButtonAdd'));
             field.addClass('hasContent');
             this.openFieldContent(content);
         },
@@ -147,7 +160,7 @@ let shelf = function () {
 
             deleteField.appendTo(tools);
             tools.prependTo(field.find('.fieldSlider'));
-            this.initDeleteButton(deleteField);
+            this.initPopupButton(deleteField);
         },
         /**
          * @param {object} content

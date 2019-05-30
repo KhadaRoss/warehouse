@@ -42,12 +42,45 @@ body {
     text-align: center;
 }
 
+.popup.product {
+    width: 500px;
+    height: 400px;
+    top: calc(50vh - 200px);
+    left: calc(((100vw - 221px) / 2 ) - 250px + 221px);
+}
+
+.popup.product .text {
+    text-align: right;
+    width: 30%;
+    float: left;
+}
+
+.popup.product input, .popup.product textarea {
+    float: right;
+    width: calc(70% - 40px);
+}
+
+.popup.product textarea {
+    height: 100px;
+}
+
+.popup.product .confirmation {
+    position: absolute;
+    bottom: 50px;
+    display: inline-table;
+    left: calc(50% - 81px);
+}
+
+.popup.product .confirmation button {
+    margin: 3px
+}
+
 .popup .headline {
     font-size: 25px;
     margin: 20px 0;
 }
 
-.popup .text {
+.popup .text, .popup input, .popup textarea {
     margin: 0 10px 10px 10px;
 }
 

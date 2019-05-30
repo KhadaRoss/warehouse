@@ -37,6 +37,21 @@
             <button class="no">{{ DELETE_NO }}</button>
         </div>
     </div>
+    <div id="productFieldAdd" class="popup product hidden">
+        <div class="headline">{{ PRODUCT_ADD_HEADER }}</div>
+        <div class="text">{{ PRODUCT_NAME }}</div>
+        <label for="productName"></label><input id="productName">
+        <div class="text">{{ PRODUCT_QUANTITY }}</div>
+        <label for="productQuantity"></label><input id="productQuantity">
+        <div class="text">{{ PRODUCT_DATE }}</div>
+        <label for="productDate"></label><input id="productDate">
+        <div class="text">{{ PRODUCT_COMMENT }}</div>
+        <label for="productComment"></label><textarea id="productComment"></textarea>
+        <div class="confirmation">
+            <button class="yes">{{ PRODUCT_YES }}</button>
+            <button class="no">{{ PRODUCT_NO }}</button>
+        </div>
+    </div>
 {% endblock %}
 
 {% block topRightButton %}
