@@ -89,4 +89,14 @@ class AjaxRequest
     {
         return (new ProductModel())->add($args);
     }
+
+    /**
+     * @param array $args
+     *
+     * @return array
+     */
+    private function getProductsByFieldId(array $args): array
+    {
+        return (new ProductModel())->getByFieldId((int)$args['id']);
+    }
 }

@@ -1,3 +1,14 @@
+@keyframes highlight {
+    0% {
+        background-color: #404040;
+        color: white;
+    }
+    100% {
+        background-color: lightgray;
+        color: black;
+    }
+}
+
 .topRightButton {
     background-color: white;
     color: black;
@@ -21,6 +32,10 @@
 
 #backButton {
     right: 20px;
+}
+
+input.empty, textarea.empty {
+    border: 2px solid red;
 }
 
 #shelf {
@@ -83,7 +98,7 @@
 }
 
 .fieldContent {
-    height: 500px;
+    min-height: 500px;
     width: 300px;
     background-color: lightgray;
     margin: 10px auto;
@@ -109,13 +124,23 @@
     color: black;
     border-bottom: 1px solid black;
     margin-bottom: 10px;
+    font-size: 20px;
 }
 
-#addProduct:hover {
+#addProduct:hover, .product:hover:not(.popup) {
     color: white;
     background-color: #1d1d1d;
     width: 100%;
     cursor: pointer;
+}
+
+.product:not(.popup) {
+    color: black;
+    font-weight: bold;
+}
+
+.product.highlight {
+    animation: highlight 2s;
 }
 
 /* desktop */

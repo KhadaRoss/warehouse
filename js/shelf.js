@@ -1,5 +1,6 @@
 let shelf = function () {
     let animating = false;
+    let extendedFieldId;
     const shelfInput = $('#shelfTools input');
     const popupBackground = $('.popupBackground');
 
@@ -28,11 +29,12 @@ let shelf = function () {
             $('.popup .no, .popup .yes').on('click', function () {
                 const method = $(this).parents('.popup').attr('id');
 
-                shelf.togglePopup(method);
-
                 if ($(this).hasClass('no')) {
+                    shelf.togglePopup(method);
                     return;
                 }
+
+                let closePopup = true;
 
                 switch (method) {
                     case 'deleteShelf':
@@ -47,16 +49,34 @@ let shelf = function () {
                         });
                         break;
                     case 'productFieldAdd':
+                        $(this).parents('.popup').find('input, textarea').each(function () {
+                            let currentField = $(this);
+                            currentField.removeClass('empty');
+                            if (currentField.val().trim() === '') {
+                                closePopup = false;
+                                currentField.addClass('empty');
+                            }
+                        });
+
                         let data = {
+                            fieldId: extendedFieldId,
                             name: $('#productName').val(),
                             quantity: $('#productQuantity').val(),
                             date: $('#productDate').val(),
                             comment: $('#productComment').val()
                         };
 
-                        request.request(method, data, function (products) {
+                        request.request(method, data, function (productId) {
+                            shelf.loadProducts(
+                                $('.field[data-fieldId="' + extendedFieldId + '"]').find('.fieldContent'),
+                                productId
+                            );
                         });
                         break;
+                }
+
+                if (closePopup) {
+                    shelf.togglePopup(method);
                 }
             });
             $('#shelfTools .fa').on('click', function () {
@@ -89,6 +109,7 @@ let shelf = function () {
             });
             $('.fieldHeadline').on('click', function () {
                 let field = $(this).parent();
+                extendedFieldId = field.attr('data-fieldid');
 
                 if (!field.hasClass('hasContent')) {
                     shelf.appendFieldContent(field);
@@ -103,7 +124,7 @@ let shelf = function () {
                     return;
                 }
 
-                shelf.openFieldContent(content);
+                shelf.openFieldContent(content, undefined);
             });
         },
         /**
@@ -130,7 +151,7 @@ let shelf = function () {
             let popup = $('#' + id);
 
             if (popup.hasClass('hidden')) {
-                popup.find('input, textarea').val('');
+                popup.find('input, textarea').val('').removeClass('empty');
             }
 
             popup.toggleClass('hidden');
@@ -152,7 +173,21 @@ let shelf = function () {
             content.appendTo(field);
             this.initPopupButton($('.productButtonAdd'));
             field.addClass('hasContent');
-            this.openFieldContent(content);
+            this.loadProducts(content.find('.fieldContent'), undefined);
+        },
+        /**
+         * @param {object} content
+         * @param {int} scrollToProductId
+         */
+        loadProducts: function (content, scrollToProductId) {
+            request.request('getProductsByFieldId', {id: extendedFieldId}, function (products) {
+                content.find('.product').remove();
+                $(JSON.parse(products)).each(function () {
+                    $('<div class="product" data-productid="' + this.id + '">' + this.name + ' (' + this.quantity + ')</div>').appendTo(content);
+                });
+
+                shelf.openFieldContent(content.parents('.fieldSlider'), scrollToProductId)
+            });
         },
         /**
          * @param {object} field
@@ -167,9 +202,21 @@ let shelf = function () {
         },
         /**
          * @param {object} content
+         * @param {int} scrollToProductId
          */
-        openFieldContent: function (content) {
-            if (animating) {
+        openFieldContent: function (content, scrollToProductId) {
+            if (animating || (content.hasClass('extended') && typeof scrollToProductId === 'undefined')) {
+                return;
+            }
+
+            let scrollToElement = undefined;
+
+            if (typeof scrollToProductId !== 'undefined') {
+                scrollToElement = $('.product[data-productid="' + scrollToProductId + '"]');
+            }
+
+            if (content.hasClass('extended') && typeof scrollToElement !== 'undefined') {
+                this.scrollElementIntoView(scrollToElement);
                 return;
             }
 
@@ -180,6 +227,9 @@ let shelf = function () {
                 content.slideDown(400, function () {
                     animating = false;
                     content.addClass('extended');
+                    if (typeof scrollToProductId !== 'undefined') {
+                        shelf.scrollElementIntoView(scrollToElement);
+                    }
                 });
             }
 
@@ -190,6 +240,19 @@ let shelf = function () {
 
             shelf.closeFieldContent(openFields, function () {
                 open(content);
+            });
+        },
+        /**
+         * @param {object} scrollToElement
+         */
+        scrollElementIntoView: function (scrollToElement) {
+            $([document.documentElement, document.body]).animate({
+                scrollTop: scrollToElement.offset().top - 200
+            }, 1000, function () {
+                scrollToElement.addClass('highlight');
+                setTimeout(function () {
+                    scrollToElement.removeClass('highlight');
+                }, 2000);
             });
         },
         /**
