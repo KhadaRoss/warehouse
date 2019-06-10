@@ -5,15 +5,49 @@ namespace models;
 class SettingsModel extends Model
 {
     /**
-     * @return array
+     * @var array
      */
-    public function getAll(): array
+    private static $settings;
+
+    private function __construct()
+    {
+        parent::__construct();
+
+        $this->getAll();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public static function get(string $key)
+    {
+        if (self::$settings === null) {
+            new self();
+        }
+
+        return self::$settings[$key];
+    }
+
+    /**
+     * @return void
+     */
+    public static function updateAll(): void
+    {
+        new self();
+    }
+
+    /**
+     * @return void
+     */
+    public function getAll(): void
     {
         $settings = $this->prepareAndExecute('SELECT id, type, setting FROM settings')->fetchAll();
 
-        $return = [];
+        $data = [];
         foreach ($settings as $setting) {
-            $return[$setting['id']] = $this->format(
+            $data[$setting['id']] = $this->format(
                 [
                     'setting' => $setting['setting'],
                     'type'    => $setting['type']
@@ -21,7 +55,7 @@ class SettingsModel extends Model
             );
         }
 
-        return $return;
+        self::$settings = $data;
     }
 
     /**

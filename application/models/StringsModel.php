@@ -2,8 +2,6 @@
 
 namespace models;
 
-use system\settings\SystemSettings;
-
 class StringsModel extends Model
 {
     /**
@@ -22,7 +20,7 @@ SQL;
         $strings = $this->prepareAndExecute(
             $query,
             [
-                'lang'    => ($lang === '' ? SystemSettings::get('CURRENT_LANGUAGE') : $lang)
+                'lang'    => ($lang === '' ? SettingsModel::get('CURRENT_LANGUAGE') : $lang)
             ]
         )->fetchAll();
 
@@ -50,7 +48,7 @@ SQL;
             $query,
             [
                 'id'   => $key,
-                'lang' => $lang === '' ? SystemSettings::get('CURRENT_LANGUAGE') : $lang
+                'lang' => $lang === '' ? SettingsModel::get('CURRENT_LANGUAGE') : $lang
             ]
         )->fetchColumn();
     }

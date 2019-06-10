@@ -6,8 +6,8 @@ require_once BASE_PATH . 'vendor/Twig.php';
 
 use helpers\CssHelper;
 use helpers\JsHelper;
+use models\SettingsModel;
 use models\SidebarModel;
-use system\settings\SystemSettings;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
@@ -83,7 +83,7 @@ abstract class View
     private function initOutput(): void
     {
         $this->output['URL'] = URL;
-        $this->output['LANG'] = SystemSettings::get('CURRENT_LANGUAGE');
+        $this->output['LANG'] = SettingsModel::get('CURRENT_LANGUAGE');
     }
 
     /**

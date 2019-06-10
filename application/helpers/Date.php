@@ -3,7 +3,7 @@
 namespace helpers;
 
 use DateTime;
-use system\settings\SystemSettings;
+use models\SettingsModel;
 
 class Date
 {
@@ -43,7 +43,7 @@ class Date
      */
     private function getFormatBySystemLanguage(): string
     {
-        switch (SystemSettings::get('CURRENT_LANGUAGE')) {
+        switch (SettingsModel::get('CURRENT_LANGUAGE')) {
             case 'de':
                 return 'd.m.Y';
             case 'en':
