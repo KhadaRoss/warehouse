@@ -42,7 +42,7 @@ class AjaxController extends Controller
             (new ErrorHandler('error', 'bad request'))->printError();
         }
 
-        return (new AjaxRequest($this->function, $this->parameters))->render();
+        return \json_encode((new AjaxRequest())->{$this->function}($this->parameters));
     }
 
     /**
