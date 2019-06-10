@@ -157,7 +157,10 @@ SQL;
         $return = [];
 
         foreach ($groups as $group) {
-            $return[] = \reset($group);
+            $entry = \reset($group);
+            if (!empty($entry)) {
+                $return[] = $entry;
+            }
         }
 
         return $return;
