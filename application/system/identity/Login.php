@@ -2,6 +2,7 @@
 
 namespace system\identity;
 
+use models\IdentityModel;
 use models\LoginModel;
 
 class Login
@@ -32,10 +33,7 @@ class Login
             return;
         }
 
-        new CurrentIdentity([
-            'userId' => $userData['userId'],
-            'userName' => $this->username,
-        ]);
+        new IdentityModel($userData['userId'], $this->username);
     }
 
     /**

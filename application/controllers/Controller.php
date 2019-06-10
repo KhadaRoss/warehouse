@@ -2,8 +2,8 @@
 
 namespace controllers;
 
+use models\IdentityModel;
 use models\StringsModel;
-use system\identity\CurrentIdentity;
 use system\router\Router;
 use system\router\RouterFactory;
 
@@ -56,7 +56,7 @@ abstract class Controller
      */
     private function checkAccess(): void
     {
-        if (!$this instanceof LoginController && !CurrentIdentity::getIdentity()->isLoggedIn()) {
+        if (!$this instanceof LoginController && !IdentityModel::isLoggedIn()) {
             Router::redirect(RouterFactory::LOGIN_CONTROLLER);
         }
     }

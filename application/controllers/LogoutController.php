@@ -2,7 +2,9 @@
 
 namespace controllers;
 
-use system\identity\CurrentIdentity;
+use models\IdentityModel;
+use system\router\Router;
+use system\router\RouterFactory;
 
 class LogoutController extends Controller
 {
@@ -11,9 +13,10 @@ class LogoutController extends Controller
      */
     public function __construct(array $args)
     {
-        CurrentIdentity::getIdentity()->logout();
-
         parent::__construct($args);
+
+        new IdentityModel(IdentityModel::GUEST_USER_ID, IdentityModel::GUEST_USER_NAME);
+        Router::redirect(RouterFactory::LOGIN_CONTROLLER);
     }
 
     /**

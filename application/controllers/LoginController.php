@@ -3,7 +3,7 @@
 namespace controllers;
 
 use helpers\Request;
-use system\identity\CurrentIdentity;
+use models\IdentityModel;
 use system\identity\Login;
 use system\router\Router;
 use system\router\RouterFactory;
@@ -24,7 +24,7 @@ class LoginController extends Controller
      */
     public function index(): string
     {
-        if (CurrentIdentity::getIdentity()->isLoggedIn()) {
+        if (IdentityModel::isLoggedIn()) {
             Router::redirect(RouterFactory::WAREHOUSE_CONTROLLER);
         }
 
@@ -43,7 +43,7 @@ class LoginController extends Controller
             $request->getPost('password'))
         )->doLogin();
 
-        if (CurrentIdentity::getIdentity()->isLoggedIn()) {
+        if (IdentityModel::isLoggedIn()) {
             Router::redirect(RouterFactory::WAREHOUSE_CONTROLLER);
         }
 
