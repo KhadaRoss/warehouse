@@ -6,8 +6,8 @@ require_once BASE_PATH . 'vendor/Twig.php';
 
 use helpers\CssHelper;
 use helpers\JsHelper;
+use models\SidebarModel;
 use system\settings\SystemSettings;
-use system\sidebar\Sidebar;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
@@ -102,7 +102,7 @@ abstract class View
     public function render(): string
     {
         if (!$this instanceof LoginView) {
-            $this->output['SIDEBAR'] = (new Sidebar($this->args['active'] ?? 0))->getTwigData();
+            $this->output['SIDEBAR'] = (new SidebarModel($this->args['active'] ?? 0))->getTwigData();
             $this->addStyles(['warehouse', 'sidebar']);
             $this->addScripts(['sidebar']);
         }

@@ -1,11 +1,10 @@
 <?php
 
-namespace system\sidebar;
+namespace models;
 
 use entities\Shelf;
-use models\ShelfModel;
 
-class Sidebar
+class SidebarModel
 {
     /** @var Shelf[] */
     private $entries;
