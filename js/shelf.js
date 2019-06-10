@@ -69,6 +69,7 @@ let shelf = function () {
                             name: (method === 'productFieldAdd' ? $('#productName').val() : $('#productNameUpdate').val()),
                             quantity: (method === 'productFieldAdd' ? $('#productQuantity').val() : $('#productQuantityUpdate').val()),
                             date: (method === 'productFieldAdd' ? $('#productDate').val() : $('#productDateUpdate').val()),
+                            productGroup: (method === 'productFieldAdd' ? $('#productGroup').val() : $('#productGroupUpdate').val()),
                             comment: (method === 'productFieldAdd' ? $('#productComment').val() : $('#productCommentUpdate').val())
                         };
 
@@ -162,6 +163,8 @@ let shelf = function () {
          */
         togglePopup: function (id, clearInputs) {
             let popup = $('#' + id);
+
+            $('#groupAutoComplete').remove();
 
             if (popup.hasClass('hidden') && clearInputs) {
                 popup.find('input, textarea').val('').removeClass('empty');
@@ -301,6 +304,50 @@ let shelf = function () {
                     });
                 }
             });
+            $('#productGroupUpdate, #productGroup').on('keyup click', function (e) {
+
+                if (e.keyCode === 13 || e.keyCode === 27) {
+                    return;
+                }
+
+                let input = $(this);
+                let position = this.getBoundingClientRect();
+
+                request.request('searchGroup', {search: $(this).val()}, function (matches) {
+                    let previous = $('#groupAutoComplete');
+                    if (previous) {
+                        previous.remove();
+                    }
+
+                    matches = JSON.parse(matches);
+
+                    if (matches.length < 1) {
+                        return;
+                    }
+
+                    let hint = $('<div id="groupAutoComplete"></div>');
+                    $(matches).each(function () {
+                        $('<div class="hint">' + this + '</div>').appendTo(hint);
+                    });
+
+                    hint.hide();
+                    hint.appendTo($('body'));
+                    hint.css({
+                        left: position.left,
+                        top: position.top + 23,
+                        width: input.width() - 4
+                    });
+                    
+                    if (!$('#productFieldAdd').hasClass('hidden') || !$('#productFieldUpdate').hasClass('hidden')) {
+                        hint.show();
+                    }
+
+                    $('.hint').on('click', function () {
+                        input.val($(this).text());
+                        hint.remove();
+                    })
+                })
+            });
         },
         /**
          * @param {object} product
@@ -312,6 +359,7 @@ let shelf = function () {
             popup.find('#productNameUpdate').val(product.name);
             popup.find('#productQuantityUpdate').val(product.quantity);
             popup.find('#productDateUpdate').val(product.date);
+            popup.find('#productGroupUpdate').val(product.productGroup);
             popup.find('#productCommentUpdate').val(product.comment);
 
             this.togglePopup('productFieldUpdate', false);

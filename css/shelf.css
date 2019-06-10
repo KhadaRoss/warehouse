@@ -150,6 +150,29 @@ input.empty, textarea.empty {
     animation: highlight 3s;
 }
 
+#groupAutoComplete {
+    z-index: 21;
+    position: fixed;
+    color: black;
+    background-color: white;
+    border: 2px solid black;
+    padding: 3px;
+}
+
+.hint {
+    padding: 2px;
+}
+
+.hint:not(:first-child) {
+    border-top: 1px solid darkgray;
+}
+
+.hint:hover {
+    color: white;
+    background-color: #1d1d1d;
+    cursor: pointer;
+}
+
 /* desktop */
 @media (min-width: 1200px) {
 }

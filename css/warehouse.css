@@ -53,6 +53,7 @@ body {
     text-align: right;
     width: 30%;
     float: left;
+    margin-bottom: 13px;
 }
 
 .popup.product input, .popup.product textarea {

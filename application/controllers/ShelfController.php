@@ -47,6 +47,7 @@ class ShelfController extends Controller
             'PRODUCT_NAME',
             'PRODUCT_QUANTITY',
             'PRODUCT_DATE',
+            'PRODUCT_GROUP',
             'PRODUCT_COMMENT',
             'PRODUCT_YES',
             'PRODUCT_NO',

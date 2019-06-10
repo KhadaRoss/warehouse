@@ -14,11 +14,12 @@ class ProductModel extends Model
         $this->prepareAndExecute(
             'INSERT INTO products (fieldId, name, quantity, date, comment) VALUES (:fieldId, :name, :quantity, :date, :comment)',
             [
-                'name'     => $data['name'],
-                'quantity' => $data['quantity'],
-                'fieldId'  => $data['fieldId'],
-                'date'     => $data['date'],
-                'comment'  => $data['comment'],
+                'name'         => $data['name'],
+                'quantity'     => $data['quantity'],
+                'fieldId'      => $data['fieldId'],
+                'date'         => $data['date'],
+                'productGroup' => $data['productGroup'],
+                'comment'      => $data['comment'],
             ]
         );
 
@@ -33,7 +34,7 @@ class ProductModel extends Model
     public function getByFieldId(int $fieldId): array
     {
         $query = <<<SQL
-SELECT id, fieldId, name, quantity, date, comment FROM products WHERE fieldId = :fieldId ORDER BY name ASC
+SELECT id, fieldId, name, quantity, date, productGroup, comment FROM products WHERE fieldId = :fieldId ORDER BY name ASC
 SQL;
 
         $products = $this->prepareAndExecute($query, ['fieldId' => $fieldId])->fetchAll();
@@ -42,12 +43,13 @@ SQL;
 
         foreach ($products as $product) {
             $data[] = [
-                'id'       => $product['id'],
-                'fieldId'  => $product['fieldId'],
-                'name'     => $product['name'],
-                'quantity' => $product['quantity'],
-                'date'     => $product['date'],
-                'comment'  => $product['comment'],
+                'id'           => $product['id'],
+                'fieldId'      => $product['fieldId'],
+                'name'         => $product['name'],
+                'quantity'     => $product['quantity'],
+                'date'         => $product['date'],
+                'productGroup' => $product['productGroup'],
+                'comment'      => $product['comment'],
             ];
         }
 
@@ -62,17 +64,18 @@ SQL;
     public function getByProductId(int $productId): array
     {
         $product = $this->prepareAndExecute(
-            'SELECT id, fieldId, name, quantity, date, comment FROM products WHERE id = :id LIMIT 1',
+            'SELECT id, fieldId, name, quantity, date, productGroup, comment FROM products WHERE id = :id LIMIT 1',
             ['id' => $productId]
         )->fetch();
 
         return [
-            'id'       => $product['id'],
-            'fieldId'  => $product['fieldId'],
-            'name'     => $product['name'],
-            'quantity' => $product['quantity'],
-            'date'     => $product['date'],
-            'comment'  => $product['comment'],
+            'id'           => $product['id'],
+            'fieldId'      => $product['fieldId'],
+            'name'         => $product['name'],
+            'quantity'     => $product['quantity'],
+            'date'         => $product['date'],
+            'productGroup' => $product['productGroup'],
+            'comment'      => $product['comment'],
         ];
     }
 
@@ -82,13 +85,14 @@ SQL;
     public function update(array $args): void
     {
         $this->prepareAndExecute(
-            'UPDATE products SET name = :name, quantity = :quantity, date = :date, comment = :comment WHERE id = :id',
+            'UPDATE products SET name = :name, quantity = :quantity, date = :date, productGroup = :productGroup, comment = :comment WHERE id = :id',
             [
-                'id'       => $args['id'],
-                'name'     => $args['name'],
-                'quantity' => $args['quantity'],
-                'date'     => $args['date'],
-                'comment'  => $args['comment'],
+                'id'           => $args['id'],
+                'name'         => $args['name'],
+                'quantity'     => $args['quantity'],
+                'date'         => $args['date'],
+                'productGroup' => $args['productGroup'],
+                'comment'      => $args['comment'],
             ]
         );
     }
@@ -116,6 +120,7 @@ SELECT
   f.shelfId as shelfId,
   s.name as shelfName,
   p.name as productName,
+  p.productGroup as productGroup,
   p.quantity as quantity,
   p.date as date,
   p.comment as comment
@@ -126,6 +131,7 @@ WHERE p.id LIKE :term
   OR p.fieldId LIKE :term
   OR f.shelfId LIKE :term
   OR p.name LIKE :term
+  OR p.productGroup LIKE :term
   OR p.quantity LIKE :term
   OR p.date LIKE :term
   OR p.comment LIKE :term
@@ -134,5 +140,26 @@ ORDER BY p.name
 SQL;
 
         return $this->prepareAndExecute($query, ['term' => '%' . $searchTerm . '%'])->fetchAll();
+    }
+
+    /**
+     * @param string $term
+     *
+     * @return array
+     */
+    public function searchGroup(string $term): array
+    {
+        $groups = $this->prepareAndExecute(
+            'SELECT DISTINCT productGroup FROM products WHERE productGroup LIKE :term LIMIT 5',
+            ['term' => '%' . $term . '%']
+        )->fetchAll();
+
+        $return = [];
+
+        foreach ($groups as $group) {
+            $return[] = \reset($group);
+        }
+
+        return $return;
     }
 }
