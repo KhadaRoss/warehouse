@@ -4,7 +4,7 @@ namespace controllers;
 
 use helpers\Request;
 use models\IdentityModel;
-use system\identity\Login;
+use models\LoginModel;
 use system\router\Router;
 use system\router\RouterFactory;
 use views\LoginView;
@@ -38,7 +38,7 @@ class LoginController extends Controller
     {
         $request = Request::getInstance();
 
-        (new Login(
+        (new LoginModel(
             $request->getPost('username'),
             $request->getPost('password'))
         )->doLogin();

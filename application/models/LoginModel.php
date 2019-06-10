@@ -2,10 +2,54 @@
 
 namespace models;
 
-use system\identity\Login;
-
 class LoginModel extends Model
 {
+    const ALGORITHM = \PASSWORD_BCRYPT;
+
+    /** @var string */
+    private $username;
+    /** @var string */
+    private $password;
+
+    /**
+     * @param string $username
+     * @param string $password
+     */
+    public function __construct(string $username, string $password)
+    {
+        parent::__construct();
+
+        $this->username = \strtolower($username);
+        $this->password = $password;
+    }
+
+    /**
+     * @return void
+     */
+    public function doLogin(): void
+    {
+        $userData = $this->getUserData($this->username);
+
+        if ($userData['userId'] === 0 || !password_verify($this->password, $userData['passwordHash'])) {
+            return;
+        }
+
+        new IdentityModel($userData['userId'], $this->username);
+    }
+
+    /**
+     * @param string $password
+     *
+     * @return string
+     */
+    private function getHashedPassword(string $password): string
+    {
+        return \password_hash(
+            $password,
+            self::ALGORITHM
+        );
+    }
+
     /**
      * @param string $username
      *
@@ -42,7 +86,7 @@ SQL;
             [
                 'userId'       => '',
                 'username'     => '',
-                'passwordHash' => Login::getHashedPassword(''),
+                'passwordHash' => $this->getHashedPassword(''),
             ]
         );
     }
