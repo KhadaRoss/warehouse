@@ -1,0 +1,14 @@
+{
+    "name": "khadaross/warehouse",
+    "description": "private warehouse application to create shelves and store products",
+    "type": "project",
+    "authors": [
+        {
+            "name": "KhadaRoss",
+            "email": "khada.webdev@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^2.0"
+    }
+}

@@ -2,20 +2,23 @@
 
 namespace views;
 
-require_once BASE_PATH . 'vendor/Twig.php';
+require_once BASE_PATH . 'vendor/autoload.php';
 
 use helpers\CssHelper;
 use helpers\JsHelper;
 use models\SettingsModel;
 use models\SidebarModel;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use Twig\Loader\FilesystemLoader;
 
 abstract class View
 {
-    /** @var Twig_Loader_Filesystem */
+    /** @var FilesystemLoader */
     protected $loader;
-    /** @var Twig_Environment */
+    /** @var Environment */
     protected $twig;
     /** @var array */
     protected $args = [];
@@ -52,8 +55,8 @@ abstract class View
      */
     private function initTwig(): void
     {
-        $this->loader = new Twig_Loader_Filesystem([TEMPLATES]);
-        $this->twig = new Twig_Environment($this->loader);
+        $this->loader = new FilesystemLoader([TEMPLATES]);
+        $this->twig = new Environment($this->loader);
     }
 
     /**
@@ -113,7 +116,7 @@ abstract class View
 
         try {
             return $this->twig->render($this->template, $this->output);
-        } catch (\Twig_Error_Runtime | \Twig_Error_Loader | \Twig_Error_Syntax $e) {
+        } catch (LoaderError | RuntimeError | SyntaxError $e) {
             return $e->getMessage();
         }
     }
