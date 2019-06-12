@@ -12,3 +12,4 @@ define('DSN', 'mysql:dbname=warehouse;host=localhost;charset=utf8');
 ini_set("default_charset", 'utf-8');
 
 require_once APPLICATION_PATH . 'config.php';
+require_once BASE_PATH . 'vendor/autoload.php';

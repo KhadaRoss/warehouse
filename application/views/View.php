@@ -2,8 +2,6 @@
 
 namespace views;
 
-require_once BASE_PATH . 'vendor/autoload.php';
-
 use helpers\CssHelper;
 use helpers\JsHelper;
 use models\SettingsModel;
