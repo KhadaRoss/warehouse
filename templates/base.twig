@@ -4,9 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{{ URL }}lib/fontawesome-free-5.6.3-web/css/all.css">
-    {{ ADD_STYLES|raw }}
     <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
+    {% block styles %}{% endblock %}
 </head>
 <body>
     <div id="background"></div>
@@ -20,7 +20,8 @@
     <script src="{{ URL }}js/warehouse.js"></script>
     <script>
         $(document).ready(function () {
-            warehouse.initStrings('{{ JS_STRINGS|raw }}');
+            common.initStrings('{{ JS_STRINGS|raw }}');
+            common.initPath('{{ URL }}');
         })
     </script>
     {{ ADD_SCRIPTS|raw }}

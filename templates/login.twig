@@ -1,9 +1,13 @@
 {% extends 'base.twig' %}
 
+{% block styles %}
+    <link href="{{ URL }}css/login.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <div id="loginContrast"></div>
     <div id="login">
-        <div id="loginHeader">{{ LOGIN }}</div>
+        <div id="loginHeader">{% if LOGIN_ERROR is defined %}{{ AUTHENTICATION_FAILED }}{% else %}{{ LOGIN }}{% endif %}</div>
         <form action="{{ URL }}login/authenticate" autocomplete="off" method="post">
             <label>
                 <input name="username" placeholder="{{ USERNAME }}">
