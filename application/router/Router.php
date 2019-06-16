@@ -2,6 +2,7 @@
 
 namespace router;
 
+use home\HomeController;
 use identity\IdentityModel;
 use identity\LoginController;
 use Psr\Http\Message\ResponseInterface;
@@ -56,7 +57,8 @@ class Router
             }
 
             $app->get('/home', function (Request $request, Response $response) {
-                return $response->write('home');
+
+                return $response->write((new HomeController($request, $response))->index());
             });
         });
 

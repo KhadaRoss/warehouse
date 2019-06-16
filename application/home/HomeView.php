@@ -6,12 +6,9 @@ use system\View;
 
 class HomeView extends View
 {
-    /**
-     * @param array $output
-     */
-    public function __construct(array $output)
+    public function __construct()
     {
-        parent::__construct($output);
+        parent::__construct();
     }
 
     /**
@@ -23,9 +20,10 @@ class HomeView extends View
     }
 
     /**
-     * @return void
+     * @param array $output
      */
-    protected function setTwigVariables(): void
+    public function setOutput(array $output): void
     {
+        parent::setOutput($output);
     }
 }

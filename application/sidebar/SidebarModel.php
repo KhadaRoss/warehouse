@@ -10,12 +10,23 @@ class SidebarModel
     /** @var Shelf[] */
     private $entries;
     /** @var int */
-    private $activeId;
+    private $activeId = 0;
 
-    public function __construct(int $activeId)
+    public function __construct()
+    {
+        $this->entries = (new ShelfModel())->getAll();
+    }
+
+    /**
+     * @param int $activeId
+     *
+     * @return SidebarModel
+     */
+    public function setActiveId(int $activeId): SidebarModel
     {
         $this->activeId = $activeId;
-        $this->entries = (new ShelfModel())->getAll();
+
+        return $this;
     }
 
     /**

@@ -6,6 +6,10 @@
     <link rel="stylesheet" type="text/css" href="{{ URL }}lib/fontawesome-free-5.6.3-web/css/all.css">
     <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
+    {% block globalStyles %}
+        <link href="{{ URL }}css/common.css" rel="stylesheet">
+        <link href="{{ URL }}css/sidebar.css" rel="stylesheet">
+    {% endblock %}
     {% block styles %}{% endblock %}
 </head>
 <body>
@@ -17,13 +21,16 @@
     {% block topRightButton %}{% endblock %}
     {% block popups %}{% endblock %}
     <script src="{{ URL }}lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    <script src="{{ URL }}js/warehouse.js"></script>
-    <script>
-        $(document).ready(function () {
-            common.initStrings('{{ JS_STRINGS|raw }}');
-            common.initPath('{{ URL }}');
-        })
-    </script>
-    {{ ADD_SCRIPTS|raw }}
+    {% block globalScripts %}
+        <script src="{{ URL }}js/common.js"></script>
+        <script src="{{ URL }}js/sidebar.js"></script>
+        <script>
+            $(document).ready(function () {
+                common.initStrings('{{ JS_STRINGS|json_encode|raw }}');
+                common.initPath('{{ URL|raw }}');
+                common.test();
+            })
+        </script>
+    {% endblock %}
 </body>
 </html>

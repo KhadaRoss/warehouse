@@ -2,15 +2,13 @@
 
 namespace system;
 
-use identity\LoginView;
-use sidebar\SidebarModel;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-abstract class View
+abstract class View implements ViewInterface
 {
     /** @var Environment */
     protected $twig;
@@ -19,14 +17,9 @@ abstract class View
     /** @var string */
     protected $template;
 
-    /**
-     * @param array $output
-     */
-    public function __construct(array $output)
+    public function __construct()
     {
         $this->initTwig();
-        $this->initOutput($output);
-
         $this->setTemplate();
     }
 
@@ -42,15 +35,9 @@ abstract class View
     /**
      * @param array $output
      */
-    private function initOutput(array $output): void
+    public function setOutput(array $output): void
     {
         $this->output = $output;
-        $this->output['URL'] = URL;
-        $this->output['LANG'] = SettingsModel::get('CURRENT_LANGUAGE');
-
-        if (!$this instanceof LoginView) {
-            $this->output['SIDEBAR'] = (new SidebarModel($this->args['active'] ?? 0))->getTwigData();
-        }
     }
 
     /**

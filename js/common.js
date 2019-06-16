@@ -31,16 +31,16 @@ let common = function() {
 
     return {
         /**
-         * @param jsStrings
+         * @param {string} jsStrings
          */
         initStrings: function (jsStrings) {
             strings = JSON.parse(jsStrings);
         },
         /**
-         * @param path
+         * @param {string} url
          */
-        initPath: function (path) {
-            strings = path;
+        initPath: function (url) {
+            path = url;
         }
     }
 } ();

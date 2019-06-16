@@ -6,12 +6,9 @@ use system\View;
 
 class LoginView extends View
 {
-    /**
-     * @param array $output
-     */
-    public function __construct(array $output)
+    public function __construct()
     {
-        parent::__construct($output);
+        parent::__construct();
     }
 
     /**
@@ -20,5 +17,13 @@ class LoginView extends View
     protected function setTemplate(): void
     {
         $this->template = 'login.twig';
+    }
+
+    /**
+     * @param array $output
+     */
+    public function setOutput(array $output): void
+    {
+        parent::setOutput($output);
     }
 }

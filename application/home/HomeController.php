@@ -2,18 +2,25 @@
 
 namespace home;
 
+use sidebar\SidebarModel;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use system\Controller;
 
 class HomeController extends Controller
 {
-    const CONTROLLER_KEY = 'home';
+    /** @var HomeView */
+    private $homeView;
 
     /**
-     * @param array $request
+     * @param Request      $request
+     * @param Response     $response
      */
-    public function __construct(array $request)
+    public function __construct(Request $request, Response $response)
     {
-        parent::__construct($request);
+        parent::__construct($request, $response, new SidebarModel());
+
+        $this->homeView = new HomeView();
     }
 
     /**
@@ -21,7 +28,9 @@ class HomeController extends Controller
      */
     public function index(): string
     {
-        return (new HomeView($this->request))->render();
+        $this->homeView->setOutput($this->output);
+
+        return $this->homeView->render();
     }
 
     /**

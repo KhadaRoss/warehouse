@@ -2,6 +2,9 @@
 
 namespace system;
 
+use identity\IdentityModel;
+use identity\LoginController;
+use sidebar\SidebarModel;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -13,19 +16,26 @@ abstract class Controller
     protected $response;
     /** @var array */
     protected $output;
+    /** @var StringsModel */
+    private $stringsModel;
+    /** @var SidebarModel */
+    protected $sidebarModel;
 
     /**
-     * @param Request  $request
-     * @param Response $response
+     * @param Request      $request
+     * @param Response     $response
+     * @param SidebarModel $sidebarModel
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request, Response $response, SidebarModel $sidebarModel)
     {
         $this->request = $request;
         $this->response = $response;
 
-        $this->initStrings();
+        $this->stringsModel = new StringsModel();
+        $this->sidebarModel = $sidebarModel;
 
-        return $this;
+        $this->initOutput();
+        $this->initStrings();
     }
 
     /**
@@ -42,14 +52,37 @@ abstract class Controller
     /**
      * @return void
      */
+    private function initOutput(): void
+    {
+        $this->output['URL'] = URL;
+        $this->output['LANG'] = SettingsModel::get('CURRENT_LANGUAGE');
+
+        if (!$this instanceof LoginController) {
+            $this->output['SIDEBAR'] = $this->sidebarModel->getTwigData();
+        }
+    }
+
+    /**
+     * @return void
+     */
     private function initStrings(): void
     {
-        $this->output = (new StringsModel())->getAll(
-            \array_merge(
-                $this->getGlobalStrings(),
-                $this->getChildStrings()
-            )
+        $this->output = \array_merge(
+            $this->output,
+            $this->stringsModel->getAll($this->getStrings())
         );
+
+        if (IdentityModel::isLoggedIn()) {
+            $this->output['JS_STRINGS'] = $this->stringsModel->getAll($this->getGlobalJsStrings());
+        }
+    }
+
+    /**
+     * @return array
+     */
+    private function getStrings(): array
+    {
+        return \array_merge($this->getGlobalStrings(), $this->getGlobalJsStrings());
     }
 
     /**
@@ -62,6 +95,16 @@ abstract class Controller
             'LOGOUT',
             'SEARCH',
             'NEW',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getGlobalJsStrings(): array
+    {
+        return [
+            'NEW_PRODUCT',
         ];
     }
 

@@ -1,5 +1,7 @@
 {% extends 'base.twig' %}
 
+{% block globalStyles %}{% endblock %}
+
 {% block styles %}
     <link href="{{ URL }}css/login.css" rel="stylesheet">
 {% endblock %}
@@ -20,3 +22,5 @@
     </div>
     <div id="credits"><span class="fa fa-envelope"></span><span>Khada.Webdev@gmail.com</span></div>
 {% endblock %}
+
+{% block globalScripts %}{% endblock %}
