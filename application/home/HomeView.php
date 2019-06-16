@@ -16,6 +16,6 @@ class HomeView extends View
      */
     protected function setTemplate(): void
     {
-        $this->template = 'warehouse.twig';
+        $this->template = 'home.twig';
     }
 }

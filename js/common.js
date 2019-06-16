@@ -1,33 +1,7 @@
 let strings;
 let path;
 
-let env = function () {
-
-    return {
-        getWebPath: function () {
-            return path;
-        }
-    }
-}();
-
-let request = function () {
-    const requestUrl = env.getWebPath() + 'ajax';
-
-    return {
-        /**
-         * @param {string}   method
-         * @param {object}   parameters
-         * @param {function} callback
-         */
-        request: function (method, parameters, callback) {
-            $.post(requestUrl, {function: method, parameters: parameters}).done(function (data) {
-                callback(data);
-            });
-        }
-    }
-}();
-
-let common = function() {
+let common = function () {
 
     return {
         /**
@@ -43,7 +17,74 @@ let common = function() {
             path = url;
         }
     }
-} ();
+}();
+
+let env = function () {
+
+    return {
+        /**
+         * @return {string}
+         */
+        getWebPath: function () {
+            return path;
+        }
+    }
+}();
+
+let request = function () {
+    let requestUrl;
+    let needsData;
+
+    return {
+        /**
+         * @return void
+         */
+        init: function () {
+            requestUrl = env.getWebPath() + 'api/';
+        },
+        /**
+         * @param {string} method
+         * @param {string} entity
+         * @param {string} parameters
+         * @param {function} callback
+         */
+        api: function (method, entity, parameters, callback) {
+            needsData = parameters.length > 1;
+
+            $.ajax({
+                type: this.getType(),
+                method: method,
+                url: requestUrl + entity + this.getParameters(parameters),
+                data: this.getData(parameters)
+            }).done(function (data) {
+                callback(data)
+            });
+        },
+        /**
+         * @return {string}
+         */
+        getType: function () {
+            return needsData ? 'POST' : 'GET';
+        },
+        /**
+         * @param {object} parameters
+         *
+         * @return {object}
+         */
+        getData: function (parameters) {
+            return needsData ? parameters : {};
+        },
+        /**
+         * @param {object} parameters
+         *
+         * @return {string}
+         */
+        getParameters: function (parameters) {
+            return needsData ? '' : '/' + parameters[(Object.keys(parameters))[0]];
+        }
+    }
+}();
 
 $(document).ready(function () {
+    request.init();
 });

@@ -4,30 +4,9 @@ namespace api;
 
 use field\FieldModel;
 use product\ProductModel;
-use shelf\ShelfModel;
 
 class AjaxRequest
 {
-    /**
-     * @param array $args
-     *
-     * @return int
-     */
-    public function newShelf(array $args): int
-    {
-        return (new ShelfModel())->add($args['name']);
-    }
-
-    /**
-     * @param array $args
-     *
-     * @return bool
-     */
-    public function deleteShelf(array $args): bool
-    {
-        return (new ShelfModel())->delete((int)$args['id']);
-    }
-
     /**
      * @param array $args
      *

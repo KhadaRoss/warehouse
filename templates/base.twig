@@ -23,14 +23,11 @@
 <script src="{{ URL }}lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
 {% block globalScripts %}
     <script src="{{ URL }}js/common.js"></script>
-    <script src="{{ URL }}js/sidebar.js"></script>
     <script>
-        $(document).ready(function () {
-            common.initStrings('{{ JS_STRINGS|json_encode|raw }}');
-            common.initPath('{{ URL|raw }}');
-            common.test();
-        })
+        common.initPath('{{ URL|raw }}');
+        common.initStrings('{{ JS_STRINGS|json_encode|raw }}');
     </script>
+    <script src="{{ URL }}js/sidebar.js"></script>
 {% endblock %}
 {% block scripts %}{% endblock %}
 </body>
