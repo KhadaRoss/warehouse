@@ -15,6 +15,7 @@ use Slim\Exception\MethodNotAllowedException;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Route;
 
 class Router
 {
@@ -53,12 +54,6 @@ class Router
         $app = new App($this->container);
 
         $app->group('', function () use ($app) {
-            if (!IdentityModel::isLoggedIn()) {
-                $app->redirect(URL . '/home', URL . '/login');
-
-                return;
-            }
-
             $app->get('/home', function (Request $request, Response $response) {
 
                 return $response->write((new HomeController($request, $response))->index());
@@ -71,17 +66,23 @@ class Router
 
                 (new LogoutController($request, $response))->logout();
 
-                return $response->withRedirect(URL . '/login');
+                return $response->withRedirect(URL . 'login');
             });
             $app->get('/search/{searchTerm}', function (Request $request, Response $response, array $args) {
 
                 return $response->write((new SearchController($request, $response, $args))->index());
             });
+        })->add(function (Request $request, Response $response, Route $next) {
+            if (IdentityModel::isLoggedIn()) {
+                return $next($request, $response);
+            }
+
+            return $response->withRedirect(URL . 'login');
         });
 
         $app->group('/login', function () use ($app) {
             if (IdentityModel::isLoggedIn()) {
-                $app->redirect(URL . '/login', URL . '/home');
+                $app->redirect(URL . 'login', URL . 'home');
 
                 return;
             }
@@ -97,6 +98,12 @@ class Router
             $app->get('/error', function (Request $request, Response $response) {
                 return $response->write((new LoginController($request, $response))->error());
             });
+        })->add(function (Request $request, Response $response, Route $next) {
+            if (IdentityModel::isLoggedIn()) {
+                return $response->withRedirect(URL . 'home');
+            }
+
+            return $next($request, $response);
         });
 
         try {
