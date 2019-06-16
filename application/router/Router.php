@@ -125,6 +125,9 @@ class Router
             $app->post('/product', function (Request $request, Response $response) {
                 $response->write((new ProductApi($request, $response))->newProduct());
             });
+            $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
+                $response->write((new ProductApi($request, $response))->get((int)$args['id']));
+            });
         })->add(function (Request $request, Response $response, Route $next) {
             if (!IS_AJAX || !IdentityModel::isLoggedIn()) {
                 return $response->withRedirect(URL . 'login');

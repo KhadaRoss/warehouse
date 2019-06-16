@@ -304,8 +304,8 @@ let shelf = function () {
                         shelf.loadProducts($('.field[data-fieldId="' + extendedFieldId + '"]').find('.fieldContent'), undefined);
                     });
                 } else {
-                    request.request('getProductInformation', {id: $(this).attr('data-productId')}, function (product) {
-                        shelf.fillProductPopup(JSON.parse(product));
+                    request.api('GET', 'product', {id: $(this).attr('data-productId')}, function (product) {
+                        shelf.fillProductPopup(product);
                     });
                 }
             });

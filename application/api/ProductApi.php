@@ -27,4 +27,16 @@ class ProductApi extends Api
 
         return $this->asJson(['id' => $newProductId]);
     }
+
+    /**
+     * @param int $id
+     *
+     * @return string
+     */
+    public function get(int $id): string
+    {
+        $product = (new ProductModel())->getByProductId($id);
+
+        return $this->asJson($product);
+    }
 }
