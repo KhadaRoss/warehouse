@@ -1,17 +1,20 @@
 {% if SIDEBAR is defined %}
-<div id="sidebar">
-    <div id="menuTools">
-        <div id="new" title="{{ NEW }}" class="fa fa-plus inputTrigger"></div>
-        <div id="search" title="{{ SEARCH }}" class="fa fa-search inputTrigger"></div>
-        <a href="{{ URL }}logout" class="logout"><div id="logout" title="{{ LOGOUT }}" class="fa fa-sign-out-alt"></div></a>
+    <div id="sidebar">
+        <div id="menuTools">
+            <div id="new" title="{{ NEW }}" class="fa fa-plus inputTrigger"></div>
+            <div id="search" title="{{ SEARCH }}" class="fa fa-search inputTrigger"></div>
+            <a href="{{ URL }}logout" class="logout">
+                <div id="logout" title="{{ LOGOUT }}" class="fa fa-sign-out-alt"></div>
+            </a>
+        </div>
+        <label for="toolInput"><input id="toolInput" class="hidden"></label>
+        <div id="menuEntries">
+            {% for shelf in SIDEBAR %}
+                <div class="entry">
+                    <a id="shelf_{{ shelf.id }}" href="{{ URL }}shelf/{{ shelf.id }}"
+                       class="{{ shelf.class }}">{{ shelf.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-    <label for="toolInput"><input id="toolInput" class="hidden"></label>
-    <div id="menuEntries">
-        {% for shelf in SIDEBAR %}
-            <div class="entry">
-                <a id="shelf_{{ shelf.id }}" href="{{ URL }}shelf/show/{{ shelf.id }}" class="{{ shelf.class }}">{{ shelf.name }}</a>
-            </div>
-        {% endfor %}
-    </div>
-</div>
 {% endif %}

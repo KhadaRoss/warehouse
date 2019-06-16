@@ -18,12 +18,4 @@ class LoginView extends View
     {
         $this->template = 'login.twig';
     }
-
-    /**
-     * @param array $output
-     */
-    public function setOutput(array $output): void
-    {
-        parent::setOutput($output);
-    }
 }

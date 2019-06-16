@@ -1,5 +1,9 @@
 {% extends 'base.twig' %}
 
+{% block styles %}
+    <link href="{{ URL }}css/shelf.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <div id="shelf" data-shelfId="{{ CURRENT_SHELF }}">
         <div id="shelfTools">
@@ -75,5 +79,9 @@
 
 {% block topRightButton %}
     <div id="deleteShelfButton" data-method="deleteShelf" class="deleteButton topRightButton fa fa-trash"></div>
-    <a href="{{ URL }}/warehouse"><div id="backButton" class="topRightButton fa fa-arrow-left"></div></a>
+    <a href="{{ URL }}/warehouse">
+        <div id="backButton" class="topRightButton fa fa-arrow-left"></div>
+    </a>
 {% endblock %}
+
+{% block scripts %}{% endblock %}

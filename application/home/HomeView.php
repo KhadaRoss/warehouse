@@ -18,12 +18,4 @@ class HomeView extends View
     {
         $this->template = 'warehouse.twig';
     }
-
-    /**
-     * @param array $output
-     */
-    public function setOutput(array $output): void
-    {
-        parent::setOutput($output);
-    }
 }

@@ -13,24 +13,25 @@
     {% block styles %}{% endblock %}
 </head>
 <body>
-    <div id="background"></div>
-    {% include 'sidebar.twig' %}
-    <div id="pageContent">
-        {% block content %}{% endblock %}
-    </div>
-    {% block topRightButton %}{% endblock %}
-    {% block popups %}{% endblock %}
-    <script src="{{ URL }}lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    {% block globalScripts %}
-        <script src="{{ URL }}js/common.js"></script>
-        <script src="{{ URL }}js/sidebar.js"></script>
-        <script>
-            $(document).ready(function () {
-                common.initStrings('{{ JS_STRINGS|json_encode|raw }}');
-                common.initPath('{{ URL|raw }}');
-                common.test();
-            })
-        </script>
-    {% endblock %}
+<div id="background"></div>
+{% include 'sidebar.twig' %}
+<div id="pageContent">
+    {% block content %}{% endblock %}
+</div>
+{% block topRightButton %}{% endblock %}
+{% block popups %}{% endblock %}
+<script src="{{ URL }}lib/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+{% block globalScripts %}
+    <script src="{{ URL }}js/common.js"></script>
+    <script src="{{ URL }}js/sidebar.js"></script>
+    <script>
+        $(document).ready(function () {
+            common.initStrings('{{ JS_STRINGS|json_encode|raw }}');
+            common.initPath('{{ URL|raw }}');
+            common.test();
+        })
+    </script>
+{% endblock %}
+{% block scripts %}{% endblock %}
 </body>
 </html>

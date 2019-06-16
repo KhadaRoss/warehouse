@@ -2,25 +2,27 @@
 
 namespace identity;
 
-use sidebar\SidebarModel;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use system\Controller;
 
 class LoginController extends Controller
 {
+    /** @var LoginModel */
+    private $loginModel;
     /** @var LoginView */
     private $loginView;
 
     /**
-     * @param Request      $request
-     * @param Response     $response
+     * @param Request  $request
+     * @param Response $response
      */
     public function __construct(Request $request, Response $response)
     {
-        parent::__construct($request, $response, new SidebarModel());
-
+        $this->loginModel = new LoginModel($request);
         $this->loginView = new LoginView();
+
+        parent::__construct($request, $response);
     }
 
     /**
@@ -48,7 +50,7 @@ class LoginController extends Controller
      */
     public function authenticate(): void
     {
-        (new LoginModel($this->request))->doLogin();
+        $this->loginModel->doLogin();
     }
 
     /**

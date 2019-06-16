@@ -2,19 +2,39 @@
 
 namespace shelf;
 
+use field\FieldModel;
+use sidebar\SidebarModel;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use system\Controller;
 
 class ShelfController extends Controller
 {
-    /**
-     * @param array $request
-     */
-    public function __construct(array $request)
-    {
-        parent::__construct($request);
+    /** @var int */
+    private $activeId;
+    /** @var FieldModel */
+    private $fieldModel;
+    /** @var ShelfModel */
+    private $shelfModel;
+    /** @var ShelfView */
+    private $shelfView;
 
-        $this->request['active'] = $this->request[0];
-        unset($this->request[0]);
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param array    $args
+     */
+    public function __construct(Request $request, Response $response, array $args)
+    {
+        $this->fieldModel = new FieldModel();
+        $this->shelfModel = new ShelfModel();
+        $this->shelfView = new ShelfView();
+        $this->sidebarModel = new SidebarModel();
+
+        $this->activeId = (int)$args['id'];
+        $this->sidebarModel->setActiveId($this->activeId);
+
+        parent::__construct($request, $response);
     }
 
     /**
@@ -22,7 +42,13 @@ class ShelfController extends Controller
      */
     public function show(): string
     {
-        return (new ShelfView($this->request))->render();
+        $this->output['CURRENT_SHELF'] = $this->activeId;
+        $this->output['CURRENT_SHELF_NAME'] = $this->shelfModel->get($this->activeId)->getName();
+        $this->output['FIELDS'] = $this->fieldModel->getTwigDataByShelfId($this->activeId);
+
+        $this->shelfView->setOutput($this->output);
+
+        return $this->shelfView->render();
     }
 
     /**

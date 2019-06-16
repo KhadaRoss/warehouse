@@ -6,6 +6,7 @@ use home\HomeController;
 use identity\IdentityModel;
 use identity\LoginController;
 use Psr\Http\Message\ResponseInterface;
+use shelf\ShelfController;
 use Slim\App;
 use Slim\Container;
 use Slim\Exception\MethodNotAllowedException;
@@ -59,6 +60,10 @@ class Router
             $app->get('/home', function (Request $request, Response $response) {
 
                 return $response->write((new HomeController($request, $response))->index());
+            });
+            $app->get('/shelf/{id}', function (Request $request, Response $response, array $args) {
+
+                return $response->write((new ShelfController($request, $response, $args))->show());
             });
         });
 

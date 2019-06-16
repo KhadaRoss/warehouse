@@ -3,7 +3,6 @@
 namespace system;
 
 use identity\IdentityModel;
-use identity\LoginController;
 use sidebar\SidebarModel;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -22,19 +21,17 @@ abstract class Controller
     protected $sidebarModel;
 
     /**
-     * @param Request      $request
-     * @param Response     $response
-     * @param SidebarModel $sidebarModel
+     * @param Request  $request
+     * @param Response $response
      */
-    public function __construct(Request $request, Response $response, SidebarModel $sidebarModel)
+    public function __construct(Request $request, Response $response)
     {
+        $this->stringsModel = new StringsModel();
+
         $this->request = $request;
         $this->response = $response;
 
-        $this->stringsModel = new StringsModel();
-        $this->sidebarModel = $sidebarModel;
-
-        $this->initOutput();
+        $this->setOutput();
         $this->initStrings();
     }
 
@@ -52,12 +49,12 @@ abstract class Controller
     /**
      * @return void
      */
-    private function initOutput(): void
+    private function setOutput(): void
     {
         $this->output['URL'] = URL;
         $this->output['LANG'] = SettingsModel::get('CURRENT_LANGUAGE');
 
-        if (!$this instanceof LoginController) {
+        if ($this->sidebarModel !== null) {
             $this->output['SIDEBAR'] = $this->sidebarModel->getTwigData();
         }
     }
@@ -82,7 +79,11 @@ abstract class Controller
      */
     private function getStrings(): array
     {
-        return \array_merge($this->getGlobalStrings(), $this->getGlobalJsStrings());
+        return \array_merge(
+            $this->getGlobalStrings(),
+            $this->getGlobalJsStrings(),
+            $this->getChildStrings()
+        );
     }
 
     /**

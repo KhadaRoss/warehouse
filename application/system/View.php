@@ -8,7 +8,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-abstract class View implements ViewInterface
+abstract class View
 {
     /** @var Environment */
     protected $twig;

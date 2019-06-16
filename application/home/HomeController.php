@@ -13,14 +13,15 @@ class HomeController extends Controller
     private $homeView;
 
     /**
-     * @param Request      $request
-     * @param Response     $response
+     * @param Request  $request
+     * @param Response $response
      */
     public function __construct(Request $request, Response $response)
     {
-        parent::__construct($request, $response, new SidebarModel());
-
         $this->homeView = new HomeView();
+        $this->sidebarModel = new SidebarModel();
+
+        parent::__construct($request, $response);
     }
 
     /**
