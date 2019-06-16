@@ -2,21 +2,10 @@
 
 namespace api;
 
-use field\FieldModel;
 use product\ProductModel;
 
 class AjaxRequest
 {
-    /**
-     * @param array $args
-     *
-     * @return int
-     */
-    public function productFieldAdd(array $args): int
-    {
-        return (new ProductModel())->add($args);
-    }
-
     /**
      * @param array $args
      *

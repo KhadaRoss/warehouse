@@ -3,6 +3,7 @@
 namespace router;
 
 use api\FieldApi;
+use api\ProductApi;
 use api\ShelfApi;
 use home\HomeController;
 use identity\IdentityModel;
@@ -120,6 +121,9 @@ class Router
             });
             $app->get('/fieldProducts/{id}', function (Request $request, Response $response, array $args) {
                 $response->write((new FieldApi($request, $response))->getProductsByFieldId((int)$args['id']));
+            });
+            $app->post('/product', function (Request $request, Response $response) {
+                $response->write((new ProductApi($request, $response))->newProduct());
             });
         })->add(function (Request $request, Response $response, Route $next) {
             if (!IS_AJAX || !IdentityModel::isLoggedIn()) {

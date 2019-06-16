@@ -13,8 +13,13 @@ class ProductModel extends Model
      */
     public function add(array $data): int
     {
+        $query = <<<SQL
+INSERT INTO products (fieldId, name, quantity, date, productGroup, comment)
+  VALUES (:fieldId, :name, :quantity, :date, :productGroup, :comment)
+SQL;
+
         $this->prepareAndExecute(
-            'INSERT INTO products (fieldId, name, quantity, date, comment) VALUES (:fieldId, :name, :quantity, :date, :comment)',
+            $query,
             [
                 'name'         => $data['name'],
                 'quantity'     => $data['quantity'],

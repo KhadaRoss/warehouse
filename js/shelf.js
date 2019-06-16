@@ -73,14 +73,16 @@ let shelf = function () {
                             comment: (method === 'productFieldAdd' ? $('#productComment').val() : $('#productCommentUpdate').val())
                         };
 
+                        let header = 'POST';
                         if (method === 'productFieldUpdate') {
+                            header = 'PUT';
                             data.id = $(this).parents('.popup').find('.headline').attr('data-productId');
                         }
 
-                        request.request(method, data, function (productId) {
+                        request.api(header, 'product', data, function (product) {
                             shelf.loadProducts(
                                 $('.field[data-fieldId="' + extendedFieldId + '"]').find('.fieldContent'),
-                                productId
+                                product.id
                             );
                         });
                         break;
