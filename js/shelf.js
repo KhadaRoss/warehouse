@@ -314,14 +314,17 @@ let shelf = function () {
 
                 let input = $(this);
                 let position = this.getBoundingClientRect();
+                let term = $(this).val();
 
-                request.request('searchGroup', {search: $(this).val()}, function (matches) {
+                if (term.length < 1) {
+                    return;
+                }
+
+                request.api('GET', 'group', {term: term}, function (matches) {
                     let previous = $('#groupAutoComplete');
                     if (previous) {
                         previous.remove();
                     }
-
-                    matches = JSON.parse(matches);
 
                     if (matches.length < 1) {
                         return;

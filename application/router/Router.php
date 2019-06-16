@@ -4,6 +4,7 @@ namespace router;
 
 use api\FieldApi;
 use api\ProductApi;
+use api\SearchApi;
 use api\ShelfApi;
 use home\HomeController;
 use identity\IdentityModel;
@@ -133,6 +134,9 @@ class Router
             });
             $app->delete('/product/{id}', function (Request $request, Response $response, array $args) {
                 $response->write((new ProductApi($request, $response))->delete((int)$args['id']));
+            });
+            $app->get('/group/{term}', function (Request $request, Response $response, array $args) {
+                $response->write((new SearchApi($request, $response))->get($args['term']));
             });
         })->add(function (Request $request, Response $response, Route $next) {
             if (!IS_AJAX || !IdentityModel::isLoggedIn()) {
