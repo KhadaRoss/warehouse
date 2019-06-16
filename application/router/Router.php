@@ -90,10 +90,13 @@ class Router
             $app->get('', function (Request $request, Response $response) {
                 $response->write((new LoginController($request, $response))->index());
             });
+            $app->get('/error', function (Request $request, Response $response) {
+                $response->write((new LoginController($request, $response))->error());
+            });
             $app->post('/authenticate', function (Request $request, Response $response) {
                 (new LoginController($request, $response))->authenticate();
 
-                return $response->withRedirect(URL . IdentityModel::isLoggedIn() ? 'home' : 'login');
+                return $response->withRedirect(URL . (IdentityModel::isLoggedIn() ? 'home' : 'login/error'));
             });
         });
 
