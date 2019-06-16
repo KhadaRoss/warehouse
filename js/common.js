@@ -49,7 +49,7 @@ let request = function () {
          * @param {function} callback
          */
         api: function (method, entity, parameters, callback) {
-            needsData = parameters.length > 1;
+            needsData = parameters.length > 1 || method === 'POST';
 
             $.ajax({
                 type: this.getType(),
@@ -57,7 +57,7 @@ let request = function () {
                 url: requestUrl + entity + this.getParameters(parameters),
                 data: this.getData(parameters)
             }).done(function (data) {
-                callback(data)
+                callback(JSON.parse(data))
             });
         },
         /**

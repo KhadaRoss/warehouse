@@ -24,8 +24,8 @@ let sidebar = function () {
                         window.location.href = env.getWebPath() + 'search/' + name.trim().replace(/\s/g, "~");
                         break;
                     case 'new':
-                        request.request(mode + 'Shelf', {name: name}, function (data) {
-                            sidebar.onNewShelf(data, name);
+                        request.api('POST', 'shelf', {name: name}, function (data) {
+                            sidebar.onNewShelf(data);
                         });
                         break;
                     default:
@@ -35,13 +35,12 @@ let sidebar = function () {
         },
 
         /**
-         * @param {number} id
-         * @param {string} name
+         * @param {object} data
          */
-        onNewShelf: function (id, name) {
+        onNewShelf: function (data) {
             const entry = $(
                 '<div class="entry">' +
-                '    <a id="shelf_' + id + '" href="' + env.getWebPath() + 'shelf/show/' + id + '" class="">' + name + '</a>\n' +
+                '    <a id="shelf_' + data.id + '" href="' + env.getWebPath() + 'shelf/' + data.id + '" class="">' + data.name + '</a>\n' +
                 '</div>'
             );
 

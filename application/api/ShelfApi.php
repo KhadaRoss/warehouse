@@ -23,13 +23,14 @@ class ShelfApi extends Api
     }
 
     /**
-     * @param array $args
-     *
-     * @return int
+     * @return string
      */
-    public function newShelf(array $args): int
+    public function newShelf(): string
     {
-        return $this->shelfModel->add($args['name']);
+        $name = $this->request->getParsedBodyParam('name');
+        $newId = $this->shelfModel->add($name);
+
+        return $this->asJson(['id' => $newId, 'name' => $name]);
     }
 
     /**

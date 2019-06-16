@@ -8,9 +8,9 @@ use Slim\Http\Response;
 class Api
 {
     /** @var Request */
-    private $request;
+    protected $request;
     /** @var Response */
-    private $response;
+    protected $response;
 
     /**
      * @param Request  $request
@@ -20,5 +20,15 @@ class Api
     {
         $this->request = $request;
         $this->response = $response;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return string
+     */
+    protected function asJson(array $data): string
+    {
+        return \json_encode($data);
     }
 }

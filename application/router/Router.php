@@ -2,6 +2,7 @@
 
 namespace router;
 
+use api\ShelfApi;
 use home\HomeController;
 use identity\IdentityModel;
 use identity\LoginController;
@@ -73,7 +74,7 @@ class Router
                 return $response->write((new SearchController($request, $response, $args))->index());
             });
         })->add(function (Request $request, Response $response, Route $next) {
-            if (IdentityModel::isLoggedIn()) {
+            if (IS_AJAX || IdentityModel::isLoggedIn()) {
                 return $next($request, $response);
             }
 
@@ -95,12 +96,21 @@ class Router
 
                 return $response->withRedirect(URL . 'login/error');
             });
-            $app->get('/error', function (Request $request, Response $response) {
-                return $response->write((new LoginController($request, $response))->error());
-            });
         })->add(function (Request $request, Response $response, Route $next) {
             if (IdentityModel::isLoggedIn()) {
                 return $response->withRedirect(URL . 'home');
+            }
+
+            return $next($request, $response);
+        });
+
+        $app->group('/api', function () use ($app) {
+            $app->post('/shelf', function (Request $request, Response $response) {
+                $response->write((new ShelfApi($request, $response))->newShelf());
+            });
+        })->add(function (Request $request, Response $response, Route $next) {
+            if (!IS_AJAX || !IdentityModel::isLoggedIn()) {
+                return $response->withRedirect(URL . 'login');
             }
 
             return $next($request, $response);
