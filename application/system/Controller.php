@@ -36,17 +36,6 @@ abstract class Controller
     }
 
     /**
-     * @param Request  $request
-     * @param Response $response
-     *
-     * @return string
-     */
-    public function __call(Request $request, Response $response): string
-    {
-        return $response->withStatus(404)->withRedirect('/error');
-    }
-
-    /**
      * @return void
      */
     private function setOutput(): void

@@ -5,6 +5,7 @@ namespace router;
 use home\HomeController;
 use identity\IdentityModel;
 use identity\LoginController;
+use identity\LogoutController;
 use Psr\Http\Message\ResponseInterface;
 use shelf\ShelfController;
 use Slim\App;
@@ -64,6 +65,12 @@ class Router
             $app->get('/shelf/{id}', function (Request $request, Response $response, array $args) {
 
                 return $response->write((new ShelfController($request, $response, $args))->show());
+            });
+            $app->get('/logout', function (Request $request, Response $response) {
+
+                (new LogoutController($request, $response))->logout();
+
+                return $response->withRedirect(URL . '/login');
             });
         });
 

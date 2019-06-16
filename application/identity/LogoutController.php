@@ -2,29 +2,27 @@
 
 namespace identity;
 
-use router\Router;
-use router\RouterFactory;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use system\Controller;
 
 class LogoutController extends Controller
 {
     /**
-     * @param array $request
+     * @param Request  $request
+     * @param Response $response
      */
-    public function __construct(array $request)
+    public function __construct(Request $request, Response $response)
     {
-        parent::__construct($request);
-
-        new IdentityModel(IdentityModel::GUEST_USER_ID, IdentityModel::GUEST_USER_NAME);
-        Router::redirect(RouterFactory::LOGIN_CONTROLLER);
+        parent::__construct($request, $response);
     }
 
     /**
-     * @return string
+     * @return void
      */
-    public function index(): string
+    public function logout(): void
     {
-        return '';
+        IdentityModel::reset();
     }
 
     /**

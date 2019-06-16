@@ -18,7 +18,7 @@ class IdentityModel extends Model
     private $userName;
 
     /**
-     * @param int $userId
+     * @param int    $userId
      * @param string $userName
      */
     public function __construct(int $userId, string $userName)
@@ -112,5 +112,13 @@ class IdentityModel extends Model
     public static function isLoggedIn(): bool
     {
         return self::get()->getUserId() !== self::GUEST_USER_ID;
+    }
+
+    /**
+     * @return void
+     */
+    public static function reset(): void
+    {
+        new self(self::GUEST_USER_ID, self::GUEST_USER_NAME);
     }
 }
