@@ -19,7 +19,6 @@ use Slim\Exception\MethodNotAllowedException;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Route;
 
 class Router
 {
@@ -58,6 +57,10 @@ class Router
         $app = new App($this->container);
 
         $app->group('', function () use ($app) {
+            if (IS_AJAX || !IdentityModel::isLoggedIn()) {
+                $app->redirect(URL, URL . 'login');
+                return;
+            }
             $app->get('/home', function (Request $request, Response $response) {
                 $response->write((new HomeController($request, $response))->index());
             });
@@ -70,23 +73,17 @@ class Router
                 });
             $app->get('/logout', function (Request $request, Response $response) {
                 (new LogoutController($request, $response))->logout();
-                $response->withRedirect(URL . 'login');
+
+                return $response->withRedirect(URL . 'login');
             });
             $app->get('/search/{searchTerm}', function (Request $request, Response $response, array $args) {
                 $response->write((new SearchController($request, $response, $args))->index());
             });
-        })->add(function (Request $request, Response $response, Route $next) {
-            if (IS_AJAX || IdentityModel::isLoggedIn()) {
-                return $next($request, $response);
-            }
-
-            return $response->withRedirect(URL . 'login');
         });
 
         $app->group('/login', function () use ($app) {
             if (IdentityModel::isLoggedIn()) {
                 $app->redirect(URL . 'login', URL . 'home');
-
                 return;
             }
 
@@ -96,17 +93,16 @@ class Router
             $app->post('/authenticate', function (Request $request, Response $response) {
                 (new LoginController($request, $response))->authenticate();
 
-                $response->withRedirect(URL . 'login/error');
+                return $response->withRedirect(URL . IdentityModel::isLoggedIn() ? 'home' : 'login');
             });
-        })->add(function (Request $request, Response $response, Route $next) {
-            if (IdentityModel::isLoggedIn()) {
-                return $response->withRedirect(URL . 'home');
-            }
-
-            return $next($request, $response);
         });
 
         $app->group('/api', function () use ($app) {
+            if (!IS_AJAX || !IdentityModel::isLoggedIn()) {
+                $app->redirect(URL . 'api', URL . 'login');
+                return;
+            }
+
             $app->post('/shelf', function (Request $request, Response $response) {
                 $response->write((new ShelfApi($request, $response))->newShelf());
             });
@@ -137,12 +133,6 @@ class Router
             $app->get('/group/{term}', function (Request $request, Response $response, array $args) {
                 $response->write((new SearchApi($request, $response))->get($args['term']));
             });
-        })->add(function (Request $request, Response $response, Route $next) {
-            if (!IS_AJAX || !IdentityModel::isLoggedIn()) {
-                return $response->withRedirect(URL . 'login');
-            }
-
-            return $next($request, $response);
         });
 
         try {
