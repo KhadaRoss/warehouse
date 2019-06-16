@@ -59,22 +59,21 @@ class Router
 
         $app->group('', function () use ($app) {
             $app->get('/home', function (Request $request, Response $response) {
-
-                return $response->write((new HomeController($request, $response))->index());
+                $response->write((new HomeController($request, $response))->index());
             });
             $app->get('/shelf/{id}', function (Request $request, Response $response, array $args) {
-
-                return $response->write((new ShelfController($request, $response, $args))->show());
+                $response->write((new ShelfController($request, $response, (int)$args['id']))->show());
             });
+            $app->get('/shelf/{id}/open/{fieldId}/{productId}',
+                function (Request $request, Response $response, array $args) {
+                    $response->write((new ShelfController($request, $response, (int)$args['id']))->show());
+                });
             $app->get('/logout', function (Request $request, Response $response) {
-
                 (new LogoutController($request, $response))->logout();
-
-                return $response->withRedirect(URL . 'login');
+                $response->withRedirect(URL . 'login');
             });
             $app->get('/search/{searchTerm}', function (Request $request, Response $response, array $args) {
-
-                return $response->write((new SearchController($request, $response, $args))->index());
+                $response->write((new SearchController($request, $response, $args))->index());
             });
         })->add(function (Request $request, Response $response, Route $next) {
             if (IS_AJAX || IdentityModel::isLoggedIn()) {
@@ -92,12 +91,12 @@ class Router
             }
 
             $app->get('', function (Request $request, Response $response) {
-                return $response->write((new LoginController($request, $response))->index());
+                $response->write((new LoginController($request, $response))->index());
             });
             $app->post('/authenticate', function (Request $request, Response $response) {
                 (new LoginController($request, $response))->authenticate();
 
-                return $response->withRedirect(URL . 'login/error');
+                $response->withRedirect(URL . 'login/error');
             });
         })->add(function (Request $request, Response $response, Route $next) {
             if (IdentityModel::isLoggedIn()) {

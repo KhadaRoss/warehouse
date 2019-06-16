@@ -22,16 +22,16 @@ class ShelfController extends Controller
     /**
      * @param Request  $request
      * @param Response $response
-     * @param array    $args
+     * @param int      $activeId
      */
-    public function __construct(Request $request, Response $response, array $args)
+    public function __construct(Request $request, Response $response, int $activeId)
     {
         $this->fieldModel = new FieldModel();
         $this->shelfModel = new ShelfModel();
         $this->shelfView = new ShelfView();
         $this->sidebarModel = new SidebarModel();
 
-        $this->activeId = (int)$args['id'] ?? 0;
+        $this->activeId = $activeId;
         $this->sidebarModel->setActiveId($this->activeId);
 
         parent::__construct($request, $response);

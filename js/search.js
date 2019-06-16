@@ -6,7 +6,7 @@ let search = function () {
                 let fieldId = $(this).attr('data-fieldId');
                 let productId = $(this).attr('data-productId');
                 let shelfId = $(this).attr('data-shelfId');
-                window.location.href = env.getWebPath() + 'shelf/show/' + shelfId + '/open/' + fieldId + '/' + productId
+                window.location.href = env.getWebPath() + 'shelf/' + shelfId + '/open/' + fieldId + '/' + productId
             });
         }
     };
