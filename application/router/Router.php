@@ -7,6 +7,7 @@ use identity\IdentityModel;
 use identity\LoginController;
 use identity\LogoutController;
 use Psr\Http\Message\ResponseInterface;
+use search\SearchController;
 use shelf\ShelfController;
 use Slim\App;
 use Slim\Container;
@@ -71,6 +72,10 @@ class Router
                 (new LogoutController($request, $response))->logout();
 
                 return $response->withRedirect(URL . '/login');
+            });
+            $app->get('/search/{searchTerm}', function (Request $request, Response $response, array $args) {
+
+                return $response->write((new SearchController($request, $response, $args))->index());
             });
         });
 

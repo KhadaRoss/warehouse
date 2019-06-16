@@ -31,7 +31,7 @@ class ShelfController extends Controller
         $this->shelfView = new ShelfView();
         $this->sidebarModel = new SidebarModel();
 
-        $this->activeId = (int)$args['id'];
+        $this->activeId = (int)$args['id'] ?? 0;
         $this->sidebarModel->setActiveId($this->activeId);
 
         parent::__construct($request, $response);

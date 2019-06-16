@@ -1,5 +1,9 @@
 {% extends 'base.twig' %}
 
+{% block styles %}
+    <link href="{{ URL }}css/search.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 
     <div id="globalSearch">
@@ -10,7 +14,9 @@
         <div id="searchResults">
             {% if PRODUCTS is defined %}
                 {% for product in PRODUCTS %}
-                    <div title="{{ SHELF }}: {{ product.shelfName }} | {{ SHELF }}: {{ product.fieldName }} | {{ PRODUCT_DATE }}: {{ product.date }}" class="product" data-productId="{{ product.productId }}" data-fieldId="{{ product.fieldId }}" data-shelfId="{{ product.shelfId }}">
+                    <div title="{{ SHELF }}: {{ product.shelfName }} | {{ SHELF }}: {{ product.fieldName }} | {{ PRODUCT_DATE }}: {{ product.date }}"
+                         class="product" data-productId="{{ product.productId }}" data-fieldId="{{ product.fieldId }}"
+                         data-shelfId="{{ product.shelfId }}">
                         <div class="productName">{{ product.productName }}</div>
                         <div class="productQuantity">{{ product.quantity }}</div>
                     </div>
@@ -18,4 +24,8 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ URL }}js/search.js"></script>
 {% endblock %}
