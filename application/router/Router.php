@@ -108,6 +108,9 @@ class Router
             $app->post('/shelf', function (Request $request, Response $response) {
                 $response->write((new ShelfApi($request, $response))->newShelf());
             });
+            $app->delete('/shelf/{id}', function (Request $request, Response $response, array $args) {
+                $response->write((new ShelfApi($request, $response))->deleteShelf((int)$args['id']));
+            });
         })->add(function (Request $request, Response $response, Route $next) {
             if (!IS_AJAX || !IdentityModel::isLoggedIn()) {
                 return $response->withRedirect(URL . 'login');

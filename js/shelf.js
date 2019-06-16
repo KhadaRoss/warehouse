@@ -39,8 +39,10 @@ let shelf = function () {
 
                 switch (method) {
                     case 'deleteShelf':
-                        request.request(method, {id: $('#shelf').attr('data-shelfId')}, function () {
-                            $('#backButton').click();
+                        request.api('DELETE', 'shelf', {id: $('#shelf').attr('data-shelfId')}, function (data) {
+                            if (data.success) {
+                                $('#backButton').click();
+                            }
                         });
                         break;
                     case 'deleteField':
@@ -87,7 +89,7 @@ let shelf = function () {
                 }
 
                 if (closePopup) {
-                    shelf.togglePopup(method,  true);
+                    shelf.togglePopup(method, true);
                 }
             });
             $('#shelfTools .fa').on('click', function () {
@@ -113,7 +115,7 @@ let shelf = function () {
             });
             shelfInput.keyup(function (e) {
                 let name = shelfInput.val();
-                
+
                 if (e.keyCode === 13 && name.length > 0) {
                     shelf.addField(name, $('#shelf').attr('data-shelfId'));
                 }
@@ -179,11 +181,11 @@ let shelf = function () {
         appendFieldContent: function (field) {
             const content = $('' +
                 '<div class="fieldSlider hidden">' +
-                    '<div class="fieldContent">' +
-                        '<div class="productButtonAdd" id="addProduct" data-method="productFieldAdd">' +
-                            '<span>' + strings['NEW_PRODUCT'] + '</span>' +
-                        '</div>' +
-                    '</div>' +
+                '<div class="fieldContent">' +
+                '<div class="productButtonAdd" id="addProduct" data-method="productFieldAdd">' +
+                '<span>' + strings['NEW_PRODUCT'] + '</span>' +
+                '</div>' +
+                '</div>' +
                 '</div>'
             );
             content.appendTo(field);
@@ -295,7 +297,10 @@ let shelf = function () {
         initProductEventHandlers: function () {
             $('.product:not(.popup)').on('click', function (e) {
                 if ($(e.target).hasClass('deleteProduct')) {
-                    request.request('deleteProduct', {id: $(this).attr('data-productId'), fieldId: extendedFieldId}, function (product) {
+                    request.request('deleteProduct', {
+                        id: $(this).attr('data-productId'),
+                        fieldId: extendedFieldId
+                    }, function (product) {
                         shelf.loadProducts($('.field[data-fieldId="' + extendedFieldId + '"]').find('.fieldContent'), undefined);
                     });
                 } else {
@@ -337,7 +342,7 @@ let shelf = function () {
                         top: position.top + 23,
                         width: input.width() - 4
                     });
-                    
+
                     if (!$('#productFieldAdd').hasClass('hidden') || !$('#productFieldUpdate').hasClass('hidden')) {
                         hint.show();
                     }

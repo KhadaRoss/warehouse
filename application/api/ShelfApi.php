@@ -34,12 +34,14 @@ class ShelfApi extends Api
     }
 
     /**
-     * @param array $args
+     * @param int $id
      *
-     * @return bool
+     * @return string
      */
-    public function deleteShelf(array $args): bool
+    public function deleteShelf(int $id): string
     {
-        return $this->shelfModel->delete((int)$args['id']);
+        $success = $this->shelfModel->delete($id);
+
+        return $this->asJson(['success' => $success]);
     }
 }

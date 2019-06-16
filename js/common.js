@@ -45,7 +45,7 @@ let request = function () {
         /**
          * @param {string} method
          * @param {string} entity
-         * @param {string} parameters
+         * @param {object} parameters
          * @param {function} callback
          */
         api: function (method, entity, parameters, callback) {
