@@ -53,4 +53,16 @@ class ProductApi extends Api
 
         return $this->asJson($product);
     }
+
+    /**
+     * @param int $id
+     *
+     * @return string
+     */
+    public function delete(int $id): string
+    {
+        $success = $this->productModel->delete($id);
+
+        return $this->asJson(['success' => $success]);
+    }
 }

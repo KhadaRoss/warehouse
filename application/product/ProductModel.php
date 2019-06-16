@@ -109,11 +109,16 @@ SQL;
     }
 
     /**
-     * @param int $productId
+     * @param int $id
+     *
+     * @return bool
      */
-    public function delete(int $productId): void
+    public function delete(int $id): bool
     {
-        $this->prepareAndExecute('DELETE FROM products WHERE id = :id', ['id' => $productId]);
+        return (int)$this->prepareAndExecute(
+                'DELETE FROM products WHERE id = :id',
+                ['id' => $id]
+            )->rowCount() > 0;
     }
 
     /**

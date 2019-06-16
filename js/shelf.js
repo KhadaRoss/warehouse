@@ -297,10 +297,7 @@ let shelf = function () {
         initProductEventHandlers: function () {
             $('.product:not(.popup)').on('click', function (e) {
                 if ($(e.target).hasClass('deleteProduct')) {
-                    request.request('deleteProduct', {
-                        id: $(this).attr('data-productId'),
-                        fieldId: extendedFieldId
-                    }, function (product) {
+                    request.api('DELETE', 'product', {id: $(this).attr('data-productId')}, function () {
                         shelf.loadProducts($('.field[data-fieldId="' + extendedFieldId + '"]').find('.fieldContent'), undefined);
                     });
                 } else {
