@@ -2,6 +2,7 @@
 
 namespace router;
 
+use api\FieldApi;
 use api\ShelfApi;
 use home\HomeController;
 use identity\IdentityModel;
@@ -110,6 +111,15 @@ class Router
             });
             $app->delete('/shelf/{id}', function (Request $request, Response $response, array $args) {
                 $response->write((new ShelfApi($request, $response))->deleteShelf((int)$args['id']));
+            });
+            $app->post('/field', function (Request $request, Response $response) {
+                $response->write((new FieldApi($request, $response))->newField());
+            });
+            $app->delete('/field/{id}', function (Request $request, Response $response, array $args) {
+                $response->write((new FieldApi($request, $response))->deleteField((int)$args['id']));
+            });
+            $app->get('/fieldProducts/{id}', function (Request $request, Response $response, array $args) {
+                $response->write((new FieldApi($request, $response))->getProductsByFieldId((int)$args['id']));
             });
         })->add(function (Request $request, Response $response, Route $next) {
             if (!IS_AJAX || !IdentityModel::isLoggedIn()) {

@@ -39,15 +39,13 @@ let shelf = function () {
 
                 switch (method) {
                     case 'deleteShelf':
-                        request.api('DELETE', 'shelf', {id: $('#shelf').attr('data-shelfId')}, function (data) {
-                            if (data.success) {
-                                $('#backButton').click();
-                            }
+                        request.api('DELETE', 'shelf', {id: $('#shelf').attr('data-shelfId')}, function () {
+                            $('#backButton').click();
                         });
                         break;
                     case 'deleteField':
                         let id = $('.fieldSlider.extended').parents('.field').attr('data-fieldId');
-                        request.request(method, {id: id}, function () {
+                        request.api('DELETE', 'field', {id: id}, function () {
                             location.reload();
                         });
                         break;
@@ -155,7 +153,7 @@ let shelf = function () {
          * @param {number} id
          */
         addField: function (name, id) {
-            request.request('newField', {name: name, shelfId: id}, function () {
+            request.api('POST', 'field', {name: name, shelfId: id}, function () {
                 location.reload();
             });
         },
@@ -198,9 +196,9 @@ let shelf = function () {
          * @param {int} scrollToProductId
          */
         loadProducts: function (content, scrollToProductId) {
-            request.request('getProductsByFieldId', {id: extendedFieldId}, function (products) {
+            request.api('GET', 'fieldProducts', {id: extendedFieldId}, function (products) {
                 content.find('.product').remove();
-                $(JSON.parse(products)).each(function () {
+                $(products).each(function () {
                     $('<div class="product" data-productid="' + this.id + '">' + this.name + ' (' + this.quantity + ')<div class="fa fa-trash deleteProduct"></div></div>').appendTo(content);
                 });
 

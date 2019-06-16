@@ -12,39 +12,9 @@ class AjaxRequest
      *
      * @return int
      */
-    public function newField(array $args): int
-    {
-        return (new FieldModel())->add($args['name'], (int)$args['shelfId']);
-    }
-
-    /**
-     * @param array $args
-     *
-     * @return bool
-     */
-    public function deleteField(array $args): bool
-    {
-        return (new FieldModel())->delete((int)$args['id']);
-    }
-
-    /**
-     * @param array $args
-     *
-     * @return int
-     */
     public function productFieldAdd(array $args): int
     {
         return (new ProductModel())->add($args);
-    }
-
-    /**
-     * @param array $args
-     *
-     * @return array
-     */
-    public function getProductsByFieldId(array $args): array
-    {
-        return (new ProductModel())->getByFieldId((int)$args['id']);
     }
 
     /**
