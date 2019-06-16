@@ -129,7 +129,7 @@ INSERT INTO `strings` (`id`, `language`, `string`) VALUES
 ('SEARCH', 'de', 'Produkt suchen'),
 ('SEARCH_HEADLINE', 'de', 'Suchergebnisse für'),
 ('SHELF', 'de', 'Schrank'),
-('TITLE', 'de', 'Warenlager - Frank Röpnack'),
+('TITLE', 'de', 'Warenlager'),
 ('USERNAME', 'de', 'Benutzername'),
 ('WAREHOUSE', 'de', 'Warenlager');
 
