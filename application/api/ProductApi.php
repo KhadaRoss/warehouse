@@ -11,6 +11,10 @@ class ProductApi extends Api
     /** @var ProductModel */
     private $productModel;
 
+    /**
+     * @param Request  $request
+     * @param Response $response
+     */
     public function __construct(Request $request, Response $response)
     {
         $this->productModel = new ProductModel();
@@ -21,9 +25,19 @@ class ProductApi extends Api
     /**
      * @return string
      */
-    public function newProduct(): string
+    public function new(): string
     {
         $newProductId = $this->productModel->add($this->request->getParsedBody());
+
+        return $this->asJson(['id' => $newProductId]);
+    }
+
+    /**
+     * @return string
+     */
+    public function update(): string
+    {
+        $newProductId = $this->productModel->update($this->request->getParsedBody());
 
         return $this->asJson(['id' => $newProductId]);
     }
@@ -35,7 +49,7 @@ class ProductApi extends Api
      */
     public function get(int $id): string
     {
-        $product = (new ProductModel())->getByProductId($id);
+        $product = $this->productModel->getByProductId($id);
 
         return $this->asJson($product);
     }

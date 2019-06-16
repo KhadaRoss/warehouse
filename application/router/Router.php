@@ -123,7 +123,10 @@ class Router
                 $response->write((new FieldApi($request, $response))->getProductsByFieldId((int)$args['id']));
             });
             $app->post('/product', function (Request $request, Response $response) {
-                $response->write((new ProductApi($request, $response))->newProduct());
+                $response->write((new ProductApi($request, $response))->new());
+            });
+            $app->put('/product', function (Request $request, Response $response) {
+                $response->write((new ProductApi($request, $response))->update());
             });
             $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
                 $response->write((new ProductApi($request, $response))->get((int)$args['id']));

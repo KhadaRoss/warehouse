@@ -88,8 +88,10 @@ SQL;
 
     /**
      * @param array $args
+     *
+     * @return int
      */
-    public function update(array $args): void
+    public function update(array $args): int
     {
         $this->prepareAndExecute(
             'UPDATE products SET name = :name, quantity = :quantity, date = :date, productGroup = :productGroup, comment = :comment WHERE id = :id',
@@ -102,6 +104,8 @@ SQL;
                 'comment'      => $args['comment'],
             ]
         );
+
+        return $args['id'];
     }
 
     /**

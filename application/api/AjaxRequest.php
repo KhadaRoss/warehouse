@@ -11,28 +11,6 @@ class AjaxRequest
      *
      * @return array
      */
-    public function getProductInformation(array $args): array
-    {
-        return (new ProductModel())->getByProductId((int)$args['id']);
-    }
-
-    /**
-     * @param array $args
-     *
-     * @return int
-     */
-    public function productFieldUpdate(array $args): int
-    {
-        (new ProductModel())->update($args);
-
-        return (int)$args['id'];
-    }
-
-    /**
-     * @param array $args
-     *
-     * @return array
-     */
     public function deleteProduct(array $args): array
     {
         $productModel = new ProductModel();
