@@ -19,6 +19,7 @@ use Slim\Exception\MethodNotAllowedException;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Route;
 
 class Router
 {
@@ -57,32 +58,14 @@ class Router
         $app = new App($this->container);
 
         $app->group('/search', function () use ($app) {
-            if (IS_AJAX || !IdentityModel::isLoggedIn()) {
-                $app->redirect(URL, URL . 'login');
-                return;
-            }
             $app->get('/{searchTerm}', function (Request $request, Response $response, array $args) {
                 $response->write((new SearchController($request, $response, $args))->index());
             });
-        });
-
-        $app->group('/logout', function () use ($app) {
-            if (IS_AJAX || !IdentityModel::isLoggedIn()) {
-                $app->redirect(URL, URL . 'login');
-                return;
-            }
-            $app->get('', function (Request $request, Response $response) {
-                (new LogoutController($request, $response))->logout();
-
-                return $response->withRedirect(URL . 'login');
-            });
+        })->add(function (Request $request, Response $response, Route $route) {
+            return Router::handleAccess($request, $response, $route);
         });
 
         $app->group('/shelf', function () use ($app) {
-            if (IS_AJAX || !IdentityModel::isLoggedIn()) {
-                $app->redirect(URL, URL . 'login');
-                return;
-            }
             $app->get('/{id}', function (Request $request, Response $response, array $args) {
                 $response->write((new ShelfController($request, $response, (int)$args['id']))->show());
             });
@@ -90,24 +73,19 @@ class Router
                 function (Request $request, Response $response, array $args) {
                     $response->write((new ShelfController($request, $response, (int)$args['id']))->show());
                 });
+        })->add(function (Request $request, Response $response, Route $route) {
+            return Router::handleAccess($request, $response, $route);
         });
 
         $app->group('/home', function () use ($app) {
-            if (IS_AJAX || !IdentityModel::isLoggedIn()) {
-                $app->redirect(URL, URL . 'login');
-                return;
-            }
             $app->get('', function (Request $request, Response $response) {
                 $response->write((new HomeController($request, $response))->index());
             });
+        })->add(function (Request $request, Response $response, Route $route) {
+            return Router::handleAccess($request, $response, $route);
         });
 
         $app->group('/login', function () use ($app) {
-            if (IdentityModel::isLoggedIn()) {
-                $app->redirect(URL . 'login', URL . 'home');
-                return;
-            }
-
             $app->get('', function (Request $request, Response $response) {
                 $response->write((new LoginController($request, $response))->index());
             });
@@ -122,11 +100,6 @@ class Router
         });
 
         $app->group('/api', function () use ($app) {
-            if (!IS_AJAX || !IdentityModel::isLoggedIn()) {
-                $app->redirect(URL . 'api', URL . 'login');
-                return;
-            }
-
             $app->post('/shelf', function (Request $request, Response $response) {
                 $response->write((new ShelfApi($request, $response))->newShelf());
             });
@@ -157,6 +130,14 @@ class Router
             $app->get('/group/{term}', function (Request $request, Response $response, array $args) {
                 $response->write((new SearchApi($request, $response))->get($args['term']));
             });
+        })->add(function (Request $request, Response $response, Route $route) {
+            return Router::handleAccess($request, $response, $route);
+        });
+
+        $app->get('/logout', function (Request $request, Response $response) {
+            (new LogoutController($request, $response))->logout();
+
+            return $response->withRedirect(URL . 'login');
         });
 
         try {
@@ -164,5 +145,24 @@ class Router
         } catch (\Exception | MethodNotAllowedException | NotFoundException $e) {
             return $e->getMessage();
         }
+    }
+
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param Route    $route
+     *
+     * @return ResponseInterface
+     * @throws \Exception
+     */
+    public static function handleAccess(Request $request, Response $response, Route $route): ResponseInterface
+    {
+        if (!IdentityModel::isLoggedIn()) {
+            $response->getBody()->write('Forbidden');
+
+            return $response->withStatus(403);
+        }
+
+        return $response = $route($request, $response);
     }
 }
