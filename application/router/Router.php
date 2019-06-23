@@ -56,28 +56,49 @@ class Router
     {
         $app = new App($this->container);
 
-        $app->group('', function () use ($app) {
+        $app->group('/search', function () use ($app) {
             if (IS_AJAX || !IdentityModel::isLoggedIn()) {
                 $app->redirect(URL, URL . 'login');
                 return;
             }
-            $app->get('/home', function (Request $request, Response $response) {
-                $response->write((new HomeController($request, $response))->index());
+            $app->get('/{searchTerm}', function (Request $request, Response $response, array $args) {
+                $response->write((new SearchController($request, $response, $args))->index());
             });
-            $app->get('/shelf/{id}', function (Request $request, Response $response, array $args) {
-                $response->write((new ShelfController($request, $response, (int)$args['id']))->show());
-            });
-            $app->get('/shelf/{id}/open/{fieldId}/{productId}',
-                function (Request $request, Response $response, array $args) {
-                    $response->write((new ShelfController($request, $response, (int)$args['id']))->show());
-                });
-            $app->get('/logout', function (Request $request, Response $response) {
+        });
+
+        $app->group('/logout', function () use ($app) {
+            if (IS_AJAX || !IdentityModel::isLoggedIn()) {
+                $app->redirect(URL, URL . 'login');
+                return;
+            }
+            $app->get('', function (Request $request, Response $response) {
                 (new LogoutController($request, $response))->logout();
 
                 return $response->withRedirect(URL . 'login');
             });
-            $app->get('/search/{searchTerm}', function (Request $request, Response $response, array $args) {
-                $response->write((new SearchController($request, $response, $args))->index());
+        });
+
+        $app->group('/shelf', function () use ($app) {
+            if (IS_AJAX || !IdentityModel::isLoggedIn()) {
+                $app->redirect(URL, URL . 'login');
+                return;
+            }
+            $app->get('/{id}', function (Request $request, Response $response, array $args) {
+                $response->write((new ShelfController($request, $response, (int)$args['id']))->show());
+            });
+            $app->get('/{id}/open/{fieldId}/{productId}',
+                function (Request $request, Response $response, array $args) {
+                    $response->write((new ShelfController($request, $response, (int)$args['id']))->show());
+                });
+        });
+
+        $app->group('/home', function () use ($app) {
+            if (IS_AJAX || !IdentityModel::isLoggedIn()) {
+                $app->redirect(URL, URL . 'login');
+                return;
+            }
+            $app->get('', function (Request $request, Response $response) {
+                $response->write((new HomeController($request, $response))->index());
             });
         });
 
