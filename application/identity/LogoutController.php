@@ -17,15 +17,18 @@ class LogoutController extends Controller
      * @param Response     $response
      * @param StringsModel $stringsModel
      * @param callable     $resetIdentity
+     * @param bool         $isLoggedIn
      */
-    public function __construct(Request $request,
+    public function __construct(
+        Request $request,
         Response $response,
         StringsModel $stringsModel,
-        callable $resetIdentity
+        callable $resetIdentity,
+        bool $isLoggedIn
     ) {
         $this->resetIdentity = $resetIdentity;
 
-        parent::__construct($request, $response, $stringsModel);
+        parent::__construct($request, $response, $stringsModel, $isLoggedIn);
     }
 
     /**

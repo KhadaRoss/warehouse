@@ -2,19 +2,27 @@
 
 namespace sidebar;
 
+use PDO;
 use shelf\Shelf;
 use shelf\ShelfModel;
+use system\Model;
 
-class SidebarModel
+class SidebarModel extends Model
 {
     /** @var Shelf[] */
     private $entries;
     /** @var int */
     private $activeId = 0;
 
-    public function __construct()
+    /**
+     * @param PDO        $database
+     * @param ShelfModel $shelfModel
+     */
+    public function __construct(PDO $database, ShelfModel $shelfModel)
     {
-        $this->entries = (new ShelfModel())->getAll();
+        parent::__construct($database);
+
+        $this->entries = $shelfModel->getAll();
     }
 
     /**
@@ -38,8 +46,8 @@ class SidebarModel
 
         foreach ($this->entries as $entry) {
             $menuEntry = [
-                'id'   => $entry->getId(),
-                'name' => $entry->getName(),
+                'id'    => $entry->getId(),
+                'name'  => $entry->getName(),
                 'class' => '',
             ];
 

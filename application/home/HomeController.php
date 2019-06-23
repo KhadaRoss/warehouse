@@ -19,18 +19,20 @@ class HomeController extends Controller
      * @param StringsModel $stringsModel
      * @param HomeView     $homeView
      * @param SidebarModel $sidebarModel
+     * @param bool         $isLoggedIn
      */
     public function __construct(
         Request $request,
         Response $response,
         StringsModel $stringsModel,
         HomeView $homeView,
-        SidebarModel $sidebarModel
+        SidebarModel $sidebarModel,
+        bool $isLoggedIn
     ) {
         $this->homeView = $homeView;
         $this->sidebarModel = $sidebarModel;
 
-        parent::__construct($request, $response, $stringsModel);
+        parent::__construct($request, $response, $stringsModel, $isLoggedIn);
     }
 
     /**

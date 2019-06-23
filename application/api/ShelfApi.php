@@ -12,12 +12,13 @@ class ShelfApi extends Api
     private $shelfModel;
 
     /**
-     * @param Request  $request
-     * @param Response $response
+     * @param Request    $request
+     * @param Response   $response
+     * @param ShelfModel $shelfModel
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request, Response $response, ShelfModel $shelfModel)
     {
-        $this->shelfModel = new ShelfModel();
+        $this->shelfModel = $shelfModel;
 
         parent::__construct($request, $response);
     }

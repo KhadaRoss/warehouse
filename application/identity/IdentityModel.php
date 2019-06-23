@@ -2,6 +2,7 @@
 
 namespace identity;
 
+use PDO;
 use system\Model;
 
 class IdentityModel extends Model
@@ -18,12 +19,13 @@ class IdentityModel extends Model
     private $userName;
 
     /**
+     * @param PDO    $database
      * @param int    $userId
      * @param string $userName
      */
-    public function __construct(int $userId, string $userName)
+    public function __construct(PDO $database, int $userId, string $userName)
     {
-        parent::__construct();
+        parent::__construct($database);
 
         $this->setUserId($userId);
         $this->setUserName($userName);
@@ -84,41 +86,48 @@ class IdentityModel extends Model
     }
 
     /**
+     * @param PDO   $database
      * @param array $userData
      */
-    private static function createBySession(array $userData): void
+    private static function createBySession(PDO $database, array $userData): void
     {
         $userId = $userData['userId'] ?? self::GUEST_USER_ID;
         $userName = $userData['userName'] ?? self::GUEST_USER_NAME;
 
-        new self($userId, $userName);
+        new self($database, $userId, $userName);
     }
 
     /**
+     * @param PDO $database
+     *
      * @return IdentityModel
      */
-    public static function get(): IdentityModel
+    public static function get(PDO $database): IdentityModel
     {
         if (self::$identity === null) {
-            self::createBySession($_SESSION[self::IDENTITY_SESSION_KEY] ?? []);
+            self::createBySession($database, $_SESSION[self::IDENTITY_SESSION_KEY] ?? []);
         }
 
         return self::$identity;
     }
 
     /**
+     * @param PDO $database
+     *
      * @return bool
      */
-    public static function isLoggedIn(): bool
+    public static function isLoggedIn(PDO $database): bool
     {
-        return self::get()->getUserId() !== self::GUEST_USER_ID;
+        return self::get($database)->getUserId() !== self::GUEST_USER_ID;
     }
 
     /**
+     * @param PDO $database
+     *
      * @return void
      */
-    public static function reset(): void
+    public static function reset(PDO $database): void
     {
-        new self(self::GUEST_USER_ID, self::GUEST_USER_NAME);
+        new self($database, self::GUEST_USER_ID, self::GUEST_USER_NAME);
     }
 }

@@ -20,18 +20,20 @@ class LoginController extends Controller
      * @param StringsModel $stringsModel
      * @param LoginModel   $loginModel
      * @param LoginView    $loginView
+     * @param bool         $isLoggedIn
      */
     public function __construct(
         Request $request,
         Response $response,
         StringsModel $stringsModel,
         LoginModel $loginModel,
-        LoginView $loginView
+        LoginView $loginView,
+        bool $isLoggedIn
     ) {
         $this->loginModel = $loginModel;
         $this->loginView = $loginView;
 
-        parent::__construct($request, $response, $stringsModel);
+        parent::__construct($request, $response, $stringsModel, $isLoggedIn);
     }
 
     /**

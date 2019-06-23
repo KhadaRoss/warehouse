@@ -2,13 +2,22 @@
 
 namespace field;
 
+use PDO;
 use system\Model;
 
 class FieldModel extends Model
 {
     /**
+     * @param PDO $database
+     */
+    public function __construct(PDO $database)
+    {
+        parent::__construct($database);
+    }
+
+    /**
      * @param string $name
-     * @param int $shelfId
+     * @param int    $shelfId
      *
      * @return int
      */
@@ -48,7 +57,7 @@ class FieldModel extends Model
 
         foreach ($fields as $field) {
             $data[] = [
-                'id' => $field['id'],
+                'id'   => $field['id'],
                 'name' => $field['name']
             ];
         }
@@ -66,8 +75,8 @@ class FieldModel extends Model
         $this->prepareAndExecute('DELETE FROM products WHERE fieldId = :fieldId', ['fieldId' => $id]);
 
         return (int)$this->prepareAndExecute(
-            'DELETE FROM fields WHERE id = :id',
-            ['id' => $id]
-        )->rowCount() > 0;
+                'DELETE FROM fields WHERE id = :id',
+                ['id' => $id]
+            )->rowCount() > 0;
     }
 }

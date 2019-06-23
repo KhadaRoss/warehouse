@@ -2,10 +2,19 @@
 
 namespace product;
 
+use PDO;
 use system\Model;
 
 class ProductModel extends Model
 {
+    /**
+     * @param PDO $database
+     */
+    public function __construct(PDO $database)
+    {
+        parent::__construct($database);
+    }
+
     /**
      * @param array $data
      *

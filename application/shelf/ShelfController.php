@@ -29,6 +29,7 @@ class ShelfController extends Controller
      * @param ShelfModel   $shelfModel
      * @param ShelfView    $shelfView
      * @param SidebarModel $sidebarModel
+     * @param bool         $isLoggedIn
      */
     public function __construct(
         Request $request,
@@ -38,7 +39,8 @@ class ShelfController extends Controller
         FieldModel $fieldModel,
         ShelfModel $shelfModel,
         ShelfView $shelfView,
-        SidebarModel $sidebarModel
+        SidebarModel $sidebarModel,
+        bool $isLoggedIn
     ) {
         $this->fieldModel = $fieldModel;
         $this->shelfModel = $shelfModel;
@@ -48,7 +50,7 @@ class ShelfController extends Controller
         $this->activeId = $activeId;
         $this->sidebarModel->setActiveId($this->activeId);
 
-        parent::__construct($request, $response, $stringsModel);
+        parent::__construct($request, $response, $stringsModel, $isLoggedIn);
     }
 
     /**

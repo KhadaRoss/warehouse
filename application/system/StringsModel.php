@@ -2,10 +2,20 @@
 
 namespace system;
 
+use PDO;
+
 class StringsModel extends Model
 {
     /**
-     * @param array $keys
+     * @param PDO $database
+     */
+    public function __construct(PDO $database)
+    {
+        parent::__construct($database);
+    }
+
+    /**
+     * @param array  $keys
      * @param string $lang
      *
      * @return array
@@ -20,7 +30,7 @@ SQL;
         $strings = $this->prepareAndExecute(
             $query,
             [
-                'lang'    => ($lang === '' ? SettingsModel::get('CURRENT_LANGUAGE') : $lang)
+                'lang' => 'de'
             ]
         )->fetchAll();
 
@@ -48,7 +58,7 @@ SQL;
             $query,
             [
                 'id'   => $key,
-                'lang' => $lang === '' ? SettingsModel::get('CURRENT_LANGUAGE') : $lang
+                'lang' => 'de'
             ]
         )->fetchColumn();
     }

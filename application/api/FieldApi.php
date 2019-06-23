@@ -14,10 +14,20 @@ class FieldApi extends Api
     /** @var ProductModel */
     private $productModel;
 
-    public function __construct(Request $request, Response $response)
-    {
-        $this->fieldModel = new FieldModel();
-        $this->productModel = new ProductModel();
+    /**
+     * @param Request      $request
+     * @param Response     $response
+     * @param FieldModel   $fieldModel
+     * @param ProductModel $productModel
+     */
+    public function __construct(
+        Request $request,
+        Response $response,
+        FieldModel $fieldModel,
+        ProductModel $productModel
+    ) {
+        $this->fieldModel = $fieldModel;
+        $this->productModel = $productModel;
 
         parent::__construct($request, $response);
     }

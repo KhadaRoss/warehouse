@@ -26,6 +26,7 @@ class SearchController extends Controller
      * @param ProductModel $productModel
      * @param SearchView   $searchView
      * @param SidebarModel $sidebarModel
+     * @param bool         $isLoggedIn
      */
     public function __construct(
         Request $request,
@@ -34,7 +35,8 @@ class SearchController extends Controller
         StringsModel $stringsModel,
         ProductModel $productModel,
         SearchView $searchView,
-        SidebarModel $sidebarModel
+        SidebarModel $sidebarModel,
+        bool $isLoggedIn
     ) {
         $this->productModel = $productModel;
         $this->searchView = $searchView;
@@ -42,7 +44,7 @@ class SearchController extends Controller
 
         $this->searchTerm = $args['searchTerm'] ?? '';
 
-        parent::__construct($request, $response, $stringsModel);
+        parent::__construct($request, $response, $stringsModel, $isLoggedIn);
     }
 
     /**

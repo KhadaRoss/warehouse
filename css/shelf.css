@@ -199,7 +199,7 @@ input.empty, textarea.empty {
         right: 7px;
     }
 
-    #productFieldAdd {
+    #productFieldAdd, #productFieldUpdate {
         height: 500px;
         top: calc(50vh - 250px);
         width: calc(100vw - 4px);

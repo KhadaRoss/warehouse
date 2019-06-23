@@ -10,14 +10,17 @@ abstract class Model
     /** @var PDO */
     protected $db;
 
-    public function __construct()
+    /**
+     * @param PDO $database
+     */
+    public function __construct(PDO $database)
     {
-        $this->db = Database::getConnection();
+        $this->db = $database;
     }
 
     /**
      * @param string $query
-     * @param array $placeholders
+     * @param array  $placeholders
      *
      * @return PDOStatement
      */

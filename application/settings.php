@@ -11,7 +11,7 @@ use Slim\Http\Response;
  */
 $container['notFoundHandler'] = function ($container) {
     return function (Request $request, Response $response) use ($container) {
-        if ($container->get('isLoggedIn')()) {
+        if ($container->get('isLoggedIn')) {
             return $response->withRedirect(URL . 'home');
         }
 

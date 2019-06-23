@@ -2,6 +2,7 @@
 
 namespace identity;
 
+use PDO;
 use Slim\Http\Request;
 use system\Model;
 
@@ -15,11 +16,12 @@ class LoginModel extends Model
     private $password;
 
     /**
+     * @param PDO     $database
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct(PDO $database, Request $request)
     {
-        parent::__construct();
+        parent::__construct($database);
 
         $this->username = \strtolower($request->getParsedBodyParam('username'));
         $this->password = $request->getParsedBodyParam('password');
@@ -36,7 +38,7 @@ class LoginModel extends Model
             return;
         }
 
-        new IdentityModel($userData['userId'], $this->username);
+        new IdentityModel($this->db, $userData['userId'], $this->username);
     }
 
     /**

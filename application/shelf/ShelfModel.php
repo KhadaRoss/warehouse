@@ -2,10 +2,19 @@
 
 namespace shelf;
 
+use PDO;
 use system\Model;
 
 class ShelfModel extends Model
 {
+    /**
+     * @param PDO $database
+     */
+    public function __construct(PDO $database)
+    {
+        parent::__construct($database);
+    }
+
     /**
      * @return Shelf[]
      */
@@ -89,8 +98,8 @@ class ShelfModel extends Model
         );
 
         return (int)$this->prepareAndExecute(
-            'DELETE FROM shelves WHERE id = :id',
-            ['id' => $id]
-        )->rowCount() > 0;
+                'DELETE FROM shelves WHERE id = :id',
+                ['id' => $id]
+            )->rowCount() > 0;
     }
 }

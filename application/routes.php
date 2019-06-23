@@ -62,13 +62,11 @@ $app->group('/login', function () use ($app) {
         $loginController = $this->get('loginController');
         $loginController($request, $response)->authenticate();
 
-        $isLoggedIn = $this->get('isLoggedIn');
-
-        return $response->withRedirect(URL . ($isLoggedIn() ? 'home' : 'login/error'));
+        return $response->withRedirect(URL . ($this->get('isLoggedIn') ? 'home' : 'login/error'));
     });
 })->add(function (Request $request, Response $response, Route $route) {
-    if ($this->get('isLoggedIn')()) {
-        return $response->withRedirect(URL . 'homee');
+    if ($this->get('isLoggedIn')) {
+        return $response->withRedirect(URL . 'home');
     }
 
     return $route($request, $response);

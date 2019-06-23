@@ -12,12 +12,13 @@ class SearchApi extends Api
     private $productModel;
 
     /**
-     * @param Request  $request
-     * @param Response $response
+     * @param Request      $request
+     * @param Response     $response
+     * @param ProductModel $productModel
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request, Response $response, ProductModel $productModel)
     {
-        $this->productModel = new ProductModel();
+        $this->productModel = $productModel;
 
         parent::__construct($request, $response);
     }

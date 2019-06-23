@@ -2,7 +2,6 @@
 
 namespace system;
 
-use identity\IdentityModel;
 use sidebar\SidebarModel;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -15,6 +14,8 @@ abstract class Controller
     protected $response;
     /** @var array */
     protected $output;
+    /** @var bool */
+    private $isLoggedIn;
     /** @var StringsModel */
     private $stringsModel;
     /** @var SidebarModel */
@@ -24,13 +25,15 @@ abstract class Controller
      * @param Request      $request
      * @param Response     $response
      * @param StringsModel $stringsModel
+     * @param bool         $isLoggedIn
      */
-    public function __construct(Request $request, Response $response, StringsModel $stringsModel)
+    public function __construct(Request $request, Response $response, StringsModel $stringsModel, bool $isLoggedIn)
     {
         $this->stringsModel = $stringsModel;
 
         $this->request = $request;
         $this->response = $response;
+        $this->isLoggedIn = $isLoggedIn;
 
         $this->setOutput();
         $this->initStrings();
@@ -42,7 +45,7 @@ abstract class Controller
     private function setOutput(): void
     {
         $this->output['URL'] = URL;
-        $this->output['LANG'] = SettingsModel::get('CURRENT_LANGUAGE');
+        $this->output['LANG'] = 'de';
 
         if ($this->sidebarModel !== null) {
             $this->output['SIDEBAR'] = $this->sidebarModel->getTwigData();
@@ -59,7 +62,7 @@ abstract class Controller
             $this->stringsModel->getAll($this->getStrings())
         );
 
-        if (IdentityModel::isLoggedIn()) {
+        if ($this->isLoggedIn) {
             $this->output['JS_STRINGS'] = $this->stringsModel->getAll($this->getGlobalJsStrings());
         }
     }

@@ -7,7 +7,6 @@ use Slim\Exception\NotFoundException;
 
 require 'base.php';
 
-require APPLICATION_PATH . 'config.php';
 require BASE_PATH . 'vendor/autoload.php';
 
 session_start();

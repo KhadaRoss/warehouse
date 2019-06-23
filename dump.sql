@@ -54,25 +54,6 @@ CREATE TABLE `products` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `settings`
---
-
-CREATE TABLE `settings` (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `type` enum('int','float','bool','enum','string') NOT NULL,
-  `setting` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `settings`
---
-
-INSERT INTO `settings` (`id`, `type`, `setting`) VALUES
-('CURRENT_LANGUAGE', 'string', 'de');
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `shelves`
 --
 
@@ -166,12 +147,6 @@ ALTER TABLE `fields`
 -- Indizes für die Tabelle `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indizes für die Tabelle `settings`
---
-ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
