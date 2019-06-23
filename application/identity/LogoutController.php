@@ -5,16 +5,27 @@ namespace identity;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use system\Controller;
+use system\StringsModel;
 
 class LogoutController extends Controller
 {
+    /** @var callable */
+    private $resetIdentity;
+
     /**
-     * @param Request  $request
-     * @param Response $response
+     * @param Request      $request
+     * @param Response     $response
+     * @param StringsModel $stringsModel
+     * @param callable     $resetIdentity
      */
-    public function __construct(Request $request, Response $response)
-    {
-        parent::__construct($request, $response);
+    public function __construct(Request $request,
+        Response $response,
+        StringsModel $stringsModel,
+        callable $resetIdentity
+    ) {
+        $this->resetIdentity = $resetIdentity;
+
+        parent::__construct($request, $response, $stringsModel);
     }
 
     /**
@@ -22,7 +33,9 @@ class LogoutController extends Controller
      */
     public function logout(): void
     {
-        IdentityModel::reset();
+        $reset = $this->resetIdentity;
+
+        $reset();
     }
 
     /**

@@ -7,6 +7,7 @@ use sidebar\SidebarModel;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use system\Controller;
+use system\StringsModel;
 
 class ShelfController extends Controller
 {
@@ -20,21 +21,34 @@ class ShelfController extends Controller
     private $shelfView;
 
     /**
-     * @param Request  $request
-     * @param Response $response
-     * @param int      $activeId
+     * @param Request      $request
+     * @param Response     $response
+     * @param int          $activeId
+     * @param StringsModel $stringsModel
+     * @param FieldModel   $fieldModel
+     * @param ShelfModel   $shelfModel
+     * @param ShelfView    $shelfView
+     * @param SidebarModel $sidebarModel
      */
-    public function __construct(Request $request, Response $response, int $activeId)
-    {
-        $this->fieldModel = new FieldModel();
-        $this->shelfModel = new ShelfModel();
-        $this->shelfView = new ShelfView();
-        $this->sidebarModel = new SidebarModel();
+    public function __construct(
+        Request $request,
+        Response $response,
+        int $activeId,
+        StringsModel $stringsModel,
+        FieldModel $fieldModel,
+        ShelfModel $shelfModel,
+        ShelfView $shelfView,
+        SidebarModel $sidebarModel
+    ) {
+        $this->fieldModel = $fieldModel;
+        $this->shelfModel = $shelfModel;
+        $this->shelfView = $shelfView;
+        $this->sidebarModel = $sidebarModel;
 
         $this->activeId = $activeId;
         $this->sidebarModel->setActiveId($this->activeId);
 
-        parent::__construct($request, $response);
+        parent::__construct($request, $response, $stringsModel);
     }
 
     /**

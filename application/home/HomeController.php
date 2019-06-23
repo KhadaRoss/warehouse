@@ -6,6 +6,7 @@ use sidebar\SidebarModel;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use system\Controller;
+use system\StringsModel;
 
 class HomeController extends Controller
 {
@@ -13,15 +14,23 @@ class HomeController extends Controller
     private $homeView;
 
     /**
-     * @param Request  $request
-     * @param Response $response
+     * @param Request      $request
+     * @param Response     $response
+     * @param StringsModel $stringsModel
+     * @param HomeView     $homeView
+     * @param SidebarModel $sidebarModel
      */
-    public function __construct(Request $request, Response $response)
-    {
-        $this->homeView = new HomeView();
-        $this->sidebarModel = new SidebarModel();
+    public function __construct(
+        Request $request,
+        Response $response,
+        StringsModel $stringsModel,
+        HomeView $homeView,
+        SidebarModel $sidebarModel
+    ) {
+        $this->homeView = $homeView;
+        $this->sidebarModel = $sidebarModel;
 
-        parent::__construct($request, $response);
+        parent::__construct($request, $response, $stringsModel);
     }
 
     /**

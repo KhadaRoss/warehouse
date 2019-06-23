@@ -7,6 +7,7 @@ use sidebar\SidebarModel;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use system\Controller;
+use system\StringsModel;
 
 class SearchController extends Controller
 {
@@ -18,19 +19,30 @@ class SearchController extends Controller
     private $searchView;
 
     /**
-     * @param Request  $request
-     * @param Response $response
-     * @param array    $args
+     * @param Request      $request
+     * @param Response     $response
+     * @param array        $args
+     * @param StringsModel $stringsModel
+     * @param ProductModel $productModel
+     * @param SearchView   $searchView
+     * @param SidebarModel $sidebarModel
      */
-    public function __construct(Request $request, Response $response, array $args)
-    {
-        $this->productModel = new ProductModel();
-        $this->searchView = new SearchView();
-        $this->sidebarModel = new SidebarModel();
+    public function __construct(
+        Request $request,
+        Response $response,
+        array $args,
+        StringsModel $stringsModel,
+        ProductModel $productModel,
+        SearchView $searchView,
+        SidebarModel $sidebarModel
+    ) {
+        $this->productModel = $productModel;
+        $this->searchView = $searchView;
+        $this->sidebarModel = $sidebarModel;
 
         $this->searchTerm = $args['searchTerm'] ?? '';
 
-        parent::__construct($request, $response);
+        parent::__construct($request, $response, $stringsModel);
     }
 
     /**

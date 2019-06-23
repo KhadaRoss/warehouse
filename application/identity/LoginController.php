@@ -5,6 +5,7 @@ namespace identity;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use system\Controller;
+use system\StringsModel;
 
 class LoginController extends Controller
 {
@@ -14,15 +15,23 @@ class LoginController extends Controller
     private $loginView;
 
     /**
-     * @param Request  $request
-     * @param Response $response
+     * @param Request      $request
+     * @param Response     $response
+     * @param StringsModel $stringsModel
+     * @param LoginModel   $loginModel
+     * @param LoginView    $loginView
      */
-    public function __construct(Request $request, Response $response)
-    {
-        $this->loginModel = new LoginModel($request);
-        $this->loginView = new LoginView();
+    public function __construct(
+        Request $request,
+        Response $response,
+        StringsModel $stringsModel,
+        LoginModel $loginModel,
+        LoginView $loginView
+    ) {
+        $this->loginModel = $loginModel;
+        $this->loginView = $loginView;
 
-        parent::__construct($request, $response);
+        parent::__construct($request, $response, $stringsModel);
     }
 
     /**

@@ -21,12 +21,13 @@ abstract class Controller
     protected $sidebarModel;
 
     /**
-     * @param Request  $request
-     * @param Response $response
+     * @param Request      $request
+     * @param Response     $response
+     * @param StringsModel $stringsModel
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request, Response $response, StringsModel $stringsModel)
     {
-        $this->stringsModel = new StringsModel();
+        $this->stringsModel = $stringsModel;
 
         $this->request = $request;
         $this->response = $response;
