@@ -19,7 +19,7 @@ class FieldModelTest extends TestCase
     /**
      * @return void
      */
-    public function testAddGetDelete(): void
+    public function testFieldModel(): void
     {
         $fieldModel = new FieldModel(Database::getConnection());
 

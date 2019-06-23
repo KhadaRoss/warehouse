@@ -84,15 +84,7 @@ SQL;
             ['id' => $productId]
         )->fetch();
 
-        return [
-            'id'           => $product['id'],
-            'fieldId'      => $product['fieldId'],
-            'name'         => $product['name'],
-            'quantity'     => $product['quantity'],
-            'date'         => $product['date'],
-            'productGroup' => $product['productGroup'],
-            'comment'      => $product['comment'],
-        ];
+        return $product ?: [];
     }
 
     /**

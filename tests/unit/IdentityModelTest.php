@@ -19,7 +19,7 @@ class IdentityModelTest extends TestCase
     /**
      * @return void
      */
-    public function testIdentity(): void
+    public function testIdentityModel(): void
     {
         $database = Database::getConnection();
 
