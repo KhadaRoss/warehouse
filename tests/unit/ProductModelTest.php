@@ -13,9 +13,9 @@ class ProductModelTest extends TestCase
      */
     public function setUp(): void
     {
-        define('USER', 'root');
-        define('PASSWORD', '');
-        define('DSN', 'mysql:dbname=warehousetest;host=localhost;charset=utf8');
+        defined('USER') or define('USER', 'root');
+        defined('PASSWORD') or define('PASSWORD', '');
+        defined('DSN') or define('DSN', 'mysql:dbname=warehousetest;host=localhost;charset=utf8');
     }
 
     /**
