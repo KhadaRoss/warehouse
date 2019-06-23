@@ -12,7 +12,7 @@ class databaseTest extends TestCase
     {
         define('USER', 'root');
         define('PASSWORD', '');
-        define('DSN', 'mysql:dbname=warehouse;host=localhost;charset=utf8');
+        define('DSN', 'mysql:dbname=warehousetest;host=localhost;charset=utf8');
 
         $database = Database::getConnection();
 
