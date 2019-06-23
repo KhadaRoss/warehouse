@@ -49,8 +49,14 @@ let sidebar = function () {
             );
 
             entry.appendTo($('#menuEntries'));
-            this.hideInput(function () {
-            });
+
+            const callback = function () {
+            };
+
+            if (env.isSmallDevice()) {
+                this.hideInputMobile(callback);
+            }
+            this.hideInput(callback);
         },
 
         /**
