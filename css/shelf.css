@@ -213,8 +213,27 @@ input.empty, textarea.empty {
         left: 0;
     }
 
+    #productFieldUpdate {
+        height: 420px;
+        top: calc(50vh - 210px);
+        width: calc(100vw - 4px);
+        left: 0;
+    }
+
     .fieldContent {
         width: 95%;
+    }
+
+    #shelfTools > .fa {
+        float: left;
+    }
+
+    #newField {
+        float: right;
+    }
+
+    #shelfHeader {
+        margin-top: 30px;
     }
 }
 
