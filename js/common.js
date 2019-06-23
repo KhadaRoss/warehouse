@@ -1,5 +1,6 @@
 let strings;
 let path;
+let isSmallDevice;
 
 let common = function () {
 
@@ -27,6 +28,13 @@ let env = function () {
          */
         getWebPath: function () {
             return path;
+        },
+        isSmallDevice: function () {
+            if (typeof isSmallDevice === 'undefined') {
+                isSmallDevice = $(window).width() < 1200;
+            }
+
+            return isSmallDevice;
         }
     }
 }();

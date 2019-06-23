@@ -9,7 +9,11 @@ let sidebar = function () {
          */
         initTools: function () {
             $('.inputTrigger').on('click', function () {
-                sidebar.handleToolClick(this.id);
+                if (env.isSmallDevice()) {
+                    sidebar.handleToolClickMobile(this.id);
+                } else {
+                    sidebar.handleToolClick(this.id);
+                }
             });
             $('#toolInput').keyup(function (e) {
                 const mode = input.attr('data-mode');
@@ -104,7 +108,63 @@ let sidebar = function () {
                 input.fadeIn();
                 input.focus();
             });
-        }
+        },
+        /**
+         * @param {string} mode
+         */
+        handleToolClickMobile: function (mode) {
+            const currentMode = input.attr('data-mode') || '';
+
+            if (currentMode === '') {
+                this.showInputMobile(mode);
+                return;
+            }
+
+            this.hideInputMobile(function () {
+                if (currentMode === mode) {
+                    return;
+                }
+
+                sidebar.showInputMobile(mode);
+            });
+        },
+        /**
+         * @param {string} mode
+         */
+        showInputMobile: function (mode) {
+            if (animating) {
+                return;
+            }
+
+            animating = true;
+            const tool = $('#menuTools div#' + mode);
+            tool.addClass('active');
+            $('#sidebar').animate({height: 79}, 400, function () {
+                animating = false;
+                input.attr('data-mode', mode);
+                input.attr('placeholder', tool.attr('title'));
+                input.fadeIn();
+                input.focus();
+            });
+        },
+        /**
+         * @param {function} callback
+         */
+        hideInputMobile: function (callback) {
+            if (animating) {
+                return;
+            }
+
+            animating = true;
+            input.attr('data-mode', '');
+            input.val('');
+            input.fadeOut(400, function () {
+                animating = false;
+                $('#menuTools div').removeClass('active');
+                $('#sidebar').animate({height: 35});
+                callback();
+            });
+        },
     }
 }();
 

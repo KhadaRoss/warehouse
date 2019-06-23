@@ -46,7 +46,7 @@ input.empty, textarea.empty {
     width: 500px;
     min-height: calc(100vh - 158px);
     top: 68px;
-    left: calc(((100vw - 221px) / 2 ) - 280px + 221px);
+    left: calc(((100vw - 221px) / 2) - 280px + 221px);
 }
 
 #shelfTools {
@@ -179,6 +179,43 @@ input.empty, textarea.empty {
 
 /* tablet */
 @media (max-width: 1199px) {
+    #shelf {
+        z-index: 5;
+        left: 0;
+        width: calc(100vw - 60px);
+        top: 100px;
+        min-height: calc(100vh - 210px);
+    }
+
+    .topRightButton {
+        top: 68px;
+    }
+
+    #deleteShelfButton {
+        right: 41px;
+    }
+
+    #backButton {
+        right: 7px;
+    }
+
+    #productFieldAdd {
+        height: 500px;
+        top: calc(50vh - 250px);
+        width: calc(100vw - 4px);
+        left: 0;
+    }
+
+    #deleteShelf, #deleteField {
+        height: 230px;
+        top: calc(50vh - 115px);
+        width: calc(100vw - 4px);
+        left: 0;
+    }
+
+    .fieldContent {
+        width: 95%;
+    }
 }
 
 /* mobile */

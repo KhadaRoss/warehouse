@@ -56,6 +56,42 @@
 
 /* tablet */
 @media (max-width: 1199px) {
+    #sidebar {
+        height: 35px;
+        width: 100vw;
+        min-height: 35px;
+        overflow: auto;
+        white-space: nowrap;
+        z-index: 1;
+    }
+
+    #menuTools {
+        height: 33px;
+        width: 100px;
+        display: inline-block;
+    }
+
+    #menuEntries {
+        border-top: 0;
+    }
+
+    #menuEntries, #menuEntries > * {
+        display: inline-block;
+    }
+
+    .entry:last-child {
+        margin-right: 20px;
+    }
+
+    #sidebar #toolInput {
+        position: absolute;
+        width: 100%;
+        top: 53px;
+        max-width: calc(100vw - 20px);
+        height: 31px;
+        text-align: center;
+        font-size: 20px;
+    }
 }
 
 /* mobile */
