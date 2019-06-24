@@ -10,7 +10,10 @@ categorized in groups.
 Use the global full text search to find things quickly. 
 
 ---
-import /dump.sql
+
+import /dump.sql to 'warehouse' and 'warehousetest' database
+
+run composer update 
 
 adjust base.php
 
@@ -25,6 +28,8 @@ tech stack:
 - PHP 7.3
 - Slim v3.12
 - Twig v2
+- PHPUnit 8
+- PSR-4 Autoloader
 - jQuery 3.3.1
 - font awesome 5.6.3
 - REST api model
