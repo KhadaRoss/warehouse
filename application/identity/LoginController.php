@@ -71,6 +71,7 @@ class LoginController extends Controller
     {
         return [
             'LOGIN',
+            'LOGIN_BUTTON',
             'USERNAME',
             'PASSWORD',
             'AUTHENTICATION_FAILED',
