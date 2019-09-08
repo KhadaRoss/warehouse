@@ -20,8 +20,7 @@ class ProductModel extends Model
      *
      * @return int
      */
-    public function add(array $data): int
-    {
+    public function add(array $data) : int {
         $query = <<<SQL
 INSERT INTO products (fieldId, name, quantity, date, productGroup, comment)
   VALUES (:fieldId, :name, :quantity, :date, :productGroup, :comment)
@@ -30,12 +29,12 @@ SQL;
         $this->prepareAndExecute(
             $query,
             [
-                'name'         => $data['name'],
-                'quantity'     => $data['quantity'],
-                'fieldId'      => $data['fieldId'],
-                'date'         => $data['date'],
+                'name' => $data['name'],
+                'quantity' => $data['quantity'],
+                'fieldId' => $data['fieldId'],
+                'date' => $data['date'],
                 'productGroup' => $data['productGroup'],
-                'comment'      => $data['comment'],
+                'comment' => $data['comment'],
             ]
         );
 
@@ -47,8 +46,7 @@ SQL;
      *
      * @return array
      */
-    public function getByFieldId(int $fieldId): array
-    {
+    public function getByFieldId(int $fieldId): array {
         $query = <<<SQL
 SELECT id, fieldId, name, quantity, date, productGroup, comment FROM products WHERE fieldId = :fieldId ORDER BY name ASC
 SQL;
@@ -59,13 +57,13 @@ SQL;
 
         foreach ($products as $product) {
             $data[] = [
-                'id'           => $product['id'],
-                'fieldId'      => $product['fieldId'],
-                'name'         => $product['name'],
-                'quantity'     => $product['quantity'],
-                'date'         => $product['date'],
+                'id' => $product['id'],
+                'fieldId' => $product['fieldId'],
+                'name' => $product['name'],
+                'quantity' => $product['quantity'],
+                'date' => $product['date'],
                 'productGroup' => $product['productGroup'],
-                'comment'      => $product['comment'],
+                'comment' => $product['comment'],
             ];
         }
 
@@ -77,8 +75,7 @@ SQL;
      *
      * @return array
      */
-    public function getByProductId(int $productId): array
-    {
+    public function getByProductId(int $productId): array {
         $product = $this->prepareAndExecute(
             'SELECT id, fieldId, name, quantity, date, productGroup, comment FROM products WHERE id = :id LIMIT 1',
             ['id' => $productId]
@@ -92,17 +89,16 @@ SQL;
      *
      * @return int
      */
-    public function update(array $args): int
-    {
+    public function update(array $args): int {
         $this->prepareAndExecute(
             'UPDATE products SET name = :name, quantity = :quantity, date = :date, productGroup = :productGroup, comment = :comment WHERE id = :id',
             [
-                'id'           => $args['id'],
-                'name'         => $args['name'],
-                'quantity'     => $args['quantity'],
-                'date'         => $args['date'],
+                'id' => $args['id'],
+                'name' => $args['name'],
+                'quantity' => $args['quantity'],
+                'date' => $args['date'],
                 'productGroup' => $args['productGroup'],
-                'comment'      => $args['comment'],
+                'comment' => $args['comment'],
             ]
         );
 
@@ -114,8 +110,7 @@ SQL;
      *
      * @return bool
      */
-    public function delete(int $id): bool
-    {
+    public function delete(int $id): bool {
         return (int)$this->prepareAndExecute(
                 'DELETE FROM products WHERE id = :id',
                 ['id' => $id]
@@ -127,8 +122,7 @@ SQL;
      *
      * @return array
      */
-    public function search(string $searchTerm): array
-    {
+    public function search(string $searchTerm): array {
         $query = <<<SQL
 SELECT
   p.id as productId,
@@ -164,8 +158,7 @@ SQL;
      *
      * @return array
      */
-    public function searchGroup(string $term): array
-    {
+    public function searchGroup(string $term): array {
         $groups = $this->prepareAndExecute(
             'SELECT DISTINCT productGroup FROM products WHERE productGroup LIKE :term LIMIT 5',
             ['term' => '%' . $term . '%']
@@ -181,5 +174,22 @@ SQL;
         }
 
         return $return;
+    }
+
+    /**
+     * @param int $productId
+     * @param int $fieldId
+     *
+     * @return bool
+     */
+    public function updatePosition(int $productId, int $fieldId): bool
+    {
+        return $this->prepareAndExecute(
+                'UPDATE products SET fieldId = :fieldId WHERE id = :productId',
+                [
+                    'fieldId' => $fieldId,
+                    'productId' => $productId,
+                ]
+            )->rowCount() > 0;
     }
 }

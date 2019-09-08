@@ -45,4 +45,12 @@ class ShelfApi extends Api
 
         return $this->asJson(['success' => $success]);
     }
+
+    /**
+     * @return string
+     */
+    public function getAll(): string
+    {
+        return $this->asJson(['shelves' => $this->shelfModel->getAllShelvesWithFields()]);
+    }
 }

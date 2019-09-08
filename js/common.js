@@ -88,6 +88,10 @@ let request = function () {
          * @return {string}
          */
         getParameters: function (parameters) {
+            if ($.isEmptyObject(parameters)) {
+                return '';
+            }
+
             return needsData ? '' : '/' + parameters[(Object.keys(parameters))[0]];
         }
     }

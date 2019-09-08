@@ -37,8 +37,7 @@ class ShelfModel extends Model
      *
      * @return Shelf
      */
-    public function get(int $id): Shelf
-    {
+    public function get(int $id): Shelf {
         $shelf = $this->prepareAndExecute(
             'SELECT * FROM shelves WHERE id = :id',
             ['id' => $id]
@@ -60,8 +59,7 @@ class ShelfModel extends Model
      *
      * @return int
      */
-    public function add(string $name): int
-    {
+    public function add(string $name): int {
         $this->prepareAndExecute(
             'INSERT INTO shelves (name) VALUES (:name)',
             ['name' => $name]
@@ -75,8 +73,7 @@ class ShelfModel extends Model
      *
      * @return bool
      */
-    public function delete(int $id): bool
-    {
+    public function delete(int $id): bool {
         $fields = $this->prepareAndExecute(
             'SELECT id FROM fields WHERE shelfId = :shelfId',
             ['shelfId' => $id]
@@ -101,5 +98,36 @@ class ShelfModel extends Model
                 'DELETE FROM shelves WHERE id = :id',
                 ['id' => $id]
             )->rowCount() > 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllShelvesWithFields(): array
+    {
+        $query = <<<SQL
+SELECT
+  s.id as shelfId,
+  s.name as shelfName,
+  f.id as fieldId,
+  f.name as fieldName
+FROM shelves s
+  INNER JOIN fields f
+    ON f.shelfId = s.id
+SQL;
+
+        $result = $this->prepareAndExecute($query)->fetchAll();
+
+        $shelves = [];
+
+        foreach ($result as $row) {
+            if (empty($shelves[$row['shelfId']]['shelfName'])) {
+                $shelves[$row['shelfId']]['shelfName'] = $row['shelfName'];
+            }
+
+            $shelves[$row['shelfId']]['fields'][$row['fieldId']] = $row['fieldName'];
+        }
+
+        return $shelves;
     }
 }

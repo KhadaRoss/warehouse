@@ -66,4 +66,16 @@ class ProductApi extends Api
 
         return $this->asJson(['success' => $success]);
     }
+
+    /**
+     * @return string
+     */
+    public function updatePosition(): string
+    {
+        $data = $this->request->getParsedBody();
+        $productId = (int)$data['productId'];
+        $fieldId = (int)$data['fieldId'];
+
+        return $this->asJson(['success' => $this->productModel->updatePosition($productId, $fieldId)]);
+    }
 }

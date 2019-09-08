@@ -78,6 +78,11 @@ $app->group('/api', function () use ($app) {
 
         $response->write($shelfApi($request, $response)->newShelf());
     });
+    $app->get('/shelves', function (Request $request, Response $response) {
+        $shelfApi = $this->get('shelfApi');
+
+        $response->write($shelfApi($request, $response)->getAll());
+    });
     $app->delete('/shelf/{id}', function (Request $request, Response $response, array $args) {
         $shelfApi = $this->get('shelfApi');
 
@@ -102,6 +107,11 @@ $app->group('/api', function () use ($app) {
         $productApi = $this->get('productApi');
 
         $response->write($productApi($request, $response)->new());
+    });
+    $app->post('/productPosition', function (Request $request, Response $response) {
+        $productApi = $this->get('productApi');
+
+        $response->write($productApi($request, $response)->updatePosition());
     });
     $app->put('/product', function (Request $request, Response $response) {
         $productApi = $this->get('productApi');

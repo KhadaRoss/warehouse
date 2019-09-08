@@ -173,6 +173,47 @@ input.empty, textarea.empty {
     cursor: pointer;
 }
 
+#productFieldUpdate .moveButton, #productFieldMove .cancelButton {
+    float: right;
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    font-size: 37px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    width: 37px;
+}
+
+#productFieldUpdate .moveButton:hover, #productFieldMove .cancelButton:hover {
+    background-color: #1d1d1d;
+    color: white;
+}
+
+#productMoveContent {
+    margin: 70px 4px 4px 4px;
+    padding: 10px;
+    border: 2px solid white;
+    overflow-x: auto;
+    height: 250px;
+}
+
+.shelfRow {
+    font-size: 30px;
+    border-bottom: 2px solid white;
+    cursor: pointer;
+}
+
+.shelfRow.extended, .shelfRow:hover, .fieldMoveContent > div:hover {
+    background-color: #1d1d1d;
+    color: white;
+}
+
+.fieldMoveContent {
+    font-size: 25px;
+    cursor: pointer;
+}
+
 /* desktop */
 @media (min-width: 1200px) {
 }
@@ -199,7 +240,7 @@ input.empty, textarea.empty {
         right: 7px;
     }
 
-    #productFieldAdd, #productFieldUpdate {
+    #productFieldAdd, #productFieldUpdate, #productFieldMove {
         height: 500px;
         top: calc(50vh - 250px);
         width: calc(100vw - 4px);

@@ -59,6 +59,7 @@
         </div>
     </div>
     <div id="productFieldUpdate" class="popup product hidden">
+        <i class="fa fa-angle-right moveButton"></i>
         <div class="headline">{{ PRODUCT_INFORMATION }}</div>
         <div class="text">{{ PRODUCT_NAME }}</div>
         <label for="productNameUpdate"></label><input id="productNameUpdate">
@@ -74,6 +75,10 @@
             <button class="yes">{{ PRODUCT_UPDATE_YES }}</button>
             <button class="no">{{ PRODUCT_NO }}</button>
         </div>
+    </div>
+    <div id="productFieldMove" class="popup hidden product">
+        <i class="fa fa-times cancelButton"></i>
+        <div id="productMoveContent"></div>
     </div>
 {% endblock %}
 

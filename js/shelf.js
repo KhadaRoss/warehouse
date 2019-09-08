@@ -20,7 +20,7 @@ let shelf = function () {
                 }
 
                 if (e.keyCode === 27) {
-                    activePopup.find('.confirmation .no').click();
+                    activePopup.find('.confirmation .no, .cancelButton').click();
                 }
 
                 if (e.keyCode === 13) {
@@ -31,7 +31,7 @@ let shelf = function () {
                 const method = $(this).parents('.popup').attr('id');
 
                 if ($(this).hasClass('no')) {
-                    shelf.togglePopup(method, true);
+                    shelf.togglePopup(method, true, true);
                     return;
                 }
 
@@ -89,7 +89,7 @@ let shelf = function () {
                 }
 
                 if (closePopup) {
-                    shelf.togglePopup(method, true);
+                    shelf.togglePopup(method, true, true);
                 }
             });
             $('#shelfTools .fa').on('click', function () {
@@ -141,13 +141,14 @@ let shelf = function () {
             });
 
             this.handleProductRequest();
+            this.initMove();
         },
         /**
          * @param {object} button
          */
         initPopupButton: function (button) {
             button.on('click', function () {
-                shelf.togglePopup($(this).attr('data-method'), true);
+                shelf.togglePopup($(this).attr('data-method'), true, true);
             });
         },
         /**
@@ -162,8 +163,9 @@ let shelf = function () {
         /**
          * @param {string} id
          * @param {boolean} clearInputs
+         * @param {boolean} toggleBg
          */
-        togglePopup: function (id, clearInputs) {
+        togglePopup: function (id, clearInputs, toggleBg) {
             let popup = $('#' + id);
 
             $('#groupAutoComplete').remove();
@@ -173,7 +175,10 @@ let shelf = function () {
             }
 
             popup.toggleClass('hidden');
-            popupBackground.toggleClass('hidden');
+
+            if (toggleBg) {
+                popupBackground.toggleClass('hidden');
+            }
         },
         /**
          * @param {object} field
@@ -367,7 +372,7 @@ let shelf = function () {
             popup.find('#productGroupUpdate').val(product.productGroup);
             popup.find('#productCommentUpdate').val(product.comment);
 
-            this.togglePopup('productFieldUpdate', false);
+            this.togglePopup('productFieldUpdate', false,true);
         },
         /**
          * @return void
@@ -392,6 +397,80 @@ let shelf = function () {
                 initAutoOpen = false;
                 shelf.scrollElementIntoView($('.product[data-productid="' + productId + '"]'));
             });
+        },
+        /**
+         * @return void
+         */
+        initMove: function () {
+            $('.moveButton').on('click', function () {
+                shelf.moveProduct();
+            });
+            $('#productFieldMove .cancelButton').on('click', function () {
+                shelf.togglePopup('productFieldMove', true, false);
+            });
+        },
+        /**
+         * @return void
+         */
+        moveProduct: function () {
+            request.api('GET', 'shelves', {}, function (result) {
+                shelf.renderProductMove(result.shelves);
+            });
+        },
+        /**
+         * @param {object} shelves
+         */
+        renderProductMove: function (shelves) {
+            let content = $('#productMoveContent');
+            content.html('');
+
+            for (let shelfId in shelves) {
+                if (!shelves.hasOwnProperty(shelfId)) {
+                    continue;
+                }
+
+                let shelfRow = $('<div data-shelfId="' + shelfId + '"><div class="shelfRow">' + shelves[shelfId]['shelfName'] + '</div></div>');
+                let fields = shelves[shelfId]['fields'];
+                let fieldMoveContent = $('<div class="fieldMoveContent"></div>');
+
+                for (let fieldId in fields) {
+                    if (!fields.hasOwnProperty(fieldId)) {
+                        continue;
+                    }
+
+                    let fieldRow = $('<div data-fieldId="' + fieldId + '">' + fields[fieldId] + '</div>');
+                    fieldRow.appendTo(fieldMoveContent);
+                }
+
+                fieldMoveContent.slideUp();
+                fieldMoveContent.appendTo(shelfRow);
+
+                shelfRow.appendTo(content);
+            }
+
+            $('#productMoveContent > div').on('click', function () {
+
+
+                $(this).children('.shelfRow').toggleClass('extended');
+                $(this).children('.fieldMoveContent').slideToggle();
+            });
+
+            $('.fieldMoveContent > div').on('click', function (e) {
+                e.stopPropagation();
+
+                const productId = $('#productFieldUpdate .headline').attr('data-productid');
+                const fieldId = $(this).attr('data-fieldid');
+
+                request.api('POST', 'productPosition', {productId: productId, fieldId: fieldId}, function (response) {
+                    if (response.success) {
+                        shelf.togglePopup('productFieldMove', true, false);
+                        shelf.togglePopup('productFieldUpdate', true, true);
+                        $('.product[data-productid="' + productId + '"]').remove();
+                    }
+                });
+            });
+
+            shelf.togglePopup('productFieldMove', true, false);
         }
     };
 }();
